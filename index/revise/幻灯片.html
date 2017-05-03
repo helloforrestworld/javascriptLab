@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			.wrap{
+				width: 1000px;
+				height: 800px;
+				background: url(img/京东幻灯片/imgs/bg.png)no-repeat;
+				position: relative;
+				margin: 0 auto;
+			}
+			.con{
+				width: 500px;
+				height: 300px;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				border: 1px solid black;
+				margin-left: -220px;
+				margin-top: -220px;
+			}
+			.img_con{
+				width: 100%;
+				height: 100%;
+				
+			}
+			.img_con img {
+				position: absolute;
+				width:100%;
+				height: 100%;
+				opacity: 0;
+				transition: 200ms linear;
+			}
+			.img_con .active{
+				opacity: 1;
+			}
+			.nav {
+				position: absolute;
+				width: 100%;
+				height: 40px;
+				bottom: -120px;
+				text-align: center;
+				
+			}
+			.nav .active{
+				background: sandybrown;
+			}
+			.nav span{
+				display: inline-block;
+				width: 30px;
+				height: 30px;
+				background:darkcyan;
+				border-radius:50% ;
+				transform: scale(0.6);
+			}
+			.nav em{
+				display: none;
+				position: absolute;
+				width: 120px;
+				height: 80px;
+				background-size:100%;
+				top: -80px;
+				left: -80px;
+			}
+			.nav span:hover em{
+				display: block;
+			}
+			/*.nav下面的span hover 后   它下面的em 显示*/
+			.prev,.next{
+				padding: 10px;
+				position: absolute;
+				width: 25px;
+				height: 46px;
+				right: 0;
+				top: 50%;
+					
+			}
+			.prev{
+				left: 0;
+			}
+			
+			.next:hover,.prev:hover{
+				background: salmon;
+				opacity: 0.5;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="con">
+				<div class="img_con">
+					
+				</div>
+				<div class="nav">
+					
+				</div>
+				<div class="prev"><img src="img/京东幻灯片/imgs/prev.png"></div>
+				<div class="next"><img src="img/京东幻灯片/imgs/next.png"></div>
+				</div>
+		</div>
+		
+		<script>
+			//获取到图片信息
+			var arrImg = ["img/京东幻灯片/ads/1.png",
+					"img/京东幻灯片/ads/2.png",
+					"img/京东幻灯片/ads/3.png",
+					"img/京东幻灯片/ads/4.png",
+					"img/京东幻灯片/ads/5.png",
+			]
+			var len= arrImg.length;
+			var strImg = '';
+			var strNav = '';
+			
+			//两个容器
+			var ImgCon = document.querySelector('.img_con');
+			var nav = document.querySelector('.nav');
+			
+			//判断生成是否第一个
+			var fisrtC = 0;
+			
+			//生成图片和导航点
+			for(var i=0;i<len;i++){
+				//给第一个添加
+				if(i==0){
+					firstC = 'active';
+				}else{
+					firstC = '';
+				}
+				strImg+='<img src="'+arrImg[i]+'"class="'+firstC+'"/>';
+				strNav+='<span data-index = "'+i+'" class="'+firstC+'"><em ></em></span>';
+			}
+			ImgCon.innerHTML = strImg;
+			nav.innerHTML = strNav;
+			
+			//获取添加的图片和导航
+			var Img = ImgCon.querySelectorAll('img');
+			var navSpan =nav.querySelectorAll('span');
+			//console.log(Img,navSpan)
+			
+			//获取em并添加背景图
+			var spanEm = nav.querySelectorAll('em');
+			
+			
+			//定义上一个
+			var prev = 0;
+			//给导航点添加事件
+			for(var i=0;i<len;i++){
+				//em添加背景tu
+				spanEm[i].style.backgroundImage='url('+arrImg[i]+')';
+				navSpan[i].onmouseover = function(){
+					//赋值给num  共用一个控制值 
+					num = this.dataset.index;
+					tab();
+					//spanEm[this.index].style.display = 'block';
+				}
+				//Em  鼠标没放上去  虽然图片和导航都是选中的 不过em还是隐藏好一点
+//				navSpan[i].onmouseout =function(){
+//					spanEm[prev].style.display = 'none';
+//				}
+				
+			}
+			
+			//设定前后按钮
+			var btnPrev = document.querySelector('.prev');
+			var btnNext = document.querySelector('.next');
+			
+			
+			var num = 0;
+			
+			btnPrev.onclick  = function(){
+//				num--;
+//				if(num<0){
+//					num = len-1;
+//				}
+				//三元
+				num = num>0?--num:len-1;
+				tab();
+				
+			}
+			btnNext.onclick  = function(){
+//				num++;
+//				if(num>len-1){
+//					num = 0;
+//				}
+				//三元
+				num =  num<len-1?++num:0;
+				tab();
+			}
+			
+			//切换的函数
+			function tab(){
+				Img[prev].className = '';
+				navSpan[prev].className = '';
+				
+				navSpan[num].className = 'active';
+				Img[num].className = 'active';
+				
+				//前一个等于现在的
+				prev = num;
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			p{padding: 0;margin: 0;}
+			button{border: none;background: none;}
+			html,body{
+				padding: 0;
+				width: 100%;
+			}
+			#set_span{
+				color: black;
+				font: bold 24px/36px "微软雅黑" ;
+			}
+			#set {
+				margin-left: 20px;
+				width: 120px;
+				height: 40px;
+				background: salmon;
+			}
+			#con{
+				margin-top: 20px;
+				width: 200px;
+				height: 200px;
+				border: 1px solid salmon;
+				transition: all 500ms; 
+			}
+			#hide{
+				transition: all 500ms; 
+				position: absolute;
+				left: 0;
+				top: 0;
+			 	width: 0;
+			 	height: 100%;
+			 	background: black;
+			 	opacity: 0.5;
+			 	filter: alpha(opacity=50);
+			}
+			#hide_con{
+				display: none;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -150px;
+				margin-top: -150px;
+				background: sandybrown;
+				width: 300px;
+				height: 300px;
+			}
+			#opc{
+				width: 320px;
+				height: 320px;
+				background: darkorange;
+				position: absolute;
+				left: -10px;
+				top: -10px;
+				z-index: -1;
+				opacity: 0.7;
+			}
+			
+			#hide_con p{
+				padding: 10px;
+				margin-top: 36px;
+				line-height: 30px;
+				font-size:14px ;
+			}
+			#hide_con button{
+				width: 40px;
+				height: 40px;
+				background:darkgoldenrod;
+				margin-right: 4px;
+			}
+			#hide_con span{
+				display: inline-block;
+				width: 130px;
+			}
+			#hide_con .red{
+				background:red;
+			}
+			#hide_con .green{
+				background:green;
+			}
+			#hide_con .org{
+				background:orange;
+			}
+			
+			#hide_con #btn{
+				position: absolute;
+				left: 50%;
+				margin-left: -125px;
+				bottom: -40px;
+				width: 258px;
+			}
+			#hide_con #btn button{
+				width: 120px;
+				height: 30px;
+				background: salmon;
+			}
+			#hide_con button:hover{
+				border: 4px solid darkcyan;
+			}
+			
+			
+		</style>
+	</head>
+	<body>
+		<span id="set_span">点击设置div:</span><button id="set">点击设置</button>
+		<div id="con"></div>
+		<div id="hide">
+			<div id='hide_con'>
+				<div id="opc"></div>
+				<p><span>请选择背景颜色：</span><button class="red">红</button><button class="green">绿</button><button class="org">橙</button></p>
+				<p><span>请选择宽(px)：</span><button class="W300">300</button><button class="W400">400</button><button class="W500">500</button></p>
+				<p><span>请选择高(px)：</span><button class="H300">300</button><button class="H400">400</button><button class="H500">500</button></p>
+				<div id="btn">
+					<button class="btn1">恢复</button>
+					<button class="btn2">确定</button>
+				</div>
+			</div>
+		</div>
+		
+		<script src="../js/miaov.js"></script>
+		<script>
+			
+			mv.$('#set').onclick = function(){
+				mv.cssSet(mv.$('#hide'),{width:'100%'});
+				mv.cssSet(mv.$('#hide_con'),{display:'block'});
+			}
+			
+			//确定 按钮   隐藏功能层
+			mv.$('.btn2').onclick = function(){
+				mv.cssSet(mv.$('#hide'),{width:''});
+				mv.cssSet(mv.$('#hide_con'),{display:'none'});
+			}
+			
+			var  box = mv.$('#con');
+			var  arrData = [['red','green','gold'],[300,400,500],[300,400,500]];
+			
+			//获取 三组 按钮 外面的容器P
+			var  wrapP = mv.$('#hide_con p');
+			
+			function styleTab(wrap,attr,arr){
+				var btns1 = mv.$('button', wrap);
+				for(var i=0;i<btns1.length;i++){
+					btns1[i].index  =  i;
+					btns1[i].onclick = function(){
+						mv.cssSet(box,attr,arr[this.index]);
+					}
+				}
+			}
+			styleTab(wrapP[0],'backgroundColor',arrData[0]);
+			styleTab(wrapP[1],'width',arrData[1]);
+			styleTab(wrapP[2],'height',arrData[2]);
+			
+			//恢复按钮
+			mv.$('.btn1').onclick = function(){
+				mv.cssSet(mv.$('#hide'),{width:''});
+				mv.cssSet(mv.$('#hide_con'),{display:'none'});
+				box.style.cssText  = '';
+			}
+		</script>
+	</body>
+</html>

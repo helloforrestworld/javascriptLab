@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			ul{margin: 0;list-style: none;padding: 0;}
+			h1{margin: 0;font-size: 20px;}
+			.wrap{
+				width: 400px;
+				height: 600px;
+				border: 2px solid black;
+				box-sizing: border-box;
+				background: orange;
+				box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+				margin: 50px auto;
+			}
+			.box{
+				width: 300px;
+				height: 500px;
+				background: url(img/bg1.png) no-repeat;
+				background-size:100% 100% ;
+				margin: 50px auto;
+				padding: 50px;
+				box-sizing: border-box;
+			}
+			
+			.head,.list li{
+				width: 200px;
+				height: 30px;
+				font: 20px/30px "微软雅黑";
+				background: black;
+				opacity: 0.6;
+				color: #fff;
+				box-sizing: border-box;
+				padding-left: 20px;
+				cursor: pointer;
+			}
+			.head{
+				position: relative;
+			}
+			.head div{
+				position: absolute;
+				width: 0;
+				height: 0;
+				border: 6px solid rgba(0,0,0,0);
+				border-left: 6px solid rgba(255,255,255,1);
+				left: 4px;
+				top: 8px;
+			}
+			.head div.active{
+				transform:rotate(90deg);
+			}
+			.head.active{
+				background:#E15671;
+				color: black;
+				opacity: 0.8;
+			}
+			.list{
+				display: none;
+				transition: 1000ms linear;
+			}
+			.list li{
+				font: 16px/30px "微软雅黑";
+			}
+			li.active{
+				background: brown;
+			}
+			li.hover{
+				background: grey;
+			}
+			.list{
+				margin-bottom: 10px;
+			}
+			h1::selection,li::selection{
+				background: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="box">
+				<h1 class="head"><div></div>我的好友</h1>
+				<ul class="list">
+					<li>Martin</li>
+					<li>Kevin</li>
+				</ul>
+				<h1 class="head"><div></div>亲朋戚友</h1>
+				<ul class="list">
+					<li>Martin</li>
+					<li>Ronaldo</li>
+				</ul>
+				<h1 class="head"><div></div>黑名单</h1>
+				<ul class="list">
+					<li>Alex</li>
+					<li>Rebackar</li>
+					<li>Bens</li>
+				</ul>
+			</div>
+		</div>
+		<script src="../js/miaov.js"></script>
+		<script>
+			
+			var aHead = mv.$('.head');
+			var aList = mv.$('.list');
+			
+			var ico = mv.$('.head div');
+			//列表展开与收起
+			for(var i=0 ;i<aHead.length;i++){
+				aHead[i].index = i;
+				aHead[i].onOff = true;
+				aHead[i].onclick = function(){
+					
+					if(this.onOff){
+						aList[this.index].style.display = 'block';
+						aHead[this.index].classList.add('active');
+						ico[this.index].className = 'active';
+						
+					}else{
+						aList[this.index].style.display = 'none';
+						aHead[this.index].classList.remove('active');
+						ico[this.index].className = '';
+					}
+					this.onOff = !this.onOff;
+				}
+			}
+			
+			//给列表项添点击事件
+			var aLi = mv.$('.list li');
+			var prev = 0;
+			
+			for(var i =0;i<aLi.length;i++){
+				
+				aLi[i].onOff = true;
+				aLi[i].index = i;
+				aLi[i].onclick = function(){
+					if(this.onOff){
+						aLi[prev].className = '';
+						aLi[prev].onOff = true;
+						
+						this.className = 'active';
+					}else{
+						this.className = '';
+					}
+					prev = this.index;
+					this.onOff = !this.onOff;
+				}
+				
+				aLi[i].onmouseover = function(){
+					if(this.onOff){
+						this.className = 'hover';
+					}
+				}
+				aLi[i].onmouseout = function(){
+					if(this.onOff){
+						this.className = '';
+					}
+				}
+			}
+			
+			
+		</script>
+	</body>
+</html>

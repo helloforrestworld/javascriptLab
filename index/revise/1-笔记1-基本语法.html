@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div></div>
+	</body>
+	
+	
+	<script>
+		
+		
+//标识符：变量名、常量名、函数名、参数名、对象属性名等统称为标识符
+	//命名规则：
+			// 1 由数字、字母、$ _构成 
+			// 2 开头不能为数字
+			// 3 关键字 保留字 不能用
+
+
+//获取元素的办法
+//	document.getElementById();
+//	document.getElementsByTagName();//这个可动态获取
+//	document.querySelector();//css选择器获取
+//	console.log(document.querySelectorAll('div'));//获取一组 注意获取到是类数组
+	
+//鼠标事件  onclick  onmouseover onmouseouts
+//系统事件  window.onload
+//自定义事件
+
+
+//属性操作		
+	//1	读  元素.属性名 /  元素['属性名'];
+	//能用点的地方一定能用中括号  能用中括号的地方不一定能用点.
+
+
+
+
+//运算符：
+	//赋值运算   =
+	//算术运算符 + += - -= * *= / /= % %=
+	//比较运算符    >  >=    ==  ===  < <=   != !==   返回的都是布尔值
+	//逻辑运算符   && || !
+	
+	//自增自减 ++ -- 
+		//前自   ++a  --a  先操作后赋值
+		//后自   a--   a++ 先赋值后操作
+		
+	//一元运算符    a ?  a:  b ;
+	
+//流程
+		//if(){}
+		//if(){}else if(){}
+		
+	//	for(初始化条件:var i = 0;条件判断 i<3;条件变化i++){
+	//			//两个分号缺一不可
+	//			//第一层 i 第二层 j  第三层k
+	//			//条件判断成立 马上执行花括号 （循环体)
+	//	}
+	// 双条件 console.log(i)
+			/*for(var i=2,j=4;i<6,j<8;i++,j++){
+				console.log(i); // 2 3 4 5
+				console.log(j); // 4 5 6 7
+			}*/
+			
+			//循环完成后i的值   (bug)
+			/*for(var i=2,j=4;i<6,j<8;i++,j++){
+				console.log(i); // 2 3 4 5
+				console.log(j); // 4 5 6 7
+			}
+			console.log(i,j) //  6  8*/
+			
+			//@ break  : 跳出循环
+				//break 
+					/*for(var i = 0 ;i<arr.length;i++){
+						if(arr[i]>5){
+							break;  //跳出循环
+						}
+						arr1.push(arr[i]);
+					}
+					console.log(arr1);*/
+			
+			//@ continue: 跳过当前循环  继续执行下一次
+			
+				/*for (var i = 0 ;i<arr.length;i++) {
+					if(arr[i]%2 !==0){
+						continue;
+					}
+					arr1.push(arr[i])
+				}
+				console.log(arr1);*/
+			
+			//对称与非对称二维数组
+	
+	
+	//while(条件){
+				//条件成立执行这个
+			//}
+				
+				//关于for
+	//				var a=0;
+	//				for(;;){
+	//					console.log(a++);
+	//					if(a>5){
+	//						break;
+	//					}
+	//				}
+					
+					//等价于
+	//				for(var a=0;a<6;a++){
+	//					console.log(a)
+	//				}
+				
+				//while就是相当于拆分for
+				
+	//			while(1<2){
+	//				console.log(100)
+	//			}//无限循环
+				
+	//			var i = 4;
+	//			while(i<10){
+	//				console.log(i++); //4 5 6 7 8 9
+	//			}
+				
+				
+				// 当明确的知道要循环多少次的时候使用for循环
+	    		// 当不确定要循环多少次的时候，只知道结束的条件的时候使用while
+	
+	
+	 //switch 作多个判断 
+	//			 switch(变量或者数值){
+	//			   case 变量或者数值:
+	//			         	要做的事;
+	//			   break;//break一般加上 详见下例子
+	//			   case 变量或者数值:
+	//			       	 	 要做的事;
+	//			   break;
+	//			       ...
+	//			   default:
+	//				    	   要做的事;
+	//		      }
+				
+	//			var a = 4;
+	//			switch(true){
+	//				case a<4:
+	//				alert(1);
+	//				Break;
+	//				case a==4:
+	//				alert(2);
+	//				Break;
+	//				case a>4:
+	//				alert(3);
+	//				Break;
+	//				default:
+	//				alert(4);
+	//			}
+
+//this:关键字   预定好的变量  随着执行环境（上下文)的改变而变化;
+//					1 在<script>范围不在任意括号或花括号内;  this//window:js中的顶级对象
+//					2 当在函数中使用this                 ;   this //执行主体
+//					@	-)对象.函数()   这个函数中的this 就是这个对象
+//						-)对象.事件 = 函数      this 就是触发函数 的对象
+			
+
+
+
+
+
+//小技巧
+//Text.focus()文本框自动聚焦
+	</script>
+	
+</html>
