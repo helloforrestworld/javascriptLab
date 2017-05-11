@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			.box{
+				width: 800px;
+				height: 600px;
+				margin: 50px auto;
+				border: 2px solid black;
+				display: flex;
+				flex-direction: column;
+			}
+			.header{
+				background: wheat;
+				height: 100px;
+				border-bottom:2px solid black;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			.header button{
+				border: none;
+				background: silver;
+				outline: none;
+				padding: 0;
+				font: 16px/40px "微软雅黑";
+				border: 2px solid black;
+				border-radius:5px ;
+				width: 100px;
+				height: 40px;
+				margin-right: 10px;
+			}
+			.body{
+				overflow: auto;
+				background: wheat;
+				flex: 1;
+				box-sizing: border-box;
+				padding: 20px;
+			}
+			.body .file{
+				margin: 20px 10px 0px 0px;
+				float: left;
+				width: 160px;
+				height: 120px;
+				border: 2px solid transparent;
+				border-radius:5px ;
+				position: relative;
+			}
+			.file.active, .file:hover{
+				border: 2px solid black;
+				background: silver;
+			}
+
+			.file .file-img{
+				position: absolute;
+				background: url(./image/file.png);
+				width:80px;
+				height: 70px;
+				left: calc(50% - 40px);
+				top: calc(50% - 40px);
+			}
+			.file .name{
+				margin: 0;
+				padding: 0;
+				position: absolute;
+				left: calc(50% - 40px);
+				bottom: 2px;
+				width:80px;
+				text-align: center;
+				font: 18px/18px "微软雅黑";
+				/*多出的显示。。。*/
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<header class="header">
+				<button>新建</button>
+				<button>删除</button>
+			</header>			
+			
+			<div class="body">
+				<div class="file">
+					<div class="file-img"></div>
+					<p class="name">文件夹</p>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		<script src="../../../js/miaov.js"></script>
+		<script>
+		//根据 数据渲染页面
+		var data = [
+		  {
+		    id: 1,
+		    type: 'foolder',
+		    name: '我的文档'
+		  },
+		  {
+		    id: 2,
+		    type: 'foolder',
+		    name: '迅雷下载'
+		  },
+		  {
+		    id: 3,
+		    type: 'foolder',
+		    name: 'Computer'
+		  }
+		];
+		
+		var body = mv.$('.body');
+		var add  = mv.$('.header button')[0];
+		var del  = mv.$('.header button')[1];
+		//初始化
+		body.innerHTML = creatFile(data);
+		fileEvent();
+		
+		
+		//新建  实际上也是操作data 数组  然后再渲染一遍
+		
+		var num = 0;//文件夹名称顺序
+		add.onclick = function(){
+			
+			var newFile = {
+				name:`${++num}文件夹夹夹夹夹夹夹夹夹夹夹夹夹`
+			}
+			data.push( newFile);
+			body.innerHTML = creatFile(data);//生成数据
+			
+			fileEvent();//添加添加事件
+		}
+		
+		//删除 
+		del.onclick = function(){
+			
+			//删除 数组中  checked = true 的项;
+			
+			for(var i =0;i<data.length;i++){
+				
+				if(data[i].checked === true){
+					data.splice(i,1);
+					i--;
+				}
+			}
+			
+			body.innerHTML = creatFile(data);//生成数据
+			
+			fileEvent();//添加添加事件
+		}
+		
+		
+		//获取文件夹 添加 添加 事件
+		function fileEvent(){
+			
+			var files = document.querySelectorAll('.file');
+			
+			Array.from(files).forEach(function(item,i){
+				
+				item.onclick = function(){
+					data[i].checked = this.classList.toggle('active')?true:false;//如果选中的话 给对应的数据 checked = true
+				}
+			})
+			
+		}
+		
+		
+		//生成文件夹
+		function creatFile(data){
+			var str = '';
+			for(var i =0;i<data.length;i++){
+				str +=`
+					<div class="file">
+						<div class="file-img"></div>
+						<p class="name">${data[i].name}</p>
+					</div>
+				`
+			};
+			return str; 
+		}
+	
+		
+		</script>
+	</body>
+</html>
