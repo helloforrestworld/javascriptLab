@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>时钟</title>
+		<style>
+			body,ul,li{
+				padding: 0;
+				background: cornsilk;
+				margin: 0;
+			}
+			li{
+				list-style: none;
+			}
+			.clock{
+				width: 600px;
+				height: 600px;
+				position: relative;
+				/*border: 10px solid black;*/
+				margin: 50px auto;
+				border-radius: 50%;
+				border: 10px solid black;
+			}
+			.tick{
+				background: sandybrown;
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				border-radius:50%;
+			}
+			.tick li{
+				position: absolute;
+				left: calc(50% - 4px);
+				top: 5px;
+				width: 8px;
+				height: 18px;
+				transform-origin: 50% 295px;				
+				background-color:black ;
+			}
+			
+			.tick li:nth-of-type(5n+1){
+				height: 26px;
+				background-color: rgb(21, 159, 118);
+			}
+			.hour,.minute,.second,.circle{
+				position: absolute;
+			}
+			.hour{
+				width: 22px;
+				height: 200px;
+				border-radius: 30px;
+				top: 130px;
+				transform-origin: 50% 170px;
+				left: calc(50% - 11px);
+				background-color: crimson;
+				
+			}
+			.minute{
+	      		width: 16px;
+			      height: 240px;
+			      border-radius: 30px;
+			      top: 96px;
+			      transform-origin: 50% 204px;
+			      left: calc(50% - 8px);			
+				background-color: seagreen;
+				
+			}
+			.second{
+				width: 14px;
+			    height: 300px;
+			    border-radius: 30px;
+			    top: 40px;
+			    transform-origin: 50% 260px;
+			    left: calc(50% - 7px);				
+				background-color: seashell;
+				
+			}
+			.circle{
+				width: 36px;
+				height: 36px;
+				border-radius: 50%;
+				left: calc(50% - 18px);
+				top: calc(50% - 18px);
+				background: silver;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="clock">
+			<ul class="tick"><!--刻度-->
+			</ul>
+			
+			<div class="hour"></div>
+			<div class="minute"></div>
+			<div class="second"></div>
+			
+			
+			<div class="circle"></div>
+			
+		</div>
+		<script>
+			var tickWrap = document.querySelector('.tick');
+			var hour = document.querySelector('.hour');
+			var min = document.querySelector('.minute');
+			var sec = document.querySelector('.second');
+			
+			//生成
+			var str = '';
+			
+			for(var i =0 ;i<60;i++){
+				
+				str += `<li style ="transform:rotate(${i*6}deg)"></li>`;
+			}
+			tickWrap.innerHTML = str;
+			
+			
+			
+			(function timeGo(){
+				window.requestAnimationFrame(timeGo);
+				var nowTime = new Date();
+				
+				var s = nowTime.getSeconds(), m = nowTime.getMinutes() + (s/60), h = nowTime.getHours() + m/60;
+				
+				hour.style.transform = `rotate(${h*30}deg)`;
+				min.style.transform = `rotate(${m*6}deg)`;
+				sec.style.transform = `rotate(${s*6}deg)`;
+			})();
+		</script>
+	</body>
+</html>
