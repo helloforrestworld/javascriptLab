@@ -1,0 +1,125 @@
+body, html {
+  margin: 0;
+  background: #f6f6f6;
+  overflow: hidden;
+  height: 100%;
+}
+
+#game-2048 {
+  position: relative;
+  width: 1200px;
+  height: 800px;
+  margin: 3% auto 0;
+  border: 6px ridge rgba(125, 96, 42, 0.63);
+  display: flex;
+}
+
+.caption-board {
+  width: 260px;
+  border-right: 6px ridge rgba(125, 96, 42, 0.63);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.caption-board .title {
+  font-size: 60px;
+}
+
+.caption-board p {
+  font-size: 28px;
+}
+
+#start {
+  width: 160px;
+  height: 40px;
+  margin: 50px 0;
+  border-radius: 10px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+  outline: none;
+  background-color: #bbada0;
+}
+
+#start:hover {
+  background-color: #ccc0b3;
+}
+
+.board-container {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.board-container .board {
+  width: 600px;
+  height: 600px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  background: #bbada0;
+  position: relative;
+}
+
+.board-grids-wrap, 
+.board-chess-wrap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.board-grids-item,
+.board-chess-item {
+  border-radius: 6px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 130px;
+  height: 130px;
+}
+
+.board-grids-item {
+  background: #ccc0b3;
+}
+
+.board-chess-item {
+  background: #000000;
+  color: #ffffff;
+  display: flex;
+  font-size: 40px;
+  justify-content: center;
+  align-items: center;
+  word-break: break-all;
+  text-align: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
