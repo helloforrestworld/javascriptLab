@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title></title>
+		<style>
+			html {
+
+				width: 100%;
+				height: 100%;
+			}
+			body{
+				margin: 0px;
+				width: 100%;
+				height: 100%;
+			}
+			.main {
+				width: 100%;
+				height: 5000px;
+				background: url(./image/bg.png) no-repeat;
+				background-size: 100% 100%;
+				overflow: hidden;
+			}
+			.logo {
+				display: block;
+				width: 200px;
+				height: 55px;
+				background: url(./image/logo.png) no-repeat;
+				margin: 20px auto;
+			}
+			ul{
+				list-style: none;
+				font-size: 14px;
+				color: #8c949c;
+				font-weight: bold;
+				
+			}
+
+			ul li {
+				position: relative;
+				padding-left: 30px;
+				
+			}
+
+			ul li div{
+				height: 98%;
+				width: 1px;
+				border-left: 1px dotted #ccc;
+				position: absolute;
+				left: 14px;
+				top: 18px;
+			}
+
+			ul ul{
+				display: none;
+			}
+			
+			ul h2{
+				cursor: pointer;
+				margin: 0;
+				height: 30px;
+				padding-left: 20px;
+				position: relative;
+			}
+			ul li span {
+				display: block;
+				position: absolute;
+				top: 8px;
+				left: 0px;
+				width: 6px;
+				height: 10px;
+				padding-left: 30px;
+				background: url(./image/icon.png)no-repeat left -40px;
+
+			}
+			
+			ul li span.add {
+				background-position: 0px -32px;
+			}
+			ul li span.line {
+				background-position: 0px 11px;
+			}
+			
+	
+			.tree {
+				margin-left: 300px;
+			}
+
+		</style>
+	
+	</head>
+
+	<body>
+		<div class="main">
+			<a href="http://www.miaov.com" class="logo"></a>
+			<div class="tree">
+				<ul id="oUl" class="ul">
+					
+				</ul>
+			</div>
+		</div>
+		<script>
+			var arr = [
+		    {
+		        title : "第一级菜单",
+		        child : [
+		        	{title:"第二集菜单"},
+		            {title:"第二集菜单",
+		            child:[
+		            		{title:"第三集菜单"},
+		            		{title:"第三集菜单",
+		            		child:[
+		            			{title:"第四集菜单"},
+		            			{title:"第四集菜单"},
+		            			{title:"第四集菜单"}
+		            		]
+		            		},
+		            		{title:"第三集菜单"}
+		            	]
+		        	},
+		            {
+		            	title:"第二集菜单",
+		            	child:[
+		            		{title:"第三集菜单"},
+		            		{title:"第三集菜单"}
+		            	]
+		            }	
+		        ]
+		    },
+		    {
+		        title : "第一级菜单",
+		        child : [
+		        	{title:"第二集菜单"},
+		            {title:"第二集菜单",
+		            child:[
+		            		{title:"第三集菜单"},
+		            		{title:"第三集菜单",
+		            		child:[
+		            			{title:"第四集菜单"},
+		            			{title:"第四集菜单"},
+		            			{title:"第四集菜单"}
+		            		]
+		            		},
+		            		{title:"第三集菜单"}
+		            	]
+		        	},
+		            {
+		            	title:"第二集菜单",
+		            	child:[
+		            		{title:"第三集菜单"},
+		            		{title:"第三集菜单"}
+		            	]
+		            }
+		        ]
+		    },
+		    {
+		    	title:"第一级菜单",
+		    	child : [
+		        	{title:"第二集菜单"},
+		            {title:"第二集菜单",
+		            
+		        	},
+		            {
+		            	title:"第二集菜单",
+		            	child:[
+		            		{title:"第三集菜单"},
+		            		{title:"第三集菜单"}
+		            	]
+		            }
+		        ]
+		         
+		    }
+		];
+		
+		
+			var oUl = document.querySelector('#oUl');
+			
+			var str1 =str2=str3=str4='';
+			var len1,len2,len3;
+			
+			for(var i = 0;i<arr.length;i++){
+				str2 = '';
+				len1 = arr[i].child ===undefined? 0:arr[i].child.length;
+				for(var j=0;j<len1;j++){
+					var str3 = '';
+					len2 = arr[i].child[j].child ===undefined? 0:arr[i].child[j].child.length;
+					for(var k=0;k<len2;k++){
+						str4 = '';
+						len3 =arr[i].child[j].child[k].child ===undefined? 0:arr[i].child[j].child[k].child.length;
+						for(var l=0;l<len3;l++){
+							str4 += 
+							`
+							<ul>
+								<li>
+									<h2><span></span>${arr[i].child[j].child[k].child[l].title}</h2>
+								</li>
+							</ul>
+							`
+						}
+						
+						str3 += 
+						`
+						<ul>
+							<li>
+								<h2><span></span>${arr[i].child[j].child[k].title}</h2>${str4}
+							</li>
+						</ul>
+						`
+					}
+					
+					str2 += 
+					`
+						<ul>
+							<li>
+								<h2><span></span>${arr[i].child[j].title}</h2>${str3}
+							</li>
+						</ul>
+					`
+				}
+				str1+=
+				`<li>
+					<h2><span></span>${arr[i].title}</h2>${str2}
+				</li>`
+				
+			}
+			
+			
+			oUl.innerHTML=str1;
+			
+			var aUl = document.querySelectorAll('ul');
+			
+			//如何避免点到父级？ 换成获取h2?
+			for(var i =0;i<aUl.length;i++){
+				aUl[i].style.zIndex = i;
+				aUl[i].onOff = true;
+				aUl[i].onclick  = function(){
+					var aUls = this.querySelectorAll('ul');
+					for(var i=0;i<aUls.length;i++){
+						aUls[i].style.display = this.onOff? 'block':'none';
+					}
+					this.onOff = !this.onOff;
+				}
+			}
+			
+			
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//	测试题	
+//		var stra = 'adasdabsdsdwwrqabasdasdab';
+////		
+//		var n = 0,index,x=0;
+//		
+//		while( (index=stra.indexOf('ab',n))!=-1){
+//			x++;
+//			console.log(index);
+//			n =  index +2;
+//		}
+//		
+
+//		var strb = '    miao  v    '
+		</script>
+	</body>
+</html>

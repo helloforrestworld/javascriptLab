@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			p{
+				margin: 0;
+			}
+			.wrap{
+				width: 650px;
+				height: 400px;
+				border-radius:8px;
+				background: silver;
+				margin:50px auto;
+				overflow: hidden;
+			}
+			.box{
+				width: 80%;
+				height: 80%;
+				margin:  40px auto;
+				background: black;
+				border-radius: 5px;
+				position: relative;
+			}
+			
+			
+			.head{
+				width: 100%;
+				height: 20%;
+				padding-top: 14px;
+				box-sizing: border-box ;
+				border-bottom:2px solid sandybrown ;
+				text-align: center;
+			}
+			
+			.head button{
+				width: 100px;
+				height: 40px;
+				color: seashell;
+				background: #171818;
+			}
+			.head button.active{
+				background: #FFF7E2;
+				color: black;
+			}
+			
+			
+			.main{
+				width: 100%;
+				height: 80%;
+				background: saddlebrown;
+				position: relative;
+			}
+			.pic{
+				width: 100%;
+				height: 100%;
+				background: salmon;
+			}
+			.main button{
+				position: absolute;
+				width: 30px;
+				height: 30px;
+				top: calc(50% - 10px);
+				font: 12px/30px "微软雅黑";
+				color: sandybrown;
+				text-align: center;
+				background: black;
+			}
+			.main .next{right: 0;}
+			.main .prev{left: 0;}
+			.main p {
+				width: 100%;
+				height: 30px;
+				font: 18px/30px "微软雅黑";
+				color: #FFFAF0;
+				background: black;
+				opacity: 0.5;
+				position: absolute;
+				left: 0;
+				text-align: center;
+			}
+			.main .text1{
+				top: 0;
+			}
+			.main .text2{
+				bottom: 0;
+			}
+			
+			
+			.tips{
+				display: none;
+				position: absolute;
+				width: 400px;
+				height: 180px;
+				background: gray;
+				opacity: 1;
+				border-radius:5px ;
+				left:calc(50% - 200px);
+				top: calc(50% - 90px);
+			}
+			
+			.tips p:nth-of-type(1){
+				margin-top: 10px;
+				width: 100%;
+				height: 30px;
+				font: 30px/30px "微软雅黑";
+				color: orange;
+			}
+			.tips p:nth-of-type(2){
+				margin-top: 30px;
+				width: 100%;
+				height: 20px;
+				font: 20px/20px "微软雅黑";
+				color: #FFF5EE;
+				text-align: center;
+			}
+			.tips .ico{
+				width: 20px;
+				height: 20px;
+				position: absolute;
+				right: 10px;
+				top: 10px;
+				background: sandybrown;
+				font: 20px/20px "微软雅黑";
+				text-align: center;
+				border-radius:2px;
+				cursor: pointer;
+			}
+			button::selection,p::selection,div::selection,span::selection{
+				background: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="box">
+				<div class="head">
+					<button>循环切换</button>
+					<button>顺序切换</button>
+				</div>
+				<div class="main">
+					<p class="text1"></p>
+					<p class="text2"></p>
+					<div class="pic"></div>
+					<button class="prev">上</button>
+					<button class="next">下</button>
+				</div>
+				<div class="tips">
+					<span class="ico">△</span>
+					<p>Javascript提醒</p>
+					<p>图片已经是最后一张了！</p>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../js/miaov.js"></script>
+	<script>
+		var arrColor =  ['gold','skyblue','green','yellow'];
+		var prev = 0;
+		var onOff = true;//控制 循环还是顺序 切换
+		var num = 0; //控制应用数组的哪一项
+		
+		//头部按钮框
+		var btns = mv.$('.head button');
+		
+		//提示框内
+		var tips = mv.$('.tips');
+		var tipsP = mv.$('p:nth-of-type(2)',tips);
+		var close = mv.$('.ico');
+		
+		//核心内容框内
+		var pic = mv.$('.pic');
+		var text1 =mv.$('.text1');
+		var text2 =mv.$('.text2');
+		
+		var prevB = mv.$('.prev');//拿到两个按钮
+		var nextB = mv.$('.next');//拿到两个按钮
+		var disabled = false;//控制按钮是否激活
+		
+		
+		
+		//初始化
+		Tab();
+		btns[prev].classList.add('active');
+		
+		
+		//按钮 添加 切换
+		for(var i=0;i<btns.length;i++){
+			btns[i].index = i;
+			btns[i].onclick = function(){
+				if(!disabled){
+					btns[prev].classList.remove('active');
+					this.classList.add('active');
+					prev = this.index;
+					onOff =this.index===0?true:false;
+				}
+			}
+		}
+		
+	
+		prevB.onclick = function(){
+			if(!disabled){
+				num--;
+				Tab();
+			}
+			
+		}
+		nextB.onclick = function(){
+			if(!disabled){
+				num++;
+				Tab();
+			}
+		}
+		close.onclick = function(){
+			tips.style.display = 'none';
+			disabled = false;
+		}
+		
+		
+		
+		function Tab (){
+			if(onOff){
+				//循环切换
+				num%=arrColor.length;
+				if(num===-1){
+					num = arrColor.length-1
+				}
+			}else{
+				//顺序切换
+				if(num>arrColor.length-1){
+					num=arrColor.length-1;
+					tips.style.display = 'block';
+					tipsP.innerHTML = '已经是最后一张了!';
+					disabled = true;
+				}
+				if(num<0){
+					num=0;
+					tips.style.display = 'block';
+					tipsP.innerHTML = '前面没有了!';
+					disabled = true;
+				}
+			}
+			pic.style.background = arrColor[num];
+			text1.innerHTML  = (num+1)+'/'+arrColor.length;
+			text2.innerHTML  = 'pic'+(num+1);
+		}
+	</script>
+</html>

@@ -1,0 +1,183 @@
+
+body,html{
+	margin: 0;
+}
+a{
+	text-decoration: none;
+	color: black;
+}
+
+.main{
+	margin: 40px auto;
+	width: 1200px;
+	height: 700px;
+	border: 2px solid black;
+	box-sizing: border-box;
+	position: relative;
+}
+.banner{
+	box-sizing: border-box;
+	width: 100%;
+	height: 8%;
+	border-bottom: 2px solid black;
+}
+.banner .btn{
+	margin-left: 10px;
+	float: left;
+	display: flex;
+	align-items: center;
+	height: 100%;
+}
+
+.banner .btn button{
+	width: 120px;
+	height: 40px;
+	background: none;
+	border: 1px solid gray;
+	border-radius:5px;
+	margin-right: 4px;
+	font: 18px/40px "微软雅黑";
+	padding: 0;
+}
+
+.banner .banner_right{
+	float: right;
+	display: flex;
+	align-items: center;
+	height: 100%;
+}
+.banner_right .search{
+	width: 200px;
+	height: 26px;
+}
+.banner_right .showtype,.banner_right .sorttype{
+	width: 20px;
+	height: 20px;
+	margin-left: 8px;
+	background-position:center center;
+	background-repeat:no-repeat ; 
+	background-size:100% 100% ;
+}
+.banner_right .sorttype{
+	background-image: url(../image/sort.png);
+}
+.banner_right .showtype{
+	margin-right: 10px;
+	background-image: url(../image/show.png);
+}
+
+
+.nav{
+	width: 100%;
+	height: 4%;
+	padding-left: 10px;
+	box-sizing: border-box;
+	border-bottom:1px solid black ;
+	display: flex;
+	align-items: center;
+}
+.nav a{
+	font-size: 16px;
+}
+
+.file-box{
+	position: relative;
+	z-index: auto;
+	width: 100%;
+	height: 88%;
+}
+.file-container{
+	overflow: auto;
+	box-sizing: border-box;
+	z-index: 0;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background: seashell;
+}
+.file-container .fileitem{
+	position: relative;
+	float: left;
+	margin: 0px 20px 20px 0px;
+	width: 140px;
+	height: 120px;
+	border: 2px solid transparent;
+	border-radius:8px ;
+	position: relative;
+}
+
+.file-container .fileitem  .pic{
+	position: absolute;
+	left: calc(50% - 40px);
+	top:calc(50% - 44px);
+	width: 80px;
+	height: 70px;
+	background: url(../image/file.png);
+}
+.file-container .fileitem .check{
+	cursor: pointer;
+	display: none;
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	border: 1px solid black;
+	left: 2px;
+	top: 2px;
+}
+.file-container .fileitem:hover{
+	border: 2px solid black;
+}
+.file-container .fileitem:hover .check{
+	display: block;
+}
+.file-container .fileitem.active{
+	border: 2px solid black;
+	background: rgba(0,0,0,0.4);
+}
+.file-container .fileitem .check.active{
+	display: block;
+	background: cadetblue;
+}
+
+.file-container .fileitem .name{
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.file-container .fileitem .name span{
+	display: block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.file-container .fileitem .name input{
+	display:none;
+	text-align: center;
+	width: 80%;
+}
+
+.menu{
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 140px;
+	display: none;
+	flex-direction: column;
+	background: wheat;
+	box-sizing: border-box;
+	box-shadow: 2px 2px 8px black;
+}
+.menu span{
+	box-sizing: border-box;
+	padding: 10px 20px;
+	cursor: pointer;
+	font: 18px/40px "微软雅黑";
+}
+.menu span:hover{
+	background: sandybrown;
+}
