@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script>
+		
+		function Ball(opts){ //配置参数
+			
+			this.x = 100;   //默认参数
+			this.y = 100;
+			this.r = 50;
+			this.color = 'red';
+			
+			if(typeof opts  === 'object'){
+				Object.assign(this,opts)
+			}
+			
+			return this		
+		}
+		Ball.prototype.init = function(){
+		
+			this.ball = document.createElement('div');
+			
+			this.draw(this.ball);
+			
+			document.body.appendChild(this.ball);
+			
+			return this;
+		}
+		
+		Ball.prototype.draw = function(ball){
+			ball.style.position = 'absolute';
+			
+			ball.style.backgroundColor = this.color;
+			ball.style.left =  this.x + 'px';
+			ball.style.top  = this.y + 'px';
+			ball.style.width = ball.style.height =  this.r * 2 + 'px';
+			ball.style.borderRadius = '50%';
+			
+		}
+		
+		new Ball().init();
+		new Ball({
+			x:200,
+			y:200,
+			r:100,
+			color:'black'
+		}).init();
+		new Ball({
+			x:400,
+			y:300,
+			color:'blue'
+		}).init();
+		
+	</script>
+</html>

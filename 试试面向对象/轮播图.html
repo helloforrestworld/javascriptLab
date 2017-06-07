@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			ul,li{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			a{
+				text-decoration: none;
+			}
+			.box{
+				margin: 40px auto;
+				width:700px;
+				height: 500px;
+				box-shadow:2px 2px 8px rgba(0,0,0,.7) ;
+				position: relative;
+			}
+			.box .pic_box{
+				overflow: hidden;
+				width: 500px;
+				height: 300px;
+				position: absolute;
+				background: #FFFAF0;
+				box-shadow: 2px 2px 8px rgba(0,0,0,.7) ;
+				box-sizing: border-box;
+				left: calc(50% - 250px);
+				top: calc(50% - 150px);
+			}
+			.box .pic_box .scroll_w{
+				position: absolute;
+				left: 0;
+				top: 0;
+				height: 100%;
+				width: 1000%;
+			}
+			.box .pic_box .scroll_w li{
+				float: left;
+				width: 500px;
+				height: 100%;
+				background-image: url(image/slide_pic/1.jpg);
+				background-repeat:no-repeat ;
+				background-size:100% 100% ;
+			}
+			.box a{
+				position: absolute;
+				width: 0;
+				height: 0;
+				top: calc(50% - 10px);
+				border: 20px solid transparent;
+				opacity: 0.6;
+			}
+			.box a:nth-of-type(1){
+				left: 12%;
+				border-right:20px solid #FFFFFF;
+			}
+			.box a:nth-of-type(2){
+				right: 12%;
+				border-left:20px solid #FFFFFF;
+			}
+			
+			.box .nav{
+				position: absolute;
+				left: calc(50% - 30px);
+				bottom: 70px;
+			}
+			.box .nav span{
+				transition: 200ms;
+				margin-right: 2px;
+				width: 10px;
+				height: 10px;
+				background: coral;
+				display: inline-block;
+			}
+			.box .nav span.active{
+				height: 20px;
+			}
+		</style>
+	</head>
+	<body>
+	</body>
+	<script src="script/miaov.js"></script>
+	<script>
+		
+		function Slide(picSrc){
+			this.box = this.createEle(picSrc);
+			this.scroll_w = this.box.querySelector('.scroll_w');
+			this.pics = this.scroll_w.querySelectorAll('li');
+			this.prev =  this.box.querySelectorAll('a')[0];
+			this.next =  this.box.querySelectorAll('a')[1];
+			this.navs =  this.box.querySelectorAll('.nav span');
+			
+			this.prevNum = 0;
+			this.picNum = 0;
+			this.size = 500;
+			this.len = this.pics.length;
+			document.body.appendChild(this.box);
+			return this;
+		}
+		
+		Slide.prototype.createEle = function(picSrc){
+			var box = document.createElement('div');
+			box.className = 'box';
+			var pic_box =document.createElement('div');
+			pic_box.className  = 'pic_box';
+			var scroll_w = document.createElement('ul');
+			scroll_w.className = 'scroll_w';
+			var navs = document.createElement('div');
+			navs.className = 'nav';
+			
+			for(var i =0;i<picSrc.length;i++){
+				var pic = document.createElement('li');
+				pic.style.backgroundImage = `url(${picSrc[i]})`;
+				scroll_w.appendChild(pic);
+				navs.appendChild(document.createElement('span'));
+			}
+			var lastPic = document.createElement('li');
+			lastPic.style.backgroundImage = `url(${picSrc[0]})`;
+			scroll_w.appendChild(lastPic);      //多准备一份第一张 放到最后  一用于做无缝切换
+			
+			var prev  = document.createElement('a');
+			var next =document.createElement('a');
+			pic_box.appendChild(scroll_w);
+			box.appendChild(pic_box);
+			box.appendChild(navs);
+			box.appendChild(prev);
+			box.appendChild(next);
+			return box;
+		}
+		Slide.prototype.init = function(){
+			var _this = this;
+			this.scroll_w.style.width = this.size*this.len;
+			this.navInit();		//导航栏事件
+			this.navs[0].classList.add('active');
+			this.prev.onclick = function(){
+				if(_this.scroll_w.animation)return;//在移动的时候不能重复点
+				if(_this.picNum==0){
+					_this.scroll_w.style.left = - _this.size * (_this.len-1)+'px';
+					_this.picNum = _this.len-1;
+				}
+				_this.picNum--;
+				_this.tab();
+				_this.navStyle();
+			}
+			this.next.onclick = function(){
+				if(_this.scroll_w.animation)return;//在移动的时候不能重复点
+				if(_this.picNum==_this.len-1){
+					_this.scroll_w.style.left = 0 +'px';
+					_this.picNum = 0;
+				}
+				_this.picNum++;
+				_this.tab();
+				_this.navStyle();
+			}
+			return this;
+		}
+		Slide.prototype.navStyle = function(){        //对应的导航条改变样式
+			var navNum = this.picNum==this.len-1?0:this.picNum;
+			this.navs[this.prevNum].classList.remove('active');
+			this.navs[navNum].classList.add('active');
+			this.prevNum = navNum;
+			return this;
+		}
+		Slide.prototype.navInit = function(){    //点击导航条切换对应的图片
+			var _this = this;
+			for(var i =0;i<this.len-1;i++){
+				this.navs[i].index = i;
+				this.navs[i].onclick = function(){
+					_this.picNum=this.index;
+					_this.navStyle();
+					_this.tab();
+				}
+				
+			}
+		}
+		
+		Slide.prototype.tab = function(){ //切换动画
+			mv.animation(this.scroll_w,{left:-this.size*this.picNum},300);
+			return this;
+		}
+		
+		
+		var arrPic = ['image/slide_pic/1.jpg','image/slide_pic/2.jpg'
+		,'image/slide_pic/3.jpg','image/slide_pic/4.jpg','image/slide_pic/5.jpg']
+		
+		new Slide(arrPic).init();
+		
+	</script>
+</html>

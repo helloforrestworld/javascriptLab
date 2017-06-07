@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			div{
+				width: 100px;
+				height: 100px;
+				background: red;
+				position: absolute;
+				left: 0;
+				top: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="div1"></div>
+	</body>
+	<script>
+		function Drap(ele){
+			
+			if(typeof ele === 'undefined'){
+				throw Error('还没第一个参数呢')
+			}
+			
+			this.box = ele;
+			
+			this.fnDown  =  this.fnDown.bind(this);
+			this.fnMove  =  this.fnMove.bind(this);
+			this.fnUp  =  this.fnUp.bind(this);
+			return this;
+		}
+		
+		Drap.prototype.init = function(){
+			this.box.style.position = 'absolute';
+			this.box.addEventListener('mousedown',this.fnDown);
+			return this;
+		}
+		
+		
+		Drap.prototype.fnDown = function(e){
+			
+			this.disX = e.pageX - this.getRec('left');
+			this.disY = e.pageY - this.getRec('top');
+			
+			document.addEventListener('mousemove',this.fnMove);
+			document.addEventListener('mouseup',this.fnUp);
+			return this;
+		}
+		
+		
+		Drap.prototype.fnMove = function(e){
+			this.X = e.pageX - this.disX;
+			this.Y = e.pageY - this.disY;
+			
+			this.box.style.left = this.X +'px';
+			this.box.style.top = this.Y +'px';
+			return this;
+		}
+		
+		Drap.prototype.fnUp = function(e){
+			
+			document.removeEventListener('mousemove',this.fnMove);
+			document.removeEventListener('mouseup',this.fnUp);
+			return this;
+		}
+		
+		Drap.prototype.getRec  = function(type){
+			
+			return  this.box.getBoundingClientRect()[type];
+		}
+		
+		var div1 = document.querySelector('.div1');
+		var DrapBox = new Drap(div1).init();
+	</script>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script>
+		
+		function Ball(x,y,r,color){
+			
+			this.x = x;
+			this.y = y;
+			this.r = r;
+			this.color = color;
+			
+			return this;
+		}
+		
+		Ball.prototype.init = function(){
+			this.ball = document.createElement('div');
+			
+			this.draw(this.ball);
+			
+			document.body.appendChild(this.ball);
+			
+			return this;
+		}
+		
+		Ball.prototype.draw = function(ball){
+			ball.style.position = 'absolute';
+			
+			ball.style.backgroundColor = this.color;
+			ball.style.left =  this.x + 'px';
+			ball.style.top  = this.y + 'px';
+			ball.style.width = ball.style.height =  this.r * 2 + 'px';
+			ball.style.borderRadius = '50%';
+			
+		}
+		
+		
+		function MoveBall(x,y,r,color){
+			Ball.call(this,x,y,r,color)
+			this.speed =  2;
+			this.g =  0.2;
+			return this;
+		}
+		MoveBall.prototype = Object.create(Ball.prototype);
+		MoveBall.prototype.constructor = MoveBall;
+		
+		MoveBall.prototype.Move = function(){
+			var _this = this;
+			var ball = _this.ball;
+			(function Fn(){
+				window.requestAnimationFrame(Fn);
+					ball.style.top  = ball.offsetTop + _this.speed + 'px';
+					_this.speed+=_this.g;
+					
+					if(ball.offsetTop>=window.innerHeight - ball.offsetWidth-20){
+						ball.offsetTop = window.innerHeight - ball.offsetWidth-20 +'px';
+						_this.speed*=-0.7;
+					}
+			})()
+			return this;
+		}
+		
+		
+		document.onclick = function(){
+			var x =  window.innerWidth*0.7*Math.random()+ window.innerWidth*0.1  
+			new MoveBall(x,20,50,'green').init().Move();
+		}
+		
+	</script>
+</html>

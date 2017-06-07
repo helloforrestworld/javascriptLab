@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script>
+		
+		function Ball(x,y,r,color){
+			
+			this.x = x;
+			this.y = y;
+			this.r = r;
+			this.color = color;
+			
+			return this		
+		}
+		
+		Ball.prototype.init = function(){
+			this.ball = document.createElement('div');
+			
+			this.draw(this.ball);
+			
+			document.body.appendChild(this.ball);
+			
+			return this;
+		}
+		
+		Ball.prototype.draw = function(ball){
+			ball.style.position = 'absolute';
+			
+			ball.style.backgroundColor = this.color;
+			ball.style.left =  this.x + 'px';
+			ball.style.top  = this.y + 'px';
+			ball.style.width = ball.style.height =  this.r * 2 + 'px';
+			ball.style.borderRadius = '50%';
+			
+		}
+		
+		document.onclick = function(){
+			var x =  window.innerWidth*0.7  * Math.random()+ window.innerWidth*0.2  ;
+			var y =  window.innerHeight*0.7  * Math.random()+ window.innerHeight*0.2 ;
+			new Ball(x,y,50,'green').init();
+		}
+		
+	</script>
+</html>
