@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			.wrap{
+				box-shadow: 2px 2px 4px black;
+				width: 420px;
+				height: 610px;
+				margin: 20px auto;
+				background: #f6f6f6;
+			}
+			.search{
+				width: 100%;
+				padding-top:10px ;
+				margin: 10px auto;
+				text-align: center;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				
+			}
+			.search .inp{
+				width: 150px;
+				height: 30px;
+				background: seashell;
+				border-radius:5px ;
+				border: 2px solid rgba(67 ,187 ,187, 0.69);
+			}
+			.search .btn{
+				margin-left: 10px;
+				height: 30px;
+				background: rgba(67 ,187 ,187, 0.69);
+				border: 1px solid seashell ;
+				color: wheat;
+			}
+			.content{
+				position: relative;
+				width: 80% ;
+				border-radius:5px ;
+				margin: 20px auto;
+			}
+			.nav{
+				width: 100%;
+				display: flex;
+				justify-content: center;
+				text-align: center;
+			}
+			.nav a,.nav strong{
+				border: 2px solid transparent;
+				margin-right: 2px;
+				padding: 2px 2px;
+				background:rgba(67 ,187 ,187, 0.69) ;
+				cursor: pointer;
+				font-size: 14px;
+				color: white;
+				text-decoration: none;				
+			}
+			.nav a.active{
+				border: 2px solid rgba(67 ,187 ,187, 0.69);
+				background: white;
+				color: skyblue;
+			}
+			
+			.item_list{
+				width: 100%;
+				box-sizing: border-box;
+				margin: 0;
+				padding-left: 8px;
+			}
+			.item_list li{
+				width: 100%;
+				height: 160px;
+				list-style: none;
+				border-bottom: 2px solid rgba(67 ,187 ,187, 0.69);
+			}
+			.item_list h2{
+				width: 100%;
+				height: 24px;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				white-space: nowrap;
+				font:normal 16px/24px "微软雅黑";
+			}
+			.item_list li .book_img{
+				float: left;
+				width: 34%;
+				height: 110px;
+			}
+			.item_list .detail{
+				padding-left: 20px;
+				box-sizing: border-box;
+				float: left;
+				width: 60%;
+			}
+			.item_list .detail .author{
+				display: inline-block;
+				width: 100%;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				white-space: nowrap;
+				color:rgba(0,0,0,0.5);
+				font: 14px/24px "微软雅黑";
+			}
+			.item_list .detail .des{
+				width: 100%;
+				height: 70px;
+				font: 14px/24px "微软雅黑";
+				color: rgba(0,0,0,0.5);
+				overflow : hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 3;
+				-webkit-box-orient: vertical
+			}
+			.tips{
+				width: 300px;
+				height: 100px;
+				font: 16px/100px "微软雅黑";
+				background: lightskyblue;
+				color: seashell;
+				border-radius:6px ;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="search">
+				<input type="text" class="inp"/>
+				<button class="btn">搜索</button>
+			</div>
+			<div class="content">
+				<ul class="item_list">
+					<div class="tips">你可以试着搜索图书，例如：javascript</div>
+				</ul>
+				<div class="nav">
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="./fectch.js" charset="utf-8"></script>
+	<script>
+		const btn  = document.querySelector('.btn');
+		const txt = document.querySelector('.inp');
+		
+		const nav = document.querySelector('.nav');
+		const listWrap = document.querySelector('.item_list');
+		
+		let dataBook ;
+		let nowPage = 1;
+		let prevPage = 1;
+		
+		btn.onclick = function(){
+			let val = txt.value;
+			txt.focus();
+			
+			if(val.trim()==''){
+				alert('请输入你的内容');
+				return;
+			}
+			
+			fetch({
+	        type: 'jsonp',
+	        url: `https://api.douban.com/v2/book/search?q=${val}&start=0&count=100`,
+	        timeout: 3000,
+	        cb: 'callback'
+      		})
+      		.init()
+      		.then((data) => {
+      			 console.log(data);
+      			 dataBook = data.books;
+      			 nowPage = 1;
+       			 listWrap.innerHTML =  creatList(dataBook,nowPage);
+       			 nav.innerHTML = creatNav(dataBook,nowPage);
+     		 }).catch((err)=>{
+      			console.log(err);
+     		 })
+     		 
+     		txt.value = ''; 
+		}
+		
+		
+		//导航切换页数
+		nav.addEventListener('click',function(e){
+			let tar = e.target;
+			if(tar.nodeName==="A"){
+				
+				if(tar.className==='prev'){
+					nowPage = nowPage>1? --nowPage:1;
+					listWrap.innerHTML =  creatList(dataBook,nowPage);
+					nav.innerHTML = creatNav(dataBook,nowPage);
+					return;
+				}
+				if(tar.className==='next'){
+					nowPage = nowPage<tar.dataset.num*1? ++nowPage:tar.dataset.num*1;
+					listWrap.innerHTML =  creatList(dataBook,nowPage);
+					nav.innerHTML = creatNav(dataBook,nowPage);
+					return;
+				}
+				let index = tar.dataset.index*1;
+				listWrap.innerHTML =  creatList(dataBook,index);
+				nowPage = index;
+				nav.innerHTML = creatNav(dataBook,nowPage);
+			}
+		})
+		
+		function navStyle(ele){
+			let childs = nav.children;
+			for(let i = 0;i<childs.length;i++){
+				childs[i].style.color = '';
+			}
+		}
+		
+		function creatList(data,page){
+			
+			let str = ``;
+			for(let i = (page-1)*3;i<(page-1)*3+3;i++){
+			 	
+			 	if(typeof data[i] ==='undefined')break;
+			 	
+			 	str+=`
+			 		<li>
+						<h2>${data[i].title}</h2>
+						<img class="book_img" src="${data[i].images.large}" />
+						<div class="detail">
+							<span class="author">${data[i].author[0]}</span>
+							<p class="des">
+								${data[i].summary==''?'本书暂时没有简介哦！抱歉':data[i].summary}
+							</p>
+						</div>
+					</li>
+			 	`
+			}
+			return str;
+		}
+		
+		
+		function creatNav (data,nowPage){
+			let len = data.length,pageNum =  Math.ceil(len/3),showNum;
+			
+			let str = nowPage==1? ``: `<a class="prev">上一页</a>`;
+			
+			//显示第一个  和 最后一个一个
+			//显示当前页码的后三个 还有前2个 其余的...
+			
+			
+			for(let i = 1;i<=pageNum;i++){
+				
+				if((i!==1 && i< nowPage-2 )||(i!=pageNum&& i>nowPage+2 )){
+					if(i==2||i==pageNum-1){
+						str+=`<strong>...</strong>`;
+					}
+					continue;
+				}
+				str += `<a data-index= "${i}" class="${i==nowPage?'active':''}">${i}</a>`;
+			}
+			
+			str+= nowPage== pageNum?``:`<a class="next" data-num= "${pageNum}">下一页</a>`
+			return str;
+		}
+	</script>
+</html>
