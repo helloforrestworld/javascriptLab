@@ -140,7 +140,7 @@
 			</div>
 		</div>
 	</body>
-	<script src="./fectch.js" charset="utf-8"></script>
+	<script src="./myfetch.js" charset="utf-8"></script>
 	<script>
 		const btn  = document.querySelector('.btn');
 		const txt = document.querySelector('.inp');
@@ -162,8 +162,13 @@
 			}
 			
 			fetch({
+			data:{
+			   q:val,
+			   start:0,
+			   count:100
+			},
 	        type: 'jsonp',
-	        url: `https://api.douban.com/v2/book/search?q=${val}&start=0&count=100`,
+	        url: `https://api.douban.com/v2/book/search`,
 	        timeout: 3000,
 	        cb: 'callback'
       		})
@@ -177,7 +182,6 @@
      		 }).catch((err)=>{
       			console.log(err);
      		 })
-     		 
      		txt.value = ''; 
 		}
 		
