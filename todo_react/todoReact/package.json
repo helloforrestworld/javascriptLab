@@ -1,0 +1,38 @@
+{
+  "name": "ReactBase",
+  "version": "1.2.0",
+  "description": "",
+  "main": "./config/index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=development node ./config",
+    "build": "cross-env NODE_ENV=production node ./config",
+    "packer": "rimraf dist/* && webpack --config ./config/packer/prod.js --progress"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.0",
+    "babel-plugin-react-html-attrs": "^2.0.0",
+    "babel-preset-env": "^1.5.2",
+    "babel-preset-react": "^6.24.1",
+    "cross-env": "^5.0.1",
+    "css-loader": "^0.28.4",
+    "extract-text-webpack-plugin": "^2.1.2",
+    "file-loader": "^0.11.2",
+    "html-webpack-plugin": "^2.28.0",
+    "open-browser-webpack-plugin": "0.0.5",
+    "rimraf": "^2.6.1",
+    "style-loader": "^0.18.2",
+    "uglifyjs-webpack-plugin": "^0.4.6",
+    "webpack": "^3.0.0",
+    "webpack-dev-server": "^2.5.0",
+    "webpack-notifier": "^1.5.0"
+  },
+  "dependencies": {
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-router-dom": "^4.1.1"
+  }
+}
