@@ -110,4 +110,4 @@
 //当移动或者复制 名字重复的时候   弹出所有重复项的处理框
 
 
-  [1]: https://helloforrestworld.github.io/javascriptLab/blob/master/%E5%BE%AE%E4%BA%91/index.html
+  [1]: https://helloforrestworld.github.io/javascriptLab/微云/index.html
