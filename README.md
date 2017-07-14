@@ -1,9 +1,10 @@
 ﻿#README
-github学习测试用的
+学习javascripit的练手项目
 
 ---
 
-在此输入正文
+- 欢迎star****
+- 欢迎交流哟,helloforrestworld@163.com
 
 
 
