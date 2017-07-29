@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			h1{margin: 0;padding: 0;}
+			ul,p{padding: 0;margin: 0;}
+			li{list-style: none;}
+			img{border: none;}
+			input{margin: 0;padding: 0;outline: none;}
+			
+			#wrap {width: 750px;border: 1px mediumvioletred solid;margin: 100px auto;border-top: 1px solid grey;padding-left: 20px;padding-right: 20px;}
+			h1 {color: fuchsia;border-bottom: 1px solid grey;margin-bottom: 10px;}
+			
+			#list{height: 280px;margin-left: 20px;}
+			#list li{float: left;width: 170px;height: 280px;margin-right: 12px;background: url(img/buy_limit/bg.jpg) no-repeat;position: relative;}
+			#list div{padding-top: 10px; height:270px;position: absolute;background: seashell;top: 0px;left: 0;opacity: 1;z-index: 2;}
+			#list span{font-size: 12px;color: gray;margin-left: 10px;}
+			#list p{font-size: 12px;width: 150px;margin: 4px auto;}
+			#list img{width: 120px;height: 116px;display: block;margin: 20px auto;}
+			#list .price{color: red;padding: 0;margin: 0;}
+			.time{font-size: 12px;width: 120px;text-align: center;}
+			.btn1{width: 30px;text-align: center;font-size: 12px;}
+			
+			
+			.title{width:680px ;padding:20px 40px;background: silver;margin-bottom: 10px;}			
+			.title span {font-size:16px ;color: brown;margin-right: 220px;font-weight: bold;}
+			
+			.goods{width:760px;height:50px;padding:20px 0px;background: silver;position: relative;margin-bottom: 10px;}
+			.goods span{line-height: 50px;font-size: 14px;margin-right: 60px;}
+			.pic{height: 63px;width: 100px;border: 1px solid salmon;position: absolute;text-align: center;right: 0px;top: 14px;}
+			.pic img{height: 55px;width: 90px;line-height:40px;display: block;margin: 4px auto;}
+			
+			
+			 span {color: red;font-size: 14px;}
+			
+		</style>
+		<script src="JS-函数返回值、定时器基础(3-$简化版).js"></script>
+		<script>
+			$(function(){
+				var oUl = $('list');
+				var oCount = $('count');
+				var oTotal = $('total');
+				var aLi = oUl.getElementsByTagName('li');
+				var arrUrl = ['img/buy_limit/0.jpg','img/buy_limit/1.jpg','img/buy_limit/2.jpg','img/buy_limit/3.jpg']
+				
+				
+				for(var i=0;i<aLi.length;i++){
+					aLi[i].index = i;
+					action(aLi[i]);
+				}
+				function action(oLi){
+					var oDiv = oLi.getElementsByTagName('div')[0];
+					var oP  = oDiv.getElementsByTagName('p')[0];
+					var aInp = oDiv.getElementsByTagName('input');
+					var aSpan = oDiv.getElementsByTagName('span');
+					var timer = null;
+					var iNew = null;
+					var iNow = null;
+					var t = 0;
+					var str = '';
+					var num = 0;
+					function timeGo(){
+							iNow = new Date();
+							t = Math.floor((iNew-iNow)/1000);
+							str = Math.floor(t/86400)+'天'+Math.floor(t%86400/3600)+'时'+Math.floor(t%86400%3600/60)+'分'+t%60+'秒';
+							aSpan[0].innerHTML = str;	
+					}
+					aInp[1].onclick = function(){
+						iNew = new Date(aInp[0].value); 
+						clearInterval(timer);
+						timeGo();
+						timer = setInterval(function(){
+							if(t>0){
+								timeGo()
+							}else{
+								clearInterval(timer)
+								shake(oDiv,'left',function(){
+									doMove(oDiv,'top',5,350)
+									fadeOut(oDiv,0.02,0,function(){
+										oCount.innerHTML+='<div class="goods"><span>'+oP.innerHTML+'</span><span>'+'￥'+aSpan[3].innerHTML+'</span><span class="pic"><img src='+arrUrl[oLi.index]+'/></span></div>';
+										num = parseInt(oTotal.innerHTML);
+										num+=parseInt(aSpan[3].innerHTML);	
+										oTotal.innerHTML=num;
+									})
+								})
+							}
+						},1000)
+					}
+				}
+			})
+		</script>
+	</head>
+	<body>
+		<div id="wrap">
+			<h1>限购时间</h1>
+			<ul id="list">
+				<li>
+					<div>
+						<input type="text" value="May 4,2016 17:29:0" class="time" />
+						<input type="button" value="确认" class="btn1"  />
+						<span></span>
+						<img  src="img/buy_limit/0.jpg"/>
+						<p>疯狂599，美的爆隐藏式面板下拉门微波炉</p>
+						<span>抢购价：</span>
+						<span class="price">￥</span><span class="price">599.00</span>
+					</div>
+				</li>
+				<li>
+					<div>
+						<input type="text" value="May 4,2016 17:29:0" class="time" />
+						<input type="button" value="确认" class="btn1"  />
+						<span></span>
+						<img  src="img/buy_limit/1.jpg"/>
+						<p>疯狂699，美的爆隐藏式面板下拉门微波炉</p>
+						<span>抢购价：</span>
+						<span class="price">￥</span><span class="price">699.00</span>
+					</div>
+				</li>
+				<li>
+					<div>
+						<input type="text" value="May 4,2016 17:29:0" class="time" />
+						<input type="button" value="确认" class="btn1"  />
+						<span></span>
+						<img  src="img/buy_limit/2.jpg"/>
+						<p>疯狂1000，美的爆隐藏式面板下拉门微波炉</p>
+						<span>抢购价：</span>
+						<span class="price">￥</span><span class="price">1000.00</span>
+					</div>
+				</li>
+				<li>
+					<div>
+						<input type="text" value="May 4,2016 17:29:0" class="time" />
+						<input type="button" value="确认" class="btn1"  />
+						<span></span>
+						<img  src="img/buy_limit/3.jpg"/>
+						<p>疯狂400，美的爆隐藏式面板下拉门微波炉</p>
+						<span>抢购价：</span>
+						<span class="price">￥</span><span class="price">400.00</span>
+					</div>
+				</li>
+			</ul>
+			
+			<div id="count">
+				<div class="title">
+					<span>商品名称</span>
+					<span>价钱</span>
+				</div>
+			</div>
+			
+			总计：<span id="total">100</span>元
+			
+		</div>
+	</body>
+</html>
