@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+</head>
+<body>
+  <script>
+    /**
+     * 结构赋值：按照一定的规则，从数据中提取值的操作，称为解构赋值
+     *
+     * 主要分为：
+     *    - 数组的解构赋值
+     *    - 对象的结构赋值
+     *    - 字符串的解构赋值
+     */
+    
+    // 数组的解构：------------------------------------------------
+    
+    
+    {
+      // let a = 1, b = 2, c = 3;
+      let [a, b, c] = [1, 2, 3]; 
+      // console.log(a, b, c);
+    }
+    
+    {
+      // 不完全解构
+      let [, , x] = [, , 1];
+      // console.log(x);
+      let [a, b] = [1, 2, 3]
+      // console.log(a, b);
+    }
+    
+    {
+      let [a, [[b], c]] = [1, [[2], 3]];
+      // console.log(a, b, c);
+      let [[x]] = [[[3]]];
+      // console.log(x);
+    }
+    
+    {
+      // 可以指定默认值
+      // let [x = 1, y = x] = [];
+      // console.log(x, y);
+      // let [x = 1, y = 2] = [, 4];
+      // console.log(x, y);
+      
+      // 只有解构的时候，对应值是 undefined 才会走默认值
+      // let [z = 4] = [undefined];
+      // console.log(z);  // 4
+      
+      let [abc = 5] = [null];  // 默认值 的比较 使用的是 ===
+      
+      // console.log(abc); // null
+    }
+    
+    // 对象的解构：------------------------------------------------
+    
+    {
+      // 对象的解构赋值结构的是 value，匹配的是 key
+      let {a: x, b: y} = {e: 1, b: 3, a: 'abc'};
+      // console.log(a, b);  // 报错
+      // console.log(x, y);
+    }
+    
+    {
+      // let {a, b}  ===> {a: a, b: b}
+      // let {x, y} = {x: 1, y: 2};
+      // console.log(x, y);
+    }
+    
+    {
+      //和数组的规则一模一样
+      // let {a = 1, b = 2} = {a: 'abc', b: undefined};
+      // 
+      // console.log(a, b);
+      
+      // let {a: x = 1, b: y = 2} = {a: 'abc', b: undefined};
+      // 
+      // console.log(x, y);
+    }
+    
+    {
+      let obj = {q: {
+          p: {
+            x: [3]
+          }
+        }};
+      let {q: {
+        p: {
+          x: [a]
+        }
+      }} = obj;
+      
+      // console.log(a);  // 3
+      // console.log(q);  // 报错
+      // console.log(p);  // 报错
+    }
+    
+    {
+      // let {from} = Array;
+      // 
+      // console.log(from(document.querySelectorAll('meta')));
+      
+      let {sin, cos, random} = Math;
+      
+      console.log(random());
+    }
+    
+    
+    
+    
+    
+    
+    
+  </script>
+</body>
+</html>

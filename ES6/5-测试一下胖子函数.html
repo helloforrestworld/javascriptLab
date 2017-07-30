@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	
+	
+	
+	<script>
+		
+	{
+		document.onclick = function(){
+			let a = 1 ;
+			let obj = {a:2};
+		
+			setTimeout(()=>{
+				console.log(this)
+			},1000)
+		}
+	}
+	
+	
+	document.onclick = function(){
+			let a = 1 ;
+			let obj = {a:2};
+		
+			setTimeout(fn,1000)
+		}
+	
+	var fn = ()=>{console.log(this)}
+	
+
+		
+	</script>
+</html>

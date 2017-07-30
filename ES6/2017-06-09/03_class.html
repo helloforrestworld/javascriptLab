@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+</head>
+<body>
+  <script>  
+    /**
+     * class 是用来声明一个 类 的，它实质上是 ES5 构造函数的一个语法糖
+     * calss 的本质就是一个函数，但是这个函数比较特别，只能用new去调用，
+     *       如果当作一个函数去调用，那么会报错
+     */
+    
+    class Person{
+      constructor(name){  // 构造函数
+        this.name = name;
+      }
+      getName(){
+        console.log(this.name);
+      }
+      static fn(){
+        console.log('hello');
+      }
+    }
+    
+    
+    var p = new Person('laowang');
+    
+    p.getName();
+    
+    Person.fn();
+    
+  
+  </script>
+</body>
+</html>

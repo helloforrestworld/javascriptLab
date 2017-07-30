@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+</head>
+<body>
+  <ul>
+    <li>111</li>
+    <li>222</li>
+    <li>333</li>
+    <li>444</li>
+    <li>555</li>
+  </ul>
+  <script>
+    /**
+     * let 主要用于声明一个变量，和 var 非常类似，但是 let 所声明的变量只在其所在的代码块内有效
+     *
+     * 使用 let 注意几点：
+     *  1. 不能声明已经存在的变量或者常量
+     *  2. 不能在声明变量之前使用，也就是不存在变量提升（暂时性死区）
+     */
+    
+    // {
+    //   var a = 1;
+    //   let b = 2;
+    //   console.log(b);
+    // }
+    
+    // console.log(a);
+    // console.log(b);  // 报错
+    
+    
+    // var a = 1;
+    // var a = 2;
+    // 
+    // console.log(a);
+    
+    // {
+    //   // let x;
+    //   var x;
+    //   let x = 1;  // 报错
+    //   console.log(x);
+    // }
+    
+    {
+      // console.log(a);
+      // var a = 1;
+      // console.log(y);
+      // console.log(typeof y);  // 报错
+      // let y = 10;
+    }
+    
+    const lis = document.querySelectorAll('li');
+    
+    // for(var i=0; i<lis.length; i++){
+    //   lis[i].onclick = function (){
+    //     alert(i);
+    //   }
+    // }
+    
+    
+    for(let i=0; i<lis.length; i++){  // 小括号内是一个父作用域
+      // 这里是子作用域
+      // let i = 0;
+      lis[i].onclick = function (){
+        alert(i);
+      }
+    }
+    
+    // function for(){
+    //   let i=0;
+    //   
+    //   function fn(){
+    //     let i = 100;
+    //     console.log(i);
+    //   }
+    //   fn()
+    // }
+    // 
+    // for()
+    
+    
+    
+  </script>
+</body>
+</html>

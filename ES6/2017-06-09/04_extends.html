@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+</head>
+<body>
+  <script>  
+    /**
+     * 在ES6中，子类继承父类使用原生提供的 extends 关键字，即可完成集成
+     */
+    
+    class Person{
+      constructor(name){  // 构造函数
+        this.name = name;
+      }
+      getName(){
+        console.log(this.name);
+      }
+      static fn(){
+        console.log('hello');
+      }
+    }
+    
+    // class Girl extends Person {};  // 相当于复制了一份 Person 类
+    
+    /**
+     * super的用法：
+     *  1. 在构造函数当中，可以当作一个函数调用，表示父类的构造函数
+     *  2. 在构造函数和原型方法当中，可以当作一个对象来使用，代表父类构造函数的 prototype
+     *  3. 在子类的静态方法里面使用的时候，代表父类的构造函数
+     */
+    
+    
+    class Girl extends Person {
+      constructor(name, age){
+        // 子类继承父类，如果想在构造函数当中集成父类的属性，并且给自己添加新的属性
+        // ES6规定，必须调用一次 super 关键字。
+        
+        // 因为子类 没有自己的 this，必须调用 super之后还会建立子类的this
+        // console.log(this); // 报错
+        
+        super(name);   
+        
+        this.age = age;
+        
+        console.log(new.target);  // 代表 new 调用的构造函数
+        
+        // console.log(super.getName);
+        
+        return this;
+      }
+      getAge(){
+        console.log(this.age);
+        super.getName()
+      }
+      
+      static ownFn(){
+        super.fn();
+      }
+      
+    };
+    
+    var p = new Girl('xiaohongmao', 88);
+    
+    // p.getName();
+    
+    p.getAge();
+    
+    // Girl.fn();
+    
+    Girl.ownFn()
+    
+  
+  </script>
+</body>
+</html>

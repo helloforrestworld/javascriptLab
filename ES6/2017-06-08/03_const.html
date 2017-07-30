@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+</head>
+<body>
+  <script>
+    /**
+     * const 用来声明一个常量。一旦声明就不可以被改变。
+     *
+     * 使用的注意事项，const如果声明的常量是一个对象，那么不可以改变的是这个对象的引用，
+     * 至于内部怎么样它不关心，但是一旦你使用const去声明，就不要再去改变它
+     *
+     * const 同样和 let 一样，不能重复声明， 不能在声明之前使用
+     */
+    
+    // 特别注意：使用 const 声明常量的时候，必须赋值，否则报错。
+     
+    // let a;
+    // 
+    // console.log(a);
+    
+    // const b;  // 报错
+    
+    // let x;
+    // 
+    // const x = 3; // 报错
+    
+    {
+      const x = 1;
+      
+      // x = 2;   // 报错
+    }
+    
+    {
+      const o = {a: 1};
+      // o = []; // 报错
+      // o = {a: 1}; // 报错
+      // o.a = 2;  // 不报错
+      // console.log(o);
+    }
+    
+    
+    
+    
+  </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div>1</div>
+		<div>2</div>
+		<div>3</div>
+	</body>
+	
+	
+	<script>
+//------------------set集合----------		
+		let arr = [1,2,3];
+		
+		let s = new Set(arr);
+//		console.log(s);
+		
+//		console.log(s.size);
+//		console.log(s.values())
+//		console.log(s.keys())
+//		console.log(s.entries())
+
+//		let s1 = new Set([1,2,3,3]);
+//		console.log(s1)
+		
+//		console.log(s.add('a').add('c'));
+//		
+//		console.log(s.delete('a'),s);
+//		console.log(s.clear(),s)
+
+
+		var arr1 = [1,1,3,3,NaN,NaN,'aa',[],[]];
+//		
+//		var s3 =   new Set(arr1);
+//		console.log([...s3])
+
+//		var ret = [];
+//		var hasNaN = false;
+//		
+//		for(let i = 0;i<arr1.length;i++){
+//			if(Number.isNaN(arr1[i])){
+//				hasNaN = true;
+//			}
+//			if(ret.indexOf(arr1[i])==-1&&!Number.isNaN(arr1[i])){
+//				ret.push(arr1[i])
+//			}
+//		}
+//		if(hasNaN){
+//			ret.push(NaN);
+//		}
+//		console.log(ret)
+		
+		
+		
+		
+//------------------------字典Map------------------------
+
+
+
+
+
+//-----------------------胖子函数(箭头函数)---------------------------
+//		
+//var i ;
+//for(i = 0 ;i<3;i++){
+//	
+//}
+//
+//for(var i = 0;i<3;i++){
+//	(function(i){
+//		li[i].onclick = function(){
+//			console.log(i)
+//		}
+//	})(i)
+//}
+//
+//for(let i = 0;i<3;i++){
+//	li[i].onclick = function(){
+//		console.log(i)
+//	}
+//}
+
+//{
+//	let i = 1;
+//	if(true){
+//		i = 2;
+//	}
+//	console.log(i)
+//}
+var li = document.querySelectorAll('div');
+{
+	let i = 0;
+	if(i<3){
+		li[i].onclick = function(){
+		console.log(i)
+		}
+	}
+	i++;
+	if(i<3){
+		li[i].onclick = function(){
+		console.log(i)
+		}
+	}
+	i++;
+	if(i<3){
+		li[i].onclick = function(){
+		console.log(i)
+		}
+	}
+}
+
+	</script>
+</html>

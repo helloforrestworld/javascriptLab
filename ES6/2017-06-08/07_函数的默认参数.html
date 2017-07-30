@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+</head>
+<body>
+  <script>
+    // ES6 允许给函数制定默认参数
+    
+    // function fn(a, b){
+    //   a = a || 1;
+    //   b = b || 2
+    //   console.log(a + b);
+    // }
+    
+    // fn(); 
+    // fn(3, 3);
+    
+    // fn(0, 1);  // 2
+    
+    // function fn2(a = 1, b = 2){
+    //   console.log(a + b);
+    // }
+    
+    // fn2();   // 3
+    // fn2(0, 1); 
+    
+    
+    // -------------------------------------------
+    
+    // function fn3({a, b} = {a: 1, b: 2}){
+    //   console.log(a + b);
+    // }
+   
+    
+    
+    // fn3();
+    // fn3({});  // NaN
+    
+    
+    function fn4({a = 1, b = 2} = {}){
+    	console.log(a,b)
+      console.log(a + b);
+    }
+    
+    // fn4();  // 3
+    // fn4({});  // 3
+    // fn4({a: 4}); // 6
+    //fn4(3,4)
+    
+    
+    
+    
+    
+    
+  </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+</head>
+<body>
+  <script>
+    /**
+     * Iteartor 是一种可遍历的数据接口，它的目的是为所有的数据结构提供统一的访问机制。
+     * 也就是 ES6 提供的 for...of循环
+     *
+     * 在ES6中 默认的 Iterator 接口部署在对象的 Symbol.iterator 属性上。
+     *
+     *  调用 Iterator 接口的过程：
+     *      1 创建一个具有 next 方法的对象
+     *      2 调用这个对象的 next 方法，返回一个 对象：{value: val, done: true/false}
+     *      3 当返回对象的 done 属性变为 true 的时候表示遍历结束
+     *
+     * 原生就具有 Iterator 的数据有： 数组，字符串，Set，Map、某些类数组等
+     *
+     * 凡是具有 Iterator 接口的数据，都可以进行如下操作：
+     *    - 解构赋值
+     *    - 使用扩展运算符 (...)
+     *    - 被 for...of循环
+     *    - ....
+     * 
+     */
+    
+    
+    // const arr = [1, 2, 3, 4];
+    // 
+    // function iter(arr){
+    //   let index = 0;
+    //   return {
+    //     next(){
+    //       return {value: arr[index++], done: index > arr.length}
+    //     }
+    //   }
+    // }
+    // 
+    // var it = iter(arr);
+    // 
+    // console.log(it);
+    
+    // it.next();
+    
+    
+    // var str = 'abcd';
+    // 
+    // for(let item of str){
+    //   console.log(item);
+    // }
+    // 
+    // for(let item of [1, 2, 3]){
+    //   console.log(item);
+    // }
+    
+    
+    // -------------------------------------------------------
+    // let m = new Map([
+    //   ['a', 1],
+    //   ['b', 2],
+    //   ['c', 3]
+    // ]);
+    // 
+    // console.log(m);
+    
+    // for(let item of m){
+    //   console.log(item);
+    // }
+    
+    // for(let [key, value] of m.entries()){
+    //   console.log(key, value);
+    // }
+    
+    
+    var obj = {
+      a: 1,
+      b: 2,
+      fn(){
+        console.log(this.a);
+      },
+      [Symbol.iterator](){
+        var _this = this;
+        var keys = Object.keys(_this);
+        var index = 0;
+        return {
+          next(){
+            return {
+              value: _this[keys[index++]], done: index > keys.length
+            }
+          }
+        }
+      }
+    };
+    
+    
+    
+    for(let key of obj){
+      console.log(key);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </script>
+</body>
+</html>

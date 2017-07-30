@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	
+	<script>
+		
+		class Person{
+			
+			constructor(name,age){
+				this.name = name;
+				this.age  = age;
+			}
+			getName(){
+				console.log(`我的名字是${this.name}`);
+			}
+			static fn(){
+				console.log('我是一个静态方法');
+			}
+		}
+		
+//		var laowang = new Person('老王',50);
+//		laowang.getName();
+
+
+
+		class Girl extends Person{ //Girl类 继承 Person类
+			
+			constructor(name,age){
+				super(name);		//相当于 构造函数 call 父构造函数，但它的this默认指向当前的新实例
+									//注意的是，使用extends的话，构造函数在开头必须调用一次super,否则会报错
+									//子构造函数 在调用 super之前并没有自己的this
+				this.age = 18;
+									
+									//super除了可以在子构造函数调用表示调用父构造函数外还有其他的用法
+									//在子构造函数和子原型方法的声明中，可以表示父构造函数的原型
+									//在声明的静态方法中super表示的是父类,可获取父类身上的属性和方法
+									
+				console.log(super.getName) //父级原型的方法
+			}
+			getAge(){
+				console.log(this.age);  // 18 
+				console.log(super.getName); //父级原型的方法
+			}
+			static fn(){
+				console.log('我是第二个静态方法');
+				console.log(super.fn);   //Person类上的静态方法 
+			}
+			
+		}
+			
+		var Angelia = new Girl('Angelia',22);
+		Angelia.getAge();
+		Girl.fn();
+	</script>
+</html>

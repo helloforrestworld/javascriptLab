@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+</head>
+<body>
+  <script>
+    // 胖子函数 又叫 箭头函数，通常用在函数表达式内和回调函数当中
+    
+    // 1 没有自己的this
+    // 2 没有 arguments
+    // 3 不能当作构造函数
+    
+    // function add(a, b){
+    //   return a + b;
+    // }
+    
+    // const add = (a, b) => a + b;  	
+    // 
+    // console.log(add(1, 2));
+    
+    
+    // const sortArr = arr => arr.sort();
+    // 
+    // console.log(sortArr([3, 2, 1]));
+    
+    // const getObj = x => ({a: x});
+    // 
+    // console.log(getObj(1));
+    
+    
+    // const fn = (a = 1, b = 2) => {  // 当有函数体的时候必须有 return
+    //   console.log(a + b);
+    //   return c = a + b + 2;
+    // };
+    // 
+    // console.log(fn());
+    
+    
+    // const arr = [5, 4, 3, 2, 1];
+    
+    // arr.sort(function (a, b){
+    //   return a - b
+    // })
+    
+    // arr.sort((a, b) => a - b);
+    // 
+    // console.log(arr);
+    
+    
+    document.onclick = function (){
+      // setTimeout(function() {
+      //   console.log(this);  // window
+      // }, 1000);
+      
+      setTimeout(() => {  // 箭头函数内的this就是定义这个函数的环境的this
+        console.log(this);
+      }, 1000);
+    }
+    
+    function fn0 (){
+      // console.log(arguments);
+      
+      const fn = (...res) => {
+        console.log(arguments);
+        
+        console.log(res);
+      }
+      
+      fn(3, 4);
+    }
+    fn0(1, 2)
+    
+    
+    
+    
+    
+    
+    
+    
+  
+  
+  </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script>
+
+//数组解构
+
+//		let [a,b,c] = [1,2,3];
+//		console.log(a,b,c)
+
+//		let[a,b,c] = [1,2,[3]];
+//		console.log(a,b,c)
+
+//		不完全结构
+		
+//		let[, , a] = [, , 3];
+//		console.log(a)
+
+//		let[a,b] = [1];
+//		console.log(a,b);  // 1 undefined
+
+		//默认值
+		
+//		let[a = 1,b = 2] = [3];
+//		console.log(a,b)  //3 2 
+		
+//		let[a = 1] = [undefined];
+//		console.log(a)
+		
+//		let[a = 1 ] = [null];
+//		console.log(a)
+
+
+
+//对象结构
+		
+//		{
+//			let {a:x,b:y} = {a:1,b:2};
+////			console.log(a,b);
+//			    console.log(x,y);
+//		}
+		
+		
+		{
+			let obj = {
+				q:{
+					b:{
+						x:1
+					}
+				}
+			}
+//			console.log(obj)
+			
+			let {
+				q:{
+					b:{
+						x:y
+					}
+				}
+			} = obj;
+			
+//			console.log(y);
+//			console.log(x);
+//			console.log(b);
+//			console.log(q);
+		}
+		
+		
+//		{
+//			
+//			let {a,b} =  {a:1 ,b:2 ,c:2};
+//			//==>let {a：a,b:b} =  {a:1 ,b:2 ,c:2};
+//			console.log(a,b);
+//		}
+		
+		
+//		
+//		{
+//			
+//			let{sin,cos,random} = Math;
+//			console.log(sin);
+//			console.log(cos);
+//			console.log(random);
+//			console.log( random())
+//		}
+		
+	</script>
+</html>
