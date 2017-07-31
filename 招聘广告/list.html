@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+		    html,body{
+		    	width: 100%;
+		    	height: 100%;
+		    	margin: 0;
+		    }
+		    body{
+		    	background: url(img/zpbg.png) no-repeat center center;
+		    	background-size: cover;
+		    	display: flex;
+		    }
+		    ul,li{
+		    	margin: 0;
+		    	padding: 0;
+		    	list-style: none;
+		    }
+		    p{
+		    	margin: 0;
+		    }
+		    a{
+		    	text-decoration: none;
+		    	color:#b6bdcf;
+		    }
+		    #content{
+		    	width: 700px;
+		    	height: 460px;
+		    	border-radius: 10px;
+		    	border: 1px solid #30343f;
+		    	margin: auto;
+		    	box-sizing: border-box;
+		    	padding: 84px 0px 0px 25px;
+		    }
+		    #leftList{
+		    	float: left;
+		    	width: 60px;
+		    	padding-right: 12px;
+		    	height: 100%;
+		    	background: url(img/leftListBg.png) no-repeat right top;
+		    }
+		    #leftList li{
+		    	text-align: right;
+		    	height: 68px;
+		    	padding-top: 12px;
+		    	color: #6a7686;
+		    	font: 10px/18px "微软雅黑";
+		    }
+		    #leftList li span{
+		    	font-size: 12px;
+		    	display: block;
+					cursor: pointer;
+		    }
+		    #leftList .active span{
+		    	color: #ff2c4f;
+		    }
+		    #right{
+		    	width: 600px;
+		    	height: 100%;
+		    	float: left;
+		    }
+		    #rightList li{
+		    	height: 82px;
+		    	width: 100%;
+		    	box-sizing: border-box;
+		    	padding: 20px 25px 20px 30px;
+		    	position: relative;
+				cursor: pointer;
+		    }
+		    #rightList li:hover{
+		    	background-color: #1e212a;
+		    }
+		    #rightList li:hover .num{
+		    	color: #ff2c4f;
+		    }
+		    #rightList li:hover:before{
+		    	content: "";
+		    	width: 2px;
+		    	height: 54px;
+		    	position: absolute;
+		    	background-color: #ff2c4f;
+		    	left: -3px;
+		    	top: 10px;
+		    }
+		    #rightList li:after{
+		    	content: "";
+		    	width: 543px;
+		    	height: 1px;
+		    	position: absolute;
+		    	bottom: 0px;
+		    	right: 25px;
+		    	background:url(img/lineBg.png) repeat-x;
+		    }
+		    #rightList .num{
+		    	font-size: 30px;
+		    	font-family: arial;
+		    	color:#6a7686;
+		    	float: left;
+		    	width: 36px;
+		    	height: 40px;
+		    	border-right: 1px solid #303642;
+		    }
+		    #rightList .list{
+		    	float: left;
+		    	width: 500px;
+		    	margin-left: 6px;
+		    	font-size: 14px;
+		    	color: #b6bdcf;
+		    	font-family: "微软雅黑";
+		    }
+		    #rightList .list span{
+		    	float: left;
+		    }
+		    
+		    .list>a:nth-of-type(1){
+		    	height: 26px;
+		    	float: none;
+		    	font-size: 14px;
+		    }
+		    .job{
+		    	margin-right: 15px;
+		    }
+		    #rightList .list time{
+		    	float: right;
+		    	color: #606a7a;
+		    }
+		    .list .text{
+		    	float: left;
+		    	width: 430px;
+		    	overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+		    }
+		    .list a{
+		    	float: right;
+		    	font-size: 12px;
+		    }
+		    .list .check{
+		    	color: salmon;
+		    }
+		    nav{
+		    	font-size: 0px;
+		    	text-align: center;
+		    }
+		    nav a{
+		    	font: 12px/46px "微软雅黑";
+		    	display: inline-block;
+		    	vertical-align: middle;
+		    	width: 24px;
+		    }
+		    nav a.active{
+		    	color: #eb2a4b;
+		    }
+		</style>
+	</head>
+	<body>
+		<div id="content">
+			<ul id="leftList">
+				
+			</ul>
+			<div id="right">
+				<ul id="rightList">
+					  
+				</ul>
+				<nav id="nav">
+					
+				</nav>
+			</div>
+		</div>
+		<script src="js/data.js"></script>
+		<script>
+			
+			
+			
+			//初始化部分 
+			var hash,type,page;
+			window.location.hash ='#sh&&1';//显示社会招聘 第一页
+			creatLeft();
+			creatRight();
+			creatNav();
+			
+			//监控hash变化，通过当前的hash控制加载哪一组列表(社会招聘或校园招聘)
+			window.onhashchange = function(){
+				creatLeft();
+				creatRight(page);
+				creatNav (page);
+			}
+			
+			//生成左侧建构
+			function creatLeft(){
+				//type为招聘类型   page为当前显示的页数
+				hash = window.location.hash.substr(1);
+				type =  hash.split('&&')[0];
+				
+				var leftList = document.querySelector('#leftList');
+				var dataLeft  = data.list,str = ``;
+				var leftchilds =  leftList.children;
+				
+				dataLeft.forEach(function(item, i) {
+					str += `<li class="${type === item.lx ? "active" : ''}" data-type="${item.lx}"><span>${item.text}</span>${item.eng}</li>`
+				});
+				
+				leftList.innerHTML = str;
+				
+				
+				Array.from(leftchilds).forEach(function(item,i){
+					
+					item.onclick = function(){
+						//样式的添加
+						for(var i =0;i<leftchilds.length;i++){
+							leftchilds[i].classList.remove('active');
+						}
+						this.classList.add('active');
+						
+						//修改hash  触发onhashchange //显示当前类型的第一页
+						window.location.hash = this.dataset.type+'&&1';
+					}
+				})
+			}
+			
+			//生成右侧结构
+			function  creatRight(){
+				//type为招聘类型   page为当前显示的页数
+				hash = window.location.hash.substr(1);
+				type =  hash.split('&&')[0];
+				page = hash.split('&&')[1]*1;
+				var rightList = document.querySelector('#rightList');
+				var dataRight = data[type].text, len = dataRight.length, i, str = ``;
+					
+				/**
+				 * 1  0  4
+				 * 2  4  8
+				 * 3  8  12
+				 * 4  12 16
+				 *
+				 * start = (currentPage - 1) * 4
+				 * end = currentPage * 4;
+				 */
+				for(i=(page-1)*4; i<page*4; i++){
+					if(!dataRight[i]) break;   //如果数据没有那一项 证明已经循环完毕  
+					str += `<li >
+										<span class="num">0${(i+1)}</span>
+										<div class="list">
+											<a href="javascript:;"><span class="job">职位需求：${dataRight[i].zw}</span><span>需求人数：${dataRight[i].rs}名</span><time>${data.formateDate(dataRight[i].sj)}</time></a>
+											<p><span class="text">岗位要求：${dataRight[i].info[0].l.join('')}</span><a href="content.html#${type}&&${i+1}" class="check">查看详情>></a></p>
+										</div>
+									</li>`
+				}
+				rightList.innerHTML = str;
+				
+			}
+			
+			//生成导航栏
+			function creatNav (){
+				//type为招聘类型   page为当前显示的页数
+				hash = window.location.hash.substr(1);
+				type =  hash.split('&&')[0];
+				page = hash.split('&&')[1]*1;  
+				
+				var nav = document.querySelector('#nav');
+				
+				var dataRight = data[type].text, len = dataRight.length, i, num = Math.ceil(len / 4);//每页4个  一共多少页
+			
+				var str = `<a href="javascript:;">&lt;</a>`;
+				
+				for(i=0; i<num; i++){
+					str += `<a href="#${type}&&${i+1}" class="${page === (i+1) ? "active" : ''}">${i+1}</a>`
+				}
+				
+				str += `<a href="javascript:;">&gt;</a>`;
+				
+				nav.innerHTML = str;
+				nav.firstElementChild.onclick = function(){  //修改hash  触发onhashchange
+					page = page>1?--page:1;
+					window.location.hash = type+'&&'+page;
+				}
+				nav.lastElementChild.onclick = function(){	//修改hash  触发onhashchange
+					page = page<num?++page:num;
+					window.location.hash = type+'&&'+page;
+				}
+			}
+			
+		</script>
+	</body>
+</html>

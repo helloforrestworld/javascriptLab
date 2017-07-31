@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+		    html,body{
+		    	width: 100%;
+		    	height: 100%;
+		    	margin: 0;
+		    }
+		    body{
+		    	background: url(img/zpbg.png) no-repeat center center;
+		    	background-size: cover;
+		    	display: flex;
+		    	color:#b6bdcf;
+		    }
+		    ul,li{
+		    	margin: 0;
+		    	padding: 0;
+		    	list-style: none;
+		    }
+		    dl,dd{
+		    	margin: 0;
+		    	padding: 0;
+		    }
+		    p{
+		    	margin: 0;
+		    }
+		    a{
+		    	text-decoration: none;
+		    	color:#b6bdcf;
+		    }
+		    #content{
+		    	width: 650px;
+		    	height: 460px;
+		    	border-radius: 10px;
+		    	border: 1px solid #30343f;
+		    	margin: auto;
+		    	box-sizing: border-box;
+		    	padding: 84px 25px 0px;
+		    	position: relative;
+		    }
+		    #rightTop{
+		    	position: absolute;
+		    	right: 0;
+		    	top: 0;
+		    	width: 285px;
+		    }
+		    #rightTop a{
+		    	float: left;
+		    	line-height: 80px;
+		    	margin-right: 34px;
+		    	font-size: 14px;
+		    }
+		    #rightTop a:nth-of-type(2){
+		    	border: 1px solid #ff2c4f;
+		    	border-radius: 28px;
+		    	width: 110px;
+		    	height: 28px;
+		    	text-align: center;
+		    	color: #ff2c4f;
+		    	line-height: 28px;
+		    	margin-top: 23px;
+		    }
+		    #rightTop a:nth-of-type(1):hover{
+		    	color:#ff2c4f;
+		    }
+		    #rightTop a:nth-of-type(2):hover{
+		    	background-color: #ff2c4f;
+		    	color: #000;
+		    }
+		    #title{
+		    	border-bottom: 1px dashed #303642;
+		    	height: 77px;
+		    }
+		    #title p{
+		    	font: 24px/38px "微软雅黑";
+		    }
+		    .simple{
+		    	font: 14px/30px "微软雅黑";
+		    }
+		    .simple span{
+		    	width: 20px;
+		    	display: inline-block;
+		    	text-align: center;	
+		    }
+		    .simple time{
+		    	color: #5c6675;
+		    	float: right;
+		    	width: 76px;
+		    	font: 12px/30px "微软雅黑";
+		    }
+		    #content dl{
+		    	margin-top: 13px;
+		    }
+		    #content dt{
+		    	font: 16px/27px "微软雅黑";
+		    }
+		    #content dd{
+		    	font: 14px/25px "微软雅黑";
+		    	color: #677282;
+		    }
+		</style>
+	</head>
+	<body>
+		<div id="content">
+			<div id="rightTop">
+				<a href="list.html" class="goback">&lt;&nbsp;返回招聘列表</a>
+				<a href="javascript:;">投个简历</a>
+			</div>
+			<div id="title">
+			</div>
+			<div id="bottom"></div>
+		</div>
+		<script src="js/data.js"></script>
+		<script>
+			var hash = window.location.hash.substr(1);
+			
+			var type = hash.split('&&')[0], index = hash.split('&&')[1];
+			
+			var dataType = data[type].text[index-1];
+			
+			var title = document.querySelector('#title');
+			
+			title.innerHTML = `<p>${dataType.zw}</p>
+			<div class="simple">${dataType.dy}<span>/</span>${dataType.dd}<span>/</span>${dataType.jy}<span>/</span>${dataType.xl}<span>/</span>${dataType.rs}名 <time>2014-04-10</time></div>`;
+			
+			var bottom = document.querySelector('#bottom');
+			
+			var str = '<dl>';
+			
+			for(var i=0; i<dataType.info.length; i++){
+				str += `<dt>${dataType.info[i].t}</dt>`;
+				
+				for(var j=0; j<dataType.info[i].l.length; j++){
+					str += `<dd>${dataType.info[i].l[j]}</dd>`
+				}
+			}
+			
+			str += `</dl>`;
+			
+			bottom.innerHTML = str;
+		</script>
+	</body>
+</html>
