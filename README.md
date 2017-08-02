@@ -1,11 +1,8 @@
-﻿#README
-学习javascripit的练手项目
+﻿# 图片擦拭 
 
----
+标签（空格分隔）： 作业总结
 
-- 欢迎star****
-- 欢迎交流哟,helloforrestworld@163.com
+[预览][1]
 
 
-
-
+  [1]: https://helloforrestworld.github.io/javascriptLab/%E5%9B%BE%E7%89%87%E6%93%A6%E6%8B%AD/index.html
