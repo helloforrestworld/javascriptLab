@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			.wrap{
+				position: relative;
+				width: 700px;
+				height: 600px;
+				border: 4px solid black;
+				box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.5);
+				margin: 0 auto;
+				background: url(./img/bg.png)no-repeat;
+				background-size: 100% 100%;
+			}
+			.head{
+				width: 100%;
+				margin: 0;
+				font: 20px/65px "微软雅黑";
+				height: 65px;
+				background: rgba(0,0,0,0.5);
+				text-align: center;
+				color: #FFFFFF;
+			}
+			.box{
+				width: 500px;
+				height: 482px;
+				background: sandybrown;
+				opacity: 0.5;
+				position: relative;
+				margin: 0 auto;
+				left: -6px;
+			}
+			.box .main{
+				width: 440px;
+				height: 482px;
+				margin: 0 auto;
+				padding: 0 20px;
+				box-sizing: border-box;
+				position: relative;
+				overflow: hidden;
+			}
+			.main span{
+				position: absolute;
+				top: -40px;
+				left: 0;
+				width: 30px;
+				height: 30px;
+				border-radius:50% ;
+				background: gold;
+				cursor: pointer;
+				border: 1px solid salmon;
+				opacity: 0.8;
+			}
+			.box .point{
+				position: absolute;
+				left: -54px;
+				width: 52px;
+				height: 52px;
+				padding: 5px;
+				box-sizing: border-box;
+				border: 2px solid salmon;
+				border-radius: 50%;
+				opacity: 1;
+				font: 16px/20px "微软雅黑";
+				text-align: center;
+				color: #fff;
+			}
+			.pointGet{
+				top: 10px;
+			}
+			.pointLost{
+				top:80px;
+			}
+			.btn{
+				position: absolute;
+				width: 120px;
+				height: 40px;
+				font: 18px/40px "微软雅黑";
+				color:salmon;
+				left: calc(50% - 60px);
+				bottom: 0px;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<h1 class="head">你的鼠标有多快?</h1>
+			<div class="box">
+				<div class="main"></div>
+				<div class="pointGet point">0分得分</div>
+				<div class="pointLost point">0分失分</div>
+				<button class="btn">开始游戏</button>
+			</div>
+		</div>
+	</body>
+	<script src="./index.js"></script>
+	
+	<script>
+		//思路 ： 
+				//1点击开始  开启定时器 一定的间隔生成一个表情   并且这是表情的top值是固定的，left值是随机的（在框内范围）
+						//让表情运动： 怎么拿到刚生成的表情，并且让他向下 运动？
+							//方法一：添加的时候给表情 一个自定义属性    index
+						
+						//如果按动态生成表情 可能会导致获取难度增加  并且每次都是innerHTML的改变 之前的属性内容拿不到
+				
+				//1思路二： 先生成一堆span 隐藏起来  然后逐个显示  向下运动   运动完之后 回到上方隐藏	
+				//如果表情被点击积分+1  否则呢 当表情运动到底部的时候  失败累计+1
+				//当失败累计 === 10  清除定时器 弹出结束框
+				
+		var box = mv.$('.box');		
+		var mainBox = mv.$('.main');//表情容器
+		var	btn = mv.$('.btn');//按钮
+		
+		
+		var timer = null;
+		var str = '';
+		var index = 0;
+		for(var i=0;i<20;i++){
+			 str+= `<span></span>`;
+		}
+		
+
+		mainBox.innerHTML = str;
+		var ball = mv.$('span',mainBox);
+		
+		//点击开始
+		btn.onclick = function(){
+			this.style.display = 'none';//隐藏按钮
+			box.style.background = 'none';
+			box.style.opacity = 1;
+			go();
+		}
+		
+		//给ball添加抖动和加分
+		var pointGet = mv.$('.pointGet');
+		var pointLost =mv.$('.pointLost');
+		var point1 =0,point2 = 0;
+		for(var i=0;i<ball.length;i++){
+			ball[i].onclick = function(){//点击抖动
+				window.cancelAnimationFrame(this.animation);//本动画帧函数停止  
+				mv.shake(this,'translateX',10,function(){
+					mv.cssSet(this,'top','');//然后清空top 
+				});
+				
+				if(this.animation){
+					point1++;	//点中了得一分
+					pointGet.innerHTML = point1+'分得分';
+					this.animation = null;//1防止 一个球多次点击 2下一次循环能够开始动画帧
+				}
+			}
+		}
+			
+		
+		function go(){
+			
+			clearInterval(timer);
+			timer = setInterval(function(){
+				var left = mv.Rondom([0,420]);	 //随机left
+				mv.cssSet(ball[index],'left',left);//先设定随机的left
+													//然后下落
+				mv.animation(ball[index],{top:500},5000,function(){
+					console.log(1);
+					point2++;
+					pointLost.innerHTML = point2+'分失分'; //如果到最后都没被点中 失1分
+					mv.cssSet(ball[index],'top','');	//拉回去上面
+						//要输了
+					if(point2>=10){
+						btn.style.display = 'block';
+						box.style.background = '';
+						box.style.opacity = '';
+						clearInterval(timer);
+						for(var i=0;i<ball.length;i++){
+							window.cancelAnimationFrame(ball[i].animation);//本动画帧函数停止  
+							mv.cssSet(ball[i],'top','');//然后清空top 
+							ball[i].animation = null;//null 让下一轮循环能够开启动画帧函数
+						}
+						point1=point2=0;
+						pointGet.innerHTML = '0分得分';
+						pointLost.innerHTML = '0分失分';
+						alert('你输了');
+					}
+				});
+				index++;  //循环ball
+				if(index>ball.length-1){index=0};
+			},1000)
+		}
+		
+		
+		
+	</script>
+</html>
