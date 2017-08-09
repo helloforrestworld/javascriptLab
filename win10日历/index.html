@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			body,html{
+				margin: 0;
+			}
+			span::selection,div::selection{
+				background: none;
+			}
+			.wrap{
+				position: relative;
+				margin: 0 auto;
+				width: 500px;
+				height: 600px;
+				background: black;
+				opacity: 0.5;
+				border: 4px solid orange;
+				box-sizing: border-box;
+			}
+			.head{
+				width: 100%;
+				height: 120px;
+				border-bottom: 2px solid orange;
+			}
+			.head .time{
+				box-sizing: border-box;
+				width: 100%;
+				height: 60px;
+				padding-left: 20px;
+				font: 50px/60px "微软雅黑";
+				color:salmon;
+			}
+			.head .date{
+				box-sizing: border-box;
+				width: 100%;
+				height: 60px;
+				padding-left: 24px;
+				font: bold 20px/60px '宋体';
+				color: sandybrown;
+			}
+			.nav{
+				box-sizing: border-box;
+				width: 100%;
+				overflow: hidden;
+				height: 80px;
+				border-bottom:2px solid gold;
+			}
+			
+			.nav .left{
+				box-sizing: border-box;
+				float: left;
+				height: 100%;
+				font: 16px/80px "微软雅黑";
+				color: sandybrown;
+				padding-left: 25px;
+			}
+			.nav .right{
+				box-sizing: border-box;
+				float: right;
+				height: 100%;
+				line-height: 80px;
+				padding-right: 20px;
+			}
+			button{
+				cursor: pointer;
+				outline: none;
+				vertical-align: middle;
+				width: 40px;
+				height: 30px;
+				margin: 2px;
+				font:bold 12px/16px "微软雅黑";
+				text-align: center;
+				background: sandybrown;
+				border: none;
+			}
+			button:nth-of-type(1),button:nth-of-type(3){
+				border-radius:5px;
+			}
+			.banner{
+				width: 100%;
+				height: 40px;
+				margin: 10px auto;
+				box-sizing: border-box;
+				padding: 0  10px;
+				text-align: center;
+			}
+			.banner span{
+				display: inline-block;
+				width: 10%;
+				height: 40px;
+				color: #FFFFFF;
+				font:16px/40px"微软雅黑";
+				margin: 0 7px;
+			}
+			.box-wrap{
+				width: 100%;
+				height: 330px;
+				position: relative;
+				overflow: hidden;
+			}
+			
+			.month{
+				position: absolute;
+				padding: 100px;
+				box-sizing: border-box;
+				width: 100%;
+				height: 392px;
+				background: gold;
+				opacity: 1;
+				z-index: 99;
+				transform: scale(0);
+				left: 0px;
+				top: 200px;
+			}
+			.month span{
+				cursor: pointer;
+				width: 	60px;
+				height: 40px;
+				margin: 4px 6px;
+				background: darkorange;
+				border-radius: 5px;
+				color: #FFF5EE;
+				float: left;
+				text-align: center;
+				font: 16px/40px "微软雅黑";
+			}
+			.box-contain{
+				position: absolute;
+				width: 100%;
+				height: 330px;
+			}
+			.box{
+				width: 100%;
+				height: 330px;
+				box-sizing: border-box;
+				padding-left: 4px;
+				margin: 0 auto;
+				text-align: center;
+			}
+			.box span {
+				display: inline-block;
+				width: 10%;
+				height: 40px;
+				color: #FFFFFF;
+				font:16px/40px"微软雅黑";
+				margin: 7px ;
+			}
+			
+			span.other{
+				background: black;
+				color: gray;
+			}
+			 .box span:hover{
+				cursor: pointer;
+				background: skyblue;
+				color: black;
+			}
+			 .date:hover,.left:hover{
+				color: red;
+			}
+			 span.active{
+				background: red;
+				color: #FFFAF0;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<header class="head">
+				<div class="time"></div>
+				<span class="date"></span>
+			</header>
+			
+			<nav class="nav">
+				<div class="left">2017年4月</div>
+				<div class="right">
+					<button></button><button>今天</button><button></button>	
+				</div>
+			</nav>
+			<div class="banner">
+				<span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>七</span>
+			</div>
+			<!--这是弹出月份选项的布局-->
+			<div class="month">
+				<span>一月</span>
+				<span>二月</span>
+				<span>三月</span>
+				<span>四月</span>
+				<span>五月</span>
+				<span>六月</span>
+				<span>七月</span>
+				<span>八月</span>
+				<span>九月</span>
+				<span>十月</span>
+				<span>十一月</span>
+				<span>十二月</span>
+			</div>
+			<!--这是弹出月份选项的布局-->
+			<div class="box-wrap">
+				<div class="box-contain">
+					<div class="box">
+					</div>
+					<div class="box">
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="./index.js"></script>
+		<script>
+			
+			var nowD  =  new Date();//定义这个是不操作改变的 现在时间对象
+			var boxC = mv.$('.box-contain');
+			var box = mv.$('.box');
+			var n = 0;
+			var dateL = mv.$('.left');
+			var monBox =mv.$('.month');
+			//头部时钟
+			var headTime = mv.$('.time');
+			var hearDate =mv.$('.date');
+			//初始化
+			dataTab(n,0);
+			timeGo();
+			
+			var btn  = mv.$('.right button');
+			
+			//上一个月
+			btn[0].onclick =function(){
+				mv.cssSet(boxC,'top',-333);
+				dataTab(n,1)
+				dataTab(--n,0);
+				mv.animation(boxC,{top:''},200)
+			}
+			//当前月份
+			btn[1].onclick =function(){
+				n=0;
+				dataTab(n,0);
+				mv.animation(boxC,{top:''},200)
+			}
+			//下个月
+			btn[2].onclick =function(){
+				mv.cssSet(boxC,'top','');
+				dataTab(n,0)
+				dataTab(++n,1);
+				mv.animation(boxC,{top:-333},200)
+				
+			}
+			
+			//点击弹出月份选择框
+			dateL.onclick = function(){
+				mv.cssSet(boxC,'top','');
+				mv.animation(box[0],{scale:0},300);
+				mv.animation(monBox,{scale:1},300);
+			}
+			//获取Month下面的12个月份选项
+			var monSpans = mv.$('.month span');
+			var monNum = 0;
+			//给月份选项添加点击事件
+			for(var i =0;i<monSpans.length;i++){
+				monSpans[i].index = i;
+				monSpans[i].onclick = function(){
+					mv.animation(monBox,{scale:0},200);
+					mv.cssSet(boxC,'top','');
+					monNum = this.index-nowD.getMonth();
+					n = monNum; //这样就和上下的按钮关联起来
+					dataTab(monNum,0);
+					mv.animation(box[0],{scale:1},300);
+				}
+			}
+		
+			//时钟执行		
+			setInterval(timeGo,1000);
+			
+			//时钟函数
+			function timeGo(){
+				var t = new Date();
+				var h = t.getHours(),min = t.getMinutes(),s = t.getSeconds();
+				var y = t.getFullYear(),mon = t.getMonth()+1,d = t.getDate();
+				headTime.innerHTML = add(h)+':'+add0(min)+':'+add0(s);
+				hearDate.innerHTML = add0(y)+'年'+add0(mon)+'月'+add0(d)+'日'
+			}
+			//补零函数
+			function add0(n){
+				return n<10? '0'+n:n+'';
+			}
+			//日历切换函数
+			function dataTab(n,index){
+				var str = '';
+				
+				var newD = new Date();
+				newD.setDate(1);
+				newD.setMonth(newD.getMonth()+n);//通过n控制月份
+				
+				
+				//前面显示的天数
+				var fontNum = newD.getDay()===0?6:newD.getDay()-1;
+				
+				
+				newD.setDate(0);
+				//获取上个月有几天
+				var lastMonDateN = newD.getDate();
+				//前面部分的span
+				for(var i = 0;i<fontNum;i++){
+					str += '<span class ="other">'+(lastMonDateN-fontNum+1+i)+'</span>'
+				}
+				
+				//避免污染  重回本月
+				newD.setDate(1);
+				newD.setMonth(newD.getMonth()+1);
+				
+				
+				newD.setMonth(newD.getMonth()+1);
+				newD.setDate(0);
+				//这个月有多少天
+				var curMonthNum =  newD.getDate();  //30
+				
+				//本月部分的span
+				var cls;
+				for(var i = 1;i<=curMonthNum;i++){
+					if(i==nowD.getDate()&&newD.getMonth()===nowD.getMonth()&&newD.getFullYear()===nowD.getFullYear() ){
+						cls = 'active';
+					}else{
+						cls = '';
+					}
+					
+					str += '<span class="'+cls+'">'+i+'</span>'
+				}
+				
+				//下个月的span
+				for(var i = 1;i<=(42-curMonthNum-fontNum);i++){
+					str += '<span class ="other">'+i+'</span>'
+				}
+				
+				//年月更改
+				dateL.innerHTML  =  newD.getFullYear()+'年'+(newD.getMonth()+1)+'月'
+				
+				box[index].innerHTML = str;
+				
+				//点击span添加样式
+				var prev = fontNum+nowD.getDate()-1;
+				for(var i=0;i<mv.$('.box span').length;i++){
+					mv.$('.box span')[i].index = i;
+					//span的点击样式
+					mv.$('.box span')[i].onclick = function(){
+						mv.$('.box span')[prev].className = '';
+						this.classList.toggle('active')
+						prev = this.index;
+					}
+					//双击切换今天日程
+					mv.$('.box span')[i].ondblclick  =function(){
+						mv.cssSet(box[index],'scale',1)
+						mv.animation(box[index],{scale:0},function(){
+							mv.animation(box[index],{scale:1})
+						})
+					}
+					
+				}
+			}
+		</script>
+	</body>
+</html>
