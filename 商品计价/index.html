@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			ul,li{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			.wrap {
+				width: 764px;
+				height: 800px;
+				margin: 0 auto;
+			/*	../img/1-4img/百度评分/bg.jpg*/
+				background:url(./img/bg.png)  no-repeat center center;
+				display: flex;  /*s*/
+			}
+			.con{
+				width: 479px;
+				height: 591px;
+				margin: auto;
+				background: url(./img/bg1.png)no-repeat center center;
+				position: relative;
+			}
+			.box{
+				width: 100%;
+				position: absolute;
+				left: 0;
+				top: 138px;
+			}
+			.box li{
+				width: 100%;
+				padding-left:30px ;
+				height: 44px;
+				font: 16px/44px "宋体";
+			}
+			.box em,i{
+				float: left;
+				width: 40px;
+				height: 40px;
+				cursor: pointer;
+			}
+			.box i:nth-of-type(1){
+				background: url(./img/sub.png)no-repeat center center;
+				background-size:cover ;
+			}
+			.box i:nth-of-type(2){
+				background: url(./img/add.png)no-repeat center center;
+				background-size:cover ;
+			}
+			.box em {
+				width: 30px;
+				height: 30px;
+				line-height: 30px;
+				text-align: center;
+				background: #FFFFFF;
+				border-radius: 5px;
+				margin: 4px;
+			}
+			.box span{
+				float: right;
+				height: 30px;
+				width: 214px;
+				margin-right: 50px;
+				background: #171818;
+				font: 16px/30px "微软雅黑";
+				color:  #878787;
+				padding-left: 20px;
+				border-radius:5px ;
+			}
+			.info {
+				vertical-align: bottom;
+				width: 100%;
+				box-sizing: border-box;
+				padding: 20px 50px;
+				height: 140px;
+				position: absolute;
+				bottom: 0;
+				color:  #878787;
+				font: bold 16px/30px "宋体";
+			}
+			.info span{
+				margin-right: 20px;
+			}
+			.info strong{
+				display: inline-block;
+				width: 30px;
+				height: 30px;
+				line-height: 30px;
+				text-align: center;
+				background: #FFFFFF;
+				vertical-align: middle;
+				margin-right: 8px;
+				border-radius: 5px;
+			}
+			.info span:nth-last-of-type(2) strong{
+				width: 50px;
+			}
+			.info span:nth-last-of-type(1) strong{
+				width: 50px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="con">
+				<ul class="box">
+					<!--<li>
+						<i></i>
+						<em>0</em>
+						<i></i>
+						<span>
+							单价：<strong>12.5</strong>元
+							小计：<strong>0</strong>元
+						</span>
+					</li>
+					<li>
+						<i></i>
+						<em>0</em>
+						<i></i>
+						<span>
+							单价：<strong>10.5</strong>元
+							小计：<strong>0</strong>元
+						</span>
+					</li>
+					<li>
+						<i></i>
+						<em>0</em>
+						<i></i>
+						<span>
+							单价：<strong>8.5</strong>元
+							小计：<strong>0</strong>元
+						</span>
+					</li>
+					<li>
+						<i></i>
+						<em>0</em>
+						<i></i>
+						<span>
+							单价：<strong>8</strong>元
+							小计：<strong>0</strong>元
+						</span>
+					</li>
+					<li>
+						<i></i>
+						<em>0</em>
+						<i></i>
+						<span>
+							单价：<strong>14.5</strong>元
+							小计：<strong>0</strong>元
+						</span>
+					</li>-->
+				</ul>
+				<div class="info">
+					<span>商品共合计：<strong>0</strong>件</span>
+					<span>共花费了：<strong>0</strong>元</span>
+					<br />
+					<span>其中最贵的商品单价是：<strong>0</strong>元</span>
+				</div>
+			</div>
+		</div>
+		<script src="./index.js"></script>
+		<script>
+			var data = [
+				{
+					id:1,
+					num:0,
+					pri:12.5,
+					total:0
+				},
+				{
+					id:2,
+					num:0,
+					pri:10.5,
+					total:0
+				},
+				{
+					id:3,
+					num:0,
+					pri:8.5,
+					total:0
+				},
+				{
+					id:4,
+					num:0,
+					pri:8,
+					total:0
+				},
+				{
+					id:5,
+					num:0,
+					pri:14.5,
+					total:0
+				}
+			]
+			
+			//获取Ul层  并根据数据添加li
+			var Box =  mv.$('.box');
+			var str = '';
+			for (var i=0;i<data.length;i++) {
+				str += `					<li>
+						<i></i>
+						<em>${data[i].num}</em>
+						<i></i>
+						<span>
+							单价：<strong>${data[i].pri}</strong>元
+							小计：<strong>${data[i].total}</strong>元
+						</span>
+					</li>`;
+			}
+			Box.innerHTML = str;
+			
+			//获取到每个Li 并且做一个的效果
+			
+			var aLi = mv.$('.box li');
+			for(var i=0;i<aLi.length;i++){
+				(function (i){
+					//加减
+					var  sub  = aLi[i].querySelector('i:nth-of-type(1)');
+					var  add  = aLi[i].querySelector('i:nth-of-type(2)');
+					
+					//个数
+					var  num   =  aLi[i].querySelector('em');
+					
+					//价格
+					var pri  =  aLi[i].querySelectorAll('strong')[0];
+					var total  =  aLi[i].querySelectorAll('strong')[1];
+					
+					
+					//给加减添加点击事件
+					
+					var Infos = mv.$('.info strong');
+					//获取统计框的东西
+					add.onclick  = function(){
+						num.innerHTML = data[i].num =++num.innerHTML;
+						total.innerHTML = data[i].total = num.innerHTML*pri.innerHTML;
+						cal();
+					}
+					sub.onclick  = function(){
+						num.innerHTML =data[i].num=num.innerHTML>0 ? --num.innerHTML:0;
+						total.innerHTML = data[i].total= num.innerHTML*pri.innerHTML;
+						cal();
+					}
+					
+					//函数做三件事：
+									//循环比较  每一个data 将所有的num 相加
+									//循环比较  每一个data 将所有的total 相加
+									//循环比较  data.num不为0 则与Max比较 大于就赋值
+					function cal(){
+						var arr=[0,0,0];
+						var max = 0;
+						for(var i=0;i<data.length;i++){
+							arr[0] += data[i].num;
+							arr[1] += data[i].total;
+							if(data[i].num!=0&&data[i].pri>max){
+								max =  data[i].pri;
+							}
+							arr[2] = max;
+							for(var j=0;j<arr.length;j++){
+								Infos[j].innerHTML = arr[j];
+							}
+						}
+					}
+				})(i)
+			}
+		</script>
+	</body>
+</html>
