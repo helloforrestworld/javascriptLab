@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style media="screen">
+    body{
+      margin: 0;
+    }
+    ul{
+      margin: 0;
+      padding: 0;
+    }
+    li{
+      list-style: none;
+    }
+    .wrapper{
+      position: absolute;
+      border-radius: 30px;
+      left:300px;
+      top: 200px;
+      width: 500px;
+      height: 260px;
+      border: 10px solid  #000;
+    }
+    .camera{
+      position: absolute;
+      width: 20px;
+      height: 100px;
+      background: black;
+      left: 0;
+      top: 80px;
+      border-radius: 0 30px 30px 0;
+    }
+    .content{
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: scroll;
+    }
+    .content ul li{
+      margin-left: 8px;
+    }
+    .content ul li + li{
+      border-top: 1px solid rgba(84, 138, 65, 0.32)
+    }
+    .content::-webkit-scrollbar{
+      left: -16px;
+    }
+  </style>
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded',function(){
+        var aLi = document.querySelectorAll('.content li');
+        var oCamera = document.querySelector('.camera');
+        var oContent = document.querySelector('.content');
+        var cameraRec = oCamera.getBoundingClientRect();
+        var tresh = 20,oLiOffset = 30;
+        // 坡度          偏移量
+        
+        moveLi(); // 初始化
+        oContent.addEventListener('scroll',moveLi,false);
+        
+        // 每条li偏移函数
+        function moveLi(){
+          for(var item of aLi){
+            var itemBottom = item.getBoundingClientRect()['bottom'];
+            var dft = itemBottom - cameraRec['top'];
+            var dfb = itemBottom - cameraRec['bottom'];
+            if(Math.abs(dft) < tresh){
+              item.style.transform = 'translateX('+lerp(0, oLiOffset, cal(dft, tresh))+'px)';
+            }else if(Math.abs(dfb) < tresh){
+              item.style.transform = 'translateX('+lerp(oLiOffset, 0, cal(dfb, tresh))+'px)';
+            }else if(dft > 0 && dfb < 0){
+              item.style.transform = 'translateX('+oLiOffset+'px)';
+            }else{
+              item.style.transform = 'translateX(0px)';
+            }
+          }
+        }
+        
+        //当前偏移量
+        function lerp(start, target, per){
+          return (target - start) * per + start
+        }
+        
+        // 百分比  返回 0 - 1
+        function cal(dis, tresh){
+          // dis -20 ~ 20 返回的值右 0 ~ 1
+          // (dis/tresh  + 1) * 1/2 
+          return (tresh + dis) / (tresh * 2)
+        }
+    },false)
+  </script>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="content">
+      <ul>
+        <li>asdasddasd s s onloadedmetadata</li>
+        <li>bbbbbbbbbbbbbbbs onloadedmetata</li>    
+        <li>werwerwrrrrrrrrweronloadedmetad</li>
+        <li>brthrtererededmetadataddddddddd</li>
+        <li>xcvxcvddddddddddddddssdsdadatad</li>
+        <li>asdasddasd s s onloadedmetadata</li>
+        <li>bbbbbbbbbbbbbbbs onloadedmetata</li>    
+        <li>werwerwrrrrrrrrweronloadedmetad</li>
+        <li>brthrtererededmetadataddddddddd</li>
+        <li>xcvxcvddddddddddddddssdsdadatad</li>
+        <li>asdasddasd s s onloadedmetadata</li>
+        <li>bbbbbbbbbbbbbbbs onloadedmetata</li>    
+        <li>werwerwrrrrrrrrweronloadedmetad</li>
+        <li>brthrtererededmetadataddddddddd</li>
+        <li>xcvxcvddddddddddddddssdsdadatad</li>
+        <li>asdasddasd s s onloadedmetadata</li>
+        <li>bbbbbbbbbbbbbbbs onloadedmetata</li>    
+        <li>werwerwrrrrrrrrweronloadedmetad</li>
+        <li>brthrtererededmetadataddddddddd</li>
+        <li>xcvxcvddddddddddddddssdsdadatad</li>
+        <li>asdasddasd s s onloadedmetadata</li>
+        <li>bbbbbbbbbbbbbbbs onloadedmetata</li>    
+        <li>werwerwrrrrrrrrweronloadedmetad</li>
+        <li>brthrtererededmetadataddddddddd</li>
+        <li>xcvxcvddddddddddddddssdsdadatad</li>
+        <li>asdasddasd s s onloadedmetadata</li>
+        <li>bbbbbbbbbbbbbbbs onloadedmetata</li>    
+        <li>werwerwrrrrrrrrweronloadedmetad</li>
+        <li>brthrtererededmetadataddddddddd</li>
+        <li>xcvxcvddddddddddddddssdsdadatad</li>
+      </ul>
+    </div>
+    <div class="camera"></div>
+  </div>
+</body>
+</html>
