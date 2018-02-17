@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    *{
+      color: #f4f4f4;
+    }
+    body,h1{
+      margin: 0;
+    }
+    ul{list-style: none;padding: 0;margin: 0;}
+    a{text-decoration: none;}
+    .bar{
+      height: 88px;
+      background: #c62f2f;
+    }
+    .bar h1{
+      width: 204px;
+      height: 100%;
+      background: url(./img/topbar.png) no-repeat 20px 4px;
+    }
+    .bar a{
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+      text-indent: -9999px;
+      white-space: nowrap;
+    }
+    .wrap{
+      margin: 120px;
+      width: 1196px;
+    }
+    .pic_wrap{
+      width: 1196px;
+      height: 362px;
+    }
+    .contain{
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+    li{
+      position: absolute;
+      opacity: 0;
+      transition: all 500ms;
+      z-index: 1;
+      transform: translateX(234px) scale(0.81);
+      transform-origin: 0% 100%;
+    }
+    img{
+      width: 730px;
+      height: 362px;
+    }
+    .list1{
+      z-index: 2;
+      opacity: 0.7;
+      transform: translateX(0px) scale(0.81);
+    }
+    .list2{
+      opacity: 1;
+      z-index: 3;
+      transform: translateX(234px);
+    }
+    .list3{
+      z-index: 2;
+      opacity: 0.7;
+      transform: translateX(730px) scale(0.81);
+    }
+    .nav{
+      height: 20px;
+      text-align: center;
+    }
+    .nav a {
+      display: inline-block;
+      width: 60px;
+      height: 4px;
+      background-color: rgb(203,203,203);
+    }
+    .nav a.active{
+      background-color: rgb(74,193,129);
+    }
+  </style>
+</head>
+<body>
+  <div class="bar">
+    <h1>
+      <a href="">网易云音乐</a>
+    </h1>
+  </div>
+  <div class="wrap">
+    <div class="pic_wrap">
+      <ul class="contain">
+        <li><a href="#"><img src="./img/1.jpg" alt=""></a></li>
+        <li><a href="#"><img src="./img/2.jpg" alt=""></a></li>
+        <li><a href="#"><img src="./img/3.jpg" alt=""></a></li>
+        <li><a href="#"><img src="./img/4.jpg" alt=""></a></li>
+        <li><a href="#"><img src="./img/5.jpg" alt=""></a></li>
+        <li><a href="#"><img src="./img/6.jpg" alt=""></a></li>
+        <li><a href="#"><img src="./img/7.jpg" alt=""></a></li>
+      </ul>
+    </div>
+    <div class="nav">
+      <a href="#"></a>
+      <a href="#"></a>
+      <a href="#"></a>
+      <a href="#"></a>
+      <a href="#"></a>
+      <a href="#"></a>
+      <a href="#"></a>
+    </div>
+  </div>
+  <script type="text/javascript">
+  
+  // 逻辑思路
+  // 1. 声明数组存放class
+  // 2. 通过计算改变数组内容位置
+  // 3. 循环每个li加上对应class
+  // 4. 改变index
+  // 5. 导航条样式切换
+  
+    var Nav = document.querySelector('.nav')// 导航条获取
+    var aNavs = Nav.querySelectorAll('a');//导航点
+    var aLi = document.querySelectorAll('.pic_wrap li');//li集合
+    var len = aLi.length;
+    var clsArr = new Array(len - 3);
+    clsArr = [...['list1','list2','list3'],...clsArr];
+    
+    // 初始化
+    var index = 0;
+    intColor();
+    tab();
+    for(var i = 0,navLen = aNavs.length; i < navLen; i++){
+      aNavs[i].num = i;
+    }
+    // 切换导航栏颜色
+    function intColor(){
+      for(var item of aNavs){
+        item.setAttribute('class', '');
+      }
+      aNavs[index].setAttribute('class','active');
+    }
+    // 切换class
+    function tab(){
+      for(var i = 0; i < len; i++){
+        aLi[i].setAttribute('class', clsArr[i]);
+      }
+    }
+  
+    // 下一张
+    function nextPic(){
+      clsArr.unshift(clsArr.pop());
+      index = index < len - 1  ? ++index : 0;
+      intColor();
+      tab();
+    }
+    
+    // 上一张
+    function prePic(){
+      clsArr.push(clsArr.shift());
+      index = index <= 0 ? len - 1 : --index;
+      intColor();
+      tab();
+    }
+    
+    
+    // 事件监听 当点击list3 时 下一张   点击list1 时上一张
+    var picWrap = document.querySelector('.pic_wrap');
+    picWrap.addEventListener('click',function(e){
+      var e = e || window.event;
+      var target  =  e.target.parentNode.parentNode;
+      if(target.classList[0] === 'list3'){
+        nextPic();
+      }else if(target.classList[0] === 'list1'){
+        prePic(); 
+      }
+    },false)
+    
+    // hover导航条切换
+    Nav.addEventListener('mouseover',function(e){
+      var e = e || window.event;
+      var target = e.target || e.srcElement;
+      if(target.nodeName === 'A'){
+        var NavsIndex = target.num;
+        var dis = NavsIndex - index;
+        if(dis > 0){
+          for(var i = 0; i < dis; i++){
+            nextPic();
+          }
+        }else{
+          for(var i = 0; i < Math.abs(dis); i++){
+            prePic(); 
+          }
+        }
+      }
+    },false)
+    
+    // 自动播放
+    var timer = null;
+    var wrap = document.querySelector('.wrap');
+    timer = setInterval(nextPic,3000);
+    wrap.onmouseover = function(){
+      clearInterval(timer);
+    }
+    wrap.onmouseout = function(){
+      timer = setInterval(nextPic,3000);
+    }
+  
+  </script>
+</body>
+</html>
