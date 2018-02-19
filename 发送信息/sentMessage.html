@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style media="screen">
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    li{
+      list-style: none;
+    }
+    img{
+      border: none;
+    }
+    
+    .wrap{
+      width: 526px;
+      height: 642px;
+      margin: 150px auto;
+      padding-top: 40px;
+      box-sizing: border-box;
+      background: url(./img/bg.jpg)no-repeat;
+    }
+    .phone{
+      width: 300px;
+      height: 574px;
+      margin: 0 auto;
+      background: url(./img/phonebg.png)no-repeat;
+      position: relative;
+      padding-top: 34px;
+      box-sizing: border-box;
+    }
+    .con{
+      position: relative;
+      width: 266px;
+      height: 478px;
+      overflow-y: auto;
+      margin: 0 auto;
+      background: #fff;
+    }
+    .con::-webkit-scrollbar {
+      width: 6px;
+      border-radius: 30%;
+    }
+  
+    .con::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    }
+  
+    .con::-webkit-scrollbar-thumb {
+      background-color: darkgrey;
+      outline: 1px solid slategrey;
+    }
+    .text-area{
+      padding-top: 10px; 
+      width: 266px;
+      height: 50px;
+      margin: auto;
+    }
+    .text-area span{
+      width: 36px;
+      height: 46px;
+      display: inline-block;
+      background: url(./img/lico.png)no-repeat;
+      background-size: 100% 100%;
+      vertical-align: middle;
+    }
+    .text-area input{
+      width: 160px;
+      height: 36px;
+      background: rgb(244, 212, 181);;
+      font: 16px/26px '楷体';
+      border: none;
+    }
+    .text-area button{
+      width: 60px;
+      height: 26px;
+      color: #fff;
+      background: rgb(246, 167, 53);
+      border: none;
+      outline: none;
+    }
+    .tips{
+      display: none;
+      position: absolute;
+      width: 370px;
+      height: 106px;
+      left:-30px;
+      top: 30px;
+      background: rgb(244, 212, 181);
+      border-top: 20px solid rgb(207, 144, 50);
+      border-radius: 8px; 
+    }
+    .tips h3{
+      color: rgb(246, 167, 53);
+    }
+    .tips p{
+      margin-top: 20px;
+      text-align: center;
+      color: rgb(171, 138, 131);
+    }
+    .tips button{
+      position: absolute;
+      right: 26px;
+      bottom: 4px;
+      width: 60px;
+      height: 24px;
+      border-radius: 5px;
+      background: rgb(218, 152, 106);
+      color: #fff;
+      border: none;
+      outline: none;
+    }
+    .con li{
+      width: 100%;
+      margin-top: 10px;
+    }
+    .con strong{
+      margin: 4px;
+      display: inline-block;
+      width: 26px;
+      height: 26px;
+    }
+    .con span{
+      max-width: 186px;
+      word-wrap: break-word;
+      padding: 6px;
+      line-height: 24px;
+      font-size: 14px;
+      font-family: arial;
+      min-width: 36px;
+      min-height:24px;
+      background-color: rgb(70, 110, 145);
+      border-radius:8px; 
+      vertical-align: middle;
+    }
+    .left{
+      float: left;
+    }
+    .left strong,.left span{
+      float: left;
+    }
+    .left strong{
+      background: url(./img/lico.png)no-repeat;
+      background-size: 100%;
+    }
+    .left span{
+      background-color: rgb(70, 110, 145);
+    }
+    .right{
+      float: right;
+    }
+    .right strong,.right span{
+      float: right;
+    }
+    .right strong{
+      background: url(./img/rico.png)no-repeat;
+      background-size: 100%;
+    }
+    .right span{
+      background-color: rgb(215, 193, 165);
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="phone">
+      <ul class="con">
+        <!-- <li class="left">
+          <strong></strong>
+          <span>1111111111111111111111111111111111111111111111111</span>
+        </li>
+        <li class="right">
+          <strong></strong>
+          <span>22222222222222222222222222222222222222222222222222222</span>
+        </li> -->
+      </ul>
+      <div class="text-area">
+        <span></span>
+        <input type="text" name="" value="" placeholder="请输入">
+        <button type="button" name="button">发送</button>
+      </div>
+      <div class="tips">
+        <h3>提示：</h3>
+        <p>写点什么吧！</p>
+        <button>确定</button>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  var icoArr = ['./img/lico.png','./img/rico.png'];
+  //用户输入区元素
+  var textArea = document.getElementsByClassName('text-area')[0];
+  var ico = textArea.getElementsByTagName('span')[0];
+  var text = textArea.getElementsByTagName('input')[0];
+  var send = textArea.getElementsByTagName('button')[0];
+  //聊天框元素
+  var mesCon = document.getElementsByClassName('con')[0];
+  
+  //tips
+  var tips = document.getElementsByClassName('tips')[0];
+  var tipsPara = tips.getElementsByTagName('p')[0];
+  var tipsSure = tips.getElementsByTagName('button')[0];
+  
+  // 用户输入区
+  (function(){
+    var index = 0;
+    //切换头像
+    ico.addEventListener('click',function(){
+      index = index === 0? 1: 0;
+      ico.style.backgroundImage = 'url('+icoArr[index]+')';
+    },false)
+    //发送信息
+    send.addEventListener('click',function(){
+      var value = text.value;
+      
+      //输入信息限制
+      if(value === ''){
+        showTips();
+        return false;
+      }else if(value.length > 250){
+        showTips('输入长度超出限制');
+        // text.value = '';
+        return false;
+      }
+      
+      var cls = index === 0? 'left': 'right';
+      var str = `
+      <li class="${cls}">
+          <strong></strong>
+          <span>${value}</span>
+      </li>
+      `
+      mesCon.innerHTML += str;
+      text.value = '';
+      text.focus();
+      // 处理滚动条到底部
+      mesCon.scrollBy(0,200);
+    },false)
+  })()
+  
+  //提示框弹出
+  function showTips(value){
+    value = value || '写点什么吧！';
+    tipsPara.innerHTML = value;
+    tips.style.display = 'block';
+    // 添加确认事件
+    if(!tipsSure.onclick){
+      tipsSure.onclick = function(){
+        tipsPara.innerHTML = '';
+        tips.style.display = 'none';
+      }
+    }
+  }
+</script>
+</html>
