@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    *{
+      margin: 0;
+      padding:0;
+    }
+    .wrap{
+      width:680px;
+      height:504px;
+      margin: 100px auto;
+      background-color: #FFF5EE;
+      border-radius: 30px;
+      position: relative;
+    }
+    .logo{
+      background: url(./img/logo.png)no-repeat;
+      background-size:100% 100%;
+      position: absolute;
+      right: 8px;
+      top: calc(50% - 20px);
+      width: 40px;
+      height:40px;
+    }
+    .main{
+      position: absolute;
+      left: 50px;
+      top: 50px;
+      background-color: black;
+      width:558px;
+      height: 410px;
+    }
+    .control{
+      padding-top: 20px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .control button{
+      cursor: pointer;
+      width: 120px;
+      height: 24px;
+      line-height: 24px;
+      color: #fff;
+      border: 1px solid #fff;
+      background: none;
+    }
+    .control button.active{
+      background: #fff;
+      color: black;
+    }
+    .control p{
+      font-size: 16px;
+      padding-top: 14px;
+      color: #fff;
+    }
+    .pic{
+      width: 100%;
+    }
+    .pic img{
+      width: 100%;
+    }
+    .info{
+      position: absolute;
+      left: 0px;
+      bottom: 2px;
+      width: 100%;
+      background: rgba(161, 153, 153, 0.67);
+      color: rgb(204, 215, 206);
+      font: 14px/20px '楷体';
+      text-align: center;
+    }
+    .prev,.next{
+      cursor: pointer;
+      padding: 18px;
+      width: 20px;
+      height: 30px;
+      position: absolute;
+    }
+    .prev:hover,.next:hover{
+      background-color: rgb(232, 119, 78);
+    }
+    .prev{
+      left: 0px;
+      top: calc(50% - 15px);
+      border: none;
+      background: url(./img/prev.png)4px 4px no-repeat;
+      background-size: 20px 30px;
+    }
+    .next{
+      right: 0px;
+      top: calc(50% - 15px);
+      border: none;
+      background: url(./img/next.png)10px 4px no-repeat;
+      background-size: 20px 30px;
+    }
+    .tips{
+      display: none;
+      position: absolute;
+      left:calc(50% - 150px);
+      top: calc(50% - 75px);
+      width: 300px;
+      height: 150px;
+      background-color: rgba(33, 28, 31, 0.54);
+      border: 2px solid grey;
+      text-align: center;
+    }
+    .tips h2{
+      width: 260px;
+      height: 30px;
+      background-color: orange;
+      color: #fff;
+      line-height: 30px;
+      margin: 10px auto;
+    }
+    .tips p{
+      color: rgb(232, 167, 68);
+      margin-top: 30px;
+      font: 18px/24px '楷体';
+    }
+    .tips button{
+      position: absolute;
+      border: none;
+      background: rgb(215, 143, 47);
+      color: black;
+      width: 100px;
+      height: 32px;
+      line-height: 32px;
+      font-size: 16px;
+      bottom: 2px;
+      right: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <span class="logo"></span>
+    <div class="main">
+      <div class="control">
+        <button class="active">循环播放</button>
+        <button>顺序播放</button>
+        <p class="control-info">图片可循切换</p>
+      </div>
+      <div class="pic">
+        <img src='' alt="">
+      </div>
+      <div class="info">
+        <span></span>
+      </div>
+      <button class="prev"></button>
+      <button class="next"></button>
+      <div class="tips">
+        <h2>Javasrcipt提醒</h2>
+        <p>已经是最后一张了</p>
+        <button>确定</button>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  //控制图片索引
+  var index;
+  var arrImg = ['img/img01.jpg','img/img02.jpg','img/img03.jpg','img/img04.jpg'];
+  var len = arrImg.length;
+  
+  var theImg = document.querySelector('.pic img');
+  var imgInfo = document.querySelector('.info span');
+  
+  //上下一张按钮
+  var prev = document.querySelector('.prev');
+  var next = document.querySelector('.next');
+  
+  // 模式切换按钮获取
+  var isCircle;
+  var modeTabs = document.querySelectorAll('button'); 
+  var modeInfo = document.querySelector('.control .control-info');
+  
+  //提示框
+  var tips = document.querySelector('.tips');
+  var tipsValue = tips.querySelector('p');
+  var tipsSure = tips.querySelector('button'); 
+  
+  
+  
+  // 初始化
+  index = 0;
+  isCircle = true;
+  tab();
+  
+  // 图片切换程序
+  function tab(){
+    theImg.setAttribute('src',arrImg[index]);
+    imgInfo.innerHTML = `图片${index + 1}/${len}`;
+  }
+  
+  // 显示提示框程序
+  function showTips(value){
+    value = value || 'no-info';
+    tipsValue.innerHTML = value;
+    tips.style.display = 'block';
+    if(!tipsSure.onclick){
+      tipsSure.onclick = function(){
+        tips.style.display = 'none';  
+      }
+    }
+  }
+  
+  prev.onclick = function(){
+    index--;
+    if(index < 0){
+      if(isCircle){
+        index = len - 1;
+      }else{
+        index = 0;
+        showTips('前面没有图片了');
+      }
+    }
+    tab();
+  }
+  
+  next.onclick = function(){
+    index ++;
+    if(index > len - 1){
+      if(isCircle){
+        index = 0;
+      }else{
+        index = len - 1;
+        showTips('已经是最后一张了');
+      }
+    }
+    tab();
+  }
+  
+  
+  // 播放模式切换
+  modeTabs[0].onclick = function(){
+    if(!isCircle){
+      this.className = 'active';
+      modeTabs[1].className = '';
+      modeInfo.innerHTML = '可循环播放';
+      isCircle = !isCircle;
+    }
+  }
+  modeTabs[1].onclick = function(){
+    if(isCircle){
+      this.className = 'active';
+      modeTabs[0].className = '';
+      modeInfo.innerHTML = '可顺序播放';
+      isCircle = !isCircle;
+    }
+  }
+  
+  
+  
+</script>
+</html>
