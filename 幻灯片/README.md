@@ -1,8 +1,8 @@
 ﻿#README
-对话框
+幻灯片
 
 ---
 [预览][1]
 
 
-  [1]: https://helloforrestworld.github.io/javascriptLab/发送信息/sentMessage.html
+  [1]: https://helloforrestworld.github.io/javascriptLab/幻灯片/index.html
