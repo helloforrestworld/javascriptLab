@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+   *{
+     margin: 0;
+     padding: 0;
+   }
+   li{
+     list-style: none;
+   }
+   .wrap{
+     width:1000px;
+     height:798px;
+     background: url(./img/bg.png)no-repeat;
+     background-size: 100%;
+     margin: 100px auto;
+     position: relative;
+   }
+   .pic{
+     width:534px;
+     height: 350px;
+     position: absolute;
+     left:300px;
+     top: 160px;
+   }
+   .next,.prev{
+     position: absolute;
+     width: 40px;
+     height: 54px;
+   }
+   .prev{
+     background: url(./img/prev.png) 10px 10px no-repeat;
+     border: 2px solid transparent;
+     background-size: 20px 34px;
+     left: 330px;
+     top: calc(50% - 100px);
+   }
+   .prev:hover{
+     border: 2px solid orange;
+   }
+   .next:hover{
+     border: 2px solid orange;
+   }
+   .next{
+     background: url(./img/next.png) 10px 10px no-repeat;
+     background-size: 20px 34px;
+     border: 2px solid transparent;
+     right: 190px;
+     top: calc(50% - 100px);
+   }
+   .nav{
+     position: absolute;
+     bottom: 200px;
+     left: 470px;
+   }
+   .nav li{
+     position: relative;
+     float: left;
+     width: 20px;
+     height: 20px;
+     border-radius:50%;
+     background-color: rgb(244, 197, 93);
+     margin-right: 20px;
+   }
+   .nav li.active{
+     background-color:rgb(238, 150, 57);
+   }
+   .nav li span{
+     display: none;
+     position: absolute;
+     width: 50px;
+     height: 34px;
+     left: -16px;
+     top: -44px;
+   }
+   .nav li span img{
+     width: 100%;
+     height: 100%;
+   }
+   .nav li span em{
+     position: absolute;
+     width: 0px;
+     height: 0px;
+     border: 8px solid transparent;
+     border-top-color: black;
+     left: calc(50% - 8px);
+     bottom: -16px;
+   }
+   
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <img  class="pic">
+    <ul class="nav">
+      <!-- <li ><span><img src="./img/1.png" alt=""><em></em></span></li> -->
+    </ul>
+    <button class="prev"></button>
+    <button class="next"></button>
+  </div>
+</body>
+<script type="text/javascript">
+  var arrImg = ['img/1.png','img/2.png','img/3.png','img/4.png','img/5.png'];
+  var len = arrImg.length;
+  var indexNum = 0; //控制图片索引
+  
+  
+  //获取导航
+  var nav = document.getElementsByClassName('nav')[0];
+  var strNav = '';
+  var navLi = nav.getElementsByTagName('li');//动态获取
+  
+  //获取幻灯片
+  var pic = document.getElementsByClassName('pic')[0];
+  
+  //获取上下张按钮
+  var next = document.getElementsByClassName('next')[0];
+  var prev = document.getElementsByClassName('prev')[0];
+  
+  // 初始化
+  // 导航
+  for(var i = 0; i < len; i++){
+    strNav += `<li ${i==0? "class='active'":"class=''"}><span><img src="${arrImg[i]}" alt=""><em></em></span></li>`
+  }
+  nav.innerHTML = strNav;
+  // 幻灯片
+  pic.setAttribute('src',arrImg[indexNum]);
+  
+  
+  
+  // 主切换程序
+  function tab(){
+    pic.setAttribute('src',arrImg[indexNum]);
+    for(var i = 0; i < len; i++){
+      navLi[i].classList.remove('active');
+    }
+    navLi[indexNum].classList.add('active');
+  }
+  
+  
+  // 上一张
+  prev.onclick = function(){
+    indexNum -- ;
+    indexNum = indexNum < 0? len - 1 : indexNum;
+    tab();
+  }
+  // 下一张
+  next.onclick = function(){
+    indexNum ++ ;
+    indexNum = indexNum > len - 1? 0 : indexNum;
+    tab();
+  }
+  
+  
+  //导航栏相关
+  for(let i = 0; i < len; i++){
+    navLi[i].index = i;
+    // 点击切换
+    navLi[i].onclick = function(){
+      indexNum = this.index;
+      tab();
+    }
+    // 移入显示缩略图
+    navLi[i].onmouseenter = function(){
+      this.firstElementChild.style.display = 'block';
+    }
+    navLi[i].onmouseleave = function(){
+      this.firstElementChild.style.display = 'none';
+    }
+  }
+</script>
+</html>
