@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    li::selection,h2::selection{
+      background: none;
+    }
+    li{
+      cursor: pointer;
+      list-style: none;
+    }
+    .wrap{
+      margin: 120px auto;
+      width: 300px;
+      height: 560px;
+      background: url(./img/bg1.png)no-repeat;
+      background-size: 100% 100%;
+      padding: 36px 0px 0px 14px;
+      box-sizing: border-box;
+    }
+    
+    .main {
+      color: white;
+      background-color: rgba(20, 22, 21, 0.62);
+    }
+    .main li{
+      opacity: 0.8;
+    }
+    .main li h2{
+      padding-left: 16px;
+      font: 600 18px/30px arial;
+      background: url(./img/ico1.png)no-repeat 2px 8px;
+      background-size: 6px;
+    }
+    .main>li.active h2{
+      background-size: 6px;
+      background: url(./img/ico2.png)no-repeat #E15671 2px 8px;
+      color: black;
+    }
+    .main>li  ul{
+      display: none;
+    }
+    .main > li.active ul{
+      display: block;
+    }
+    .main li ul .item{
+      font: 16px/30px  sans-serif;
+      padding-left: 16px;
+    }
+    .main li ul .item:hover{
+      background-color: grey;
+    }
+    .main li ul .item.active{
+      background-color: brown;
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <ul class="main">
+      <li>
+        <h2>我的好友</h2>
+        <ul>
+          <li class="item">Martin</li>
+          <li class="item">Kevin</li>
+        </ul>
+      </li>
+      <li>
+        <h2>亲戚好友</h2>
+        <ul>
+          <li class="item">Marquee</li>
+          <li class="item">Ronaldo</li>
+        </ul>
+      </li>
+      <li>
+        <h2>企业好友</h2>
+        <ul>
+          <li class="item">Steven Job</li>
+          <li class="item">Bill</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</body>
+<script type="text/javascript">
+  
+  // 点击展开列表 
+  // 列表项可点击选中  当列表收起选中取消
+  var outerLi = document.querySelectorAll('.main>li');
+  var len = outerLi.length;
+  
+  for(var i = 0; i < len; i++ ){
+    outerLi[i].onOpened = false;
+    outerLi[i].onclick = function(e){
+      var e = e || window.event;
+      var target = e.target || e.srcElement;
+      
+      if(target.classList.contains('item')){
+        
+        target.onSelect =  target.onSelect === undefined? true: !target.onSelect;//是否第一次点击item
+        
+        target.className = target.onSelect? 'item active': 'item';
+        
+        return false; //如果点的是item 不收起
+      }
+      
+      this.onOpened = !this.onOpened;
+      this.className = this.onOpened ? 'active' : ''; //通过控制大的List类名  实现展开收起 
+      
+      // 收起时 取消本列表的选中
+      if(!this.onOpened){
+        var theItems = this.lastElementChild.children,
+            len = theItems.length;
+        
+        for(var i = 0; i < len; i++){
+          theItems[i].classList.remove('active');
+          theItems[i].onSelect = false;
+        }
+      } 
+      
+    }
+  }
+  
+</script>
+</html>
