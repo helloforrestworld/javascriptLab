@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<style media="screen">
+  *{
+    margin: 0;
+    padding:0;
+  }
+  li{
+    list-style: none;
+  }
+  .wrap{
+    width: 680px;
+    height: 420px;
+    background: url(./img/bg.png)no-repeat;
+    background-size: 100% 100%;
+    margin: 100px auto;
+    padding-top: 50px;
+    box-sizing: border-box;
+  }
+  .inner{
+    width: 520px;
+    height: 350px;
+    margin: auto;
+    border-radius: 8px;
+    background: #fff;
+  }
+  .inner ul{
+    width: 100%;
+    height: 86%;
+    display: flex;
+    flex-flow: column;
+  }
+  .inner ul li{
+    padding-top: 14px;
+    box-sizing: border-box;
+    flex: 1;
+    border-bottom: 1px solid rgba(57, 56, 52, 0.77);
+  }
+  .inner ul li span,.inner ul li input{
+    float: left;
+  }
+  .inner ul li span{
+    line-height: 18px;
+    font-size: 16px;
+  }
+  .inner ul li input{
+    height: 18px;
+    width: 32px;
+  }
+  .inner ul li em{
+    float: right;
+    margin-right: 10px;
+    font: 16px/21px arial;
+    font-style: normal;
+  }
+  .inner ul li:hover{
+    background-color: rgba(229, 220, 232,0.5);
+  }
+  .inner ul li:nth-of-type(2n){
+    background-color: #f4b4be;
+  }
+  .inner ul li.active{
+    background-color: #de4a63;
+  }
+  .inner .control{
+    padding-top: 14px;
+    box-sizing: border-box;
+    height: 14%;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background-color: #de4a63;
+  }
+  .inner .control input{
+    width: 32px;
+    height: 18px;
+    /* vertical-align: middle; */
+    display: inline-block;
+  }
+  .inner .control span{
+    vertical-align: top;
+  }
+  
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="inner">
+      <ul>
+        <li class="">
+          <input type="checkbox">
+          <span>咖喱</span>
+          <em>辣鸡</em>
+        </li>
+        <li>
+          <input type="checkbox">
+          <span>咖喱</span>
+          <em>辣鸡</em>
+        </li>
+        <li>
+          <input type="checkbox">
+          <span>咖喱</span>
+          <em>辣鸡</em>
+        </li>
+        <li>
+          <input type="checkbox">
+          <span>咖喱</span>
+          <em>辣鸡</em>
+        </li>
+        <li>
+          <input type="checkbox">
+          <span>咖喱</span>
+          <em>辣鸡</em>
+        </li>
+        <li>
+          <input type="checkbox">
+          <span>咖喱</span>
+          <em>辣鸡</em>
+        </li>
+      </ul>
+      <div class="control">
+        <input type="checkbox" name="" value="">
+        <span>全选</span>
+      </div>
+    </div>
+  </div>
+</body>
+<script type="text/javascript">
+  var count = 0; //控制是否全选
+  var aList = document.querySelectorAll('.inner ul li');
+  var allSelect = document.querySelector('.control input');
+  
+  var len = aList.length;
+  // 点击list 如果选中 count+1 取消选中 count-1
+  // if count == len  全选 否则 不全选
+  
+  for(var i = 0; i < len; i++){
+    aList[i].onChecked = false; //控制当前条目是否被选中
+    aList[i].onclick = function(){
+      this.onChecked = !this.onChecked;
+      count = this.onChecked? ++count : --count;
+      
+      // 选中与取消选中
+      if(this.onChecked){
+        this.firstElementChild.checked = true;
+        this.className = 'active';
+      }else{
+        this.firstElementChild.checked = false;
+        this.className = '';
+      }
+        
+      
+      // 全选与非全选
+      if(count == len){
+        allSelect.checked = true;
+      }else{
+        allSelect.checked = false;
+      }
+      
+    }
+  }
+  
+  // 全选按钮
+  allSelect.onclick = function(){
+    count = this.checked? len : 0;
+    for(var i = 0; i < len; i++){
+      if(this.checked){
+        aList[i].className = 'active';
+        aList[i].onChecked = true;
+        aList[i].firstElementChild.checked = true;
+      }else{
+        aList[i].className = '';
+        aList[i].onChecked = false;
+        aList[i].firstElementChild.checked = false;
+      }
+    }
+  }
+</script>
+</html>
