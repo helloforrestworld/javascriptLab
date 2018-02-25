@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div></div>
+</body>
+<script type="text/javascript">
+  var div = document.getElementsByTagName('div')[0];
+
+  // 功能css属性读取和操作
+  
+  // 传入两个参数
+  //  1.第二个参数为''清空所有行间样式
+  //  2.第二个参数为属性名,则查看属性值
+  //  3.第二个参数为对象则按照键值对设置属性 
+
+  // 传入三个参数
+  // 1.对应设置并实现省略px
+  
+  //兼容transform属性 
+
+  function css(ele,type,value){
+    var arg = arguments,
+        len = arg.length,
+        ele = arg[0],
+        type = arg[1],
+        value = arg[2];
+    
+    // 只有两个参数
+    if(len === 2){
+      
+      if(typeof type === 'object'){
+        // 设置一组属性值
+        for(var key in type){
+          set(key,type[key]);
+        }
+        return
+      }
+      
+      if(type.trim() === '' ){
+        // 清空行间样式
+        ele.style.cssText = '';
+        return
+      }
+      
+      if(typeof type === 'string'){
+        // 查找属性值
+        if(styleTransform(type)){
+          return ele.transformAttr[type]
+        }
+        
+        if(window.getComputedStyle){
+          return window.getComputedStyle(ele,null)[type]
+        }else{
+          return ele.currentStyle[type]
+        }
+      }
+    }
+    
+    // 三个参数
+    if(len === 3){
+      set(type,value);
+    }
+    
+    // 判断是否使用px  是否属于transform属性  再设置
+    function set(type,value){
+      if(styleUsePx(type)){
+        ele.style[type] = parseFloat(value) + 'px';
+      }else if(styleTransform(type)){
+        var attr = ele.transformAttr = ele.transformAttr || {},
+            str = '';
+            
+        attr[type] = value;
+        
+        for(var key in attr){
+          
+          // deg px 两种单位
+          switch(key){
+            case 'translateX':
+            case 'translateY':
+            case 'translateZ':
+            str += attr[key] === ''? ``: `${key}(${attr[key]}px)`;
+            break;
+            
+            case 'rotate':
+            case 'rotateX':
+            case 'rotateY':
+            case 'skew':
+            case 'skewX':
+            case 'skewY':
+            str += attr[key] === ''? `` :`${key}(${attr[key]}deg)`;
+            break;
+            
+            default:
+            str += attr[key] === ''? `` :`${key}(${attr[key]})`;
+          }
+        }
+        ele.style.transform = str;
+      }else{
+        ele.style[type] = value;
+      }
+    }
+    
+    // 常用px
+    function styleUsePx(type){
+      return type ==='left'||type ==='right'||type ==='bottom'||type ==='top'||type ==='width'
+      ||type ==='height'||type ==='margin-top'||type ==='margin-right'||type ==='margin-bottom'
+      ||type ==='margin-left'||type ==='padding-top'||type ==='padding-right'||type ==='padding-bottom'
+      ||type ==='padding-left';
+    }
+    
+    //transform
+    function styleTransform(type){
+      return type === 'skew'||type === 'skewX'||type === 'skewY'||type === 'rotate'||
+      type === 'rotateX'||type==='rotateY'||type==='translateX'||type==='translateY'||
+      type === 'scale'||type === 'scaleX'||type === 'scaleY';
+    }
+  }
+</script>
+</html>
