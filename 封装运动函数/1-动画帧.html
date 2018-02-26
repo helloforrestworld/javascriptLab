@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    div{
+      width: 100px;
+      height: 100px;
+      background-color:gold;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    button{
+      margin-top: 120px;
+    }
+  </style>
+</head>
+<body>
+<div>
+</div>
+<button>stop</button>
+</body>
+<script>
+  var div = document.getElementsByTagName('div')[0];
+  var btn = document.getElementsByTagName('button')[0];
+  
+  div.onclick = function(){
+    console.log(div.animate);
+    if(div.anim) return
+    (function fn(){
+      div.anim = window.requestAnimationFrame(fn,div);
+      div.style.left = div.offsetLeft + 100 + 'px';
+    })()
+  }
+  
+  btn.onclick = function(){
+    window.cancelAnimationFrame(div.animate);
+    div.anim = null;
+  }
+  
+</script>
+</html>

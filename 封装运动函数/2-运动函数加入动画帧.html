@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div></div>
+</body>
+<script src="Lau.js"></script>
+<script>
+var div = document.getElementsByTagName('div')[0];
+Lau.css(div,{scale:1,rotate:0,translateX:0,translateY:0,skew:0,width:100,height:100,'background-color':'red'});
+
+div.onclick = function(){
+  move(div,{scale:2,rotate:45,translateX:500,translateY:200,skew:45,opacity:0},'backOut');
+}
+function move(ele,attr,duration,fx,callback){
+  
+  if(ele.anim) return //防止同时多次调用
+  
+  var css = Lau.css,
+      beginValue = {},//存放所有属性初始值
+      changeVaule ={},//存放所有属性需要改变的量
+      startTime = Date.now(),//运动开始时间点
+      t = 0;//过去的时间
+  
+  // 参数兼容
+  if(typeof duration === 'number'){
+    if(typeof fx === 'undefined'){
+      fx = 'linear';
+    }
+    if(typeof fx === 'function'){
+      callback = fx;
+      fx = 'linear';
+    }
+  }
+  
+  if(typeof duration === 'undefined'){
+    duration = 500;
+    fx = 'linear'
+  }
+  
+  if(typeof duration === 'string'){
+    callback = fx;
+    fx = duration;
+    duration = 500;
+  }
+  
+  if(typeof duration === 'function'){
+    callback = duration;
+    fx = 'linear';
+    duration = 500;
+  }
+  
+  for(var key in attr){
+    beginValue[key] = parseFloat( css(ele,key) );
+    changeVaule[key] = parseFloat(attr[key]) - beginValue[key];
+  }
+  
+  
+  (function fn(){
+    
+    ele.anim = window.requestAnimationFrame(fn,ele);
+    // 每次的current值 =  c * t/d + b;
+    t = Date.now() - startTime;
+    for(var key in beginValue){
+      css(ele,key, Tween[fx](t,beginValue[key],changeVaule[key],duration));
+    }
+    
+    // 出口
+    if(t >= duration){
+      for(var key in attr){
+        css(ele,key,attr[key]);
+      }
+      
+      if(typeof callback === 'function'){
+          callback.call(ele);
+      }
+      window.cancelAnimationFrame(ele.anim);
+      ele.anim = null;
+    }
+  })()
+}
+
+var Tween = {
+  linear: function (t, b, c, d){  //匀速
+    return c*t/d + b;
+  },
+  easeIn: function(t, b, c, d){  //加速曲线
+    return c*(t/=d)*t + b;
+  },
+  easeOut: function(t, b, c, d){  //减速曲线
+    return -c *(t/=d)*(t-2) + b;
+  },
+  easeBoth: function(t, b, c, d){  //加速减速曲线
+    if ((t/=d/2) < 1) {
+      return c/2*t*t + b;
+    }
+    return -c/2 * ((--t)*(t-2) - 1) + b;
+  },
+  easeInStrong: function(t, b, c, d){  //加加速曲线
+    return c*(t/=d)*t*t*t + b;
+  },
+  easeOutStrong: function(t, b, c, d){  //减减速曲线
+    return -c * ((t=t/d-1)*t*t*t - 1) + b;
+  },
+  easeBothStrong: function(t, b, c, d){  //加加速减减速曲线
+    if ((t/=d/2) < 1) {
+      return c/2*t*t*t*t + b;
+    }
+    return -c/2 * ((t-=2)*t*t*t - 2) + b;
+  },
+  elasticIn: function(t, b, c, d, a, p){  //正弦衰减曲线（弹动渐入）
+    if (t === 0) { 
+      return b; 
+    }
+    if ( (t /= d) == 1 ) {
+      return b+c; 
+    }
+    if (!p) {
+      p=d*0.3; 
+    }
+    if (!a || a < Math.abs(c)) {
+      a = c; 
+      var s = p/4;
+    } else {
+      var s = p/(2*Math.PI) * Math.asin (c/a);
+    }
+    return -(a*Math.pow(2,10*(t-=1)) * Math.sin( (t*d-s)*(2*Math.PI)/p )) + b;
+  },
+  elasticOut: function(t, b, c, d, a, p){    //*正弦增强曲线（弹动渐出）
+    if (t === 0) {
+      return b;
+    }
+    if ( (t /= d) == 1 ) {
+      return b+c;
+    }
+    if (!p) {
+      p=d*0.3;
+    }
+    if (!a || a < Math.abs(c)) {
+      a = c;
+      var s = p / 4;
+    } else {
+      var s = p/(2*Math.PI) * Math.asin (c/a);
+    }
+    return a*Math.pow(2,-10*t) * Math.sin( (t*d-s)*(2*Math.PI)/p ) + c + b;
+  },    
+  elasticBoth: function(t, b, c, d, a, p){
+    if (t === 0) {
+      return b;
+    }
+    if ( (t /= d/2) == 2 ) {
+      return b+c;
+    }
+    if (!p) {
+      p = d*(0.3*1.5);
+    }
+    if ( !a || a < Math.abs(c) ) {
+      a = c; 
+      var s = p/4;
+    }
+    else {
+      var s = p/(2*Math.PI) * Math.asin (c/a);
+    }
+    if (t < 1) {
+      return - 0.5*(a*Math.pow(2,10*(t-=1)) * 
+          Math.sin( (t*d-s)*(2*Math.PI)/p )) + b;
+    }
+    return a*Math.pow(2,-10*(t-=1)) * 
+        Math.sin( (t*d-s)*(2*Math.PI)/p )*0.5 + c + b;
+  },
+  backIn: function(t, b, c, d, s){     //回退加速（回退渐入）
+    if (typeof s == 'undefined') {
+       s = 1.70158;
+    }
+    return c*(t/=d)*t*((s+1)*t - s) + b;
+  },
+  backOut: function(t, b, c, d, s){
+    if (typeof s == 'undefined') {
+      s = 3.70158;  //回缩的距离
+    }
+    return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b;
+  }, 
+  backBoth: function(t, b, c, d, s){
+    if (typeof s == 'undefined') {
+      s = 1.70158; 
+    }
+    if ((t /= d/2 ) < 1) {
+      return c/2*(t*t*(((s*=(1.525))+1)*t - s)) + b;
+    }
+    return c/2*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b;
+  },
+  bounceIn: function(t, b, c, d){    //弹球减振（弹球渐出）
+    return c - Tween['bounceOut'](d-t, 0, c, d) + b;
+  },       
+  bounceOut: function(t, b, c, d){//*
+    if ((t/=d) < (1/2.75)) {
+      return c*(7.5625*t*t) + b;
+    } else if (t < (2/2.75)) {
+      return c*(7.5625*(t-=(1.5/2.75))*t + 0.75) + b;
+    } else if (t < (2.5/2.75)) {
+      return c*(7.5625*(t-=(2.25/2.75))*t + 0.9375) + b;
+    }
+    return c*(7.5625*(t-=(2.625/2.75))*t + 0.984375) + b;
+  },      
+  bounceBoth: function(t, b, c, d){
+    if (t < d/2) {
+      return Tween['bounceIn'](t*2, 0, c, d) * 0.5 + b;
+    }
+    return Tween['bounceOut'](t*2-d, 0, c, d) * 0.5 + c*0.5 + b;
+  }
+}
+</script>
+</html>

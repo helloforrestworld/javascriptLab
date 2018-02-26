@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div style="width:100px;height:100px;background-color:gold; position:absolute;left:0;top:0;"></div>
+</body>
+<script type="text/javascript" src="Lau.js"></script>
+<script>
+  
+  var div = document.getElementsByTagName('div')[0];
+  div.onclick = function(){
+    move(div,'left',500,200,function(){console.log('完成')});
+  }
+  
+  
+  function move(ele,attr,target,step,callback){
+    
+    if(ele.timer) return 
+    
+    // 参数兼容
+    var argSlice = [].__proto__.slice.call(arguments,2),len = argSlice.length;
+    if(len === 0){
+      step = 100;
+    }else if(len === 1){
+      
+      if(typeof target === 'function'){
+        callback = target;
+        step = 100;
+      }else if(typeof attr === 'object'){
+        step = target;
+      }else{
+        step = 100;
+      }
+      
+    }else if(len === 2){
+      
+      if(typeof attr === 'object'){
+        callback = step;
+        step = target;
+      }else{
+        if(typeof step === 'function'){
+          callback = step;
+          step = 100;
+        }
+      }
+    }
+    
+    
+    // 定时器每一圈就是一个step
+    // 每圈的目标 = rate * nowStep + startValue;
+    // rate = (targetValue - startValue) / step
+    var css = Lau.css,
+        beginValue = {},
+        changeVaule ={},
+        rateValue = {},
+        count = 0;
+    
+    
+    
+    if(typeof attr === 'object'){
+      for(var key in attr){
+        beginValue[key] = parseFloat( css(ele,key) );
+        changeVaule[key] = parseFloat(attr[key]) - beginValue[key];
+        rateValue[key] = changeVaule[key] / step;
+      }
+    }else {
+      beginValue[attr] = parseFloat( css(ele,attr) );
+      changeVaule[attr] = parseFloat(target) - beginValue[attr];
+      rateValue[attr] = changeVaule[attr] / step;
+    }
+    ele.timer = setInterval(function(){
+      count ++;
+      for(var key in rateValue){
+        css(ele,key,rateValue[key] * count + beginValue[key] );
+      }
+      
+      if(count >= step){
+        clearInterval(ele.timer);
+        for(var key in attr){
+          css(ele,key,attr[key]);
+        }
+        
+        if(typeof callback === 'function'){
+          callback.call(ele);
+        }
+        ele.timer = null;
+      }
+    },20)
+  }
+  
+  
+</script>
+</html>
