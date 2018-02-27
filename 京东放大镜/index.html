@@ -119,7 +119,7 @@
 		</div>
 		
 	</body>
-	<script src="../../../../../js/miaov.js"></script>
+	<script src="lau.js"></script>
 	<script>
 		
 		var data =  [
@@ -200,11 +200,11 @@
 		var numIndex  = 0;
 		next.addEventListener('click',function(){
 			numIndex = navChild.length-numIndex>4? ++numIndex:numIndex;
-			mv.animation(navScroll,{left:-64*numIndex},300);
+			lau.move(navScroll,{left:-64*numIndex},300);
 		});
 		prev.addEventListener('click',function(){
 			numIndex = numIndex>0? --numIndex:0;
-			mv.animation(navScroll,{left:-64*numIndex},300)
+			lau.move(navScroll,{left:-64*numIndex},300)
 		})
 		
 		//放大镜
