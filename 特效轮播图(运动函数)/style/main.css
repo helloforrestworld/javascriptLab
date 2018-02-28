@@ -1,0 +1,154 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+li{
+  list-style: none;
+}
+html{
+  width: 100%;
+  height: 100%;
+}
+body{
+  width: 100%;
+  height: 100%;
+}
+.wrap{
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* 幻灯片 */
+.slide{
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: calc(100% - 16px);
+  background-size:cover;
+  z-index: 2;
+}
+
+.prev,.next{
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  transition: 500ms;
+  z-index: 999;
+  top: calc(50% - 50px);
+}
+
+.prev{
+  left: 0;
+  background: url(../image/btn_prev.png)no-repeat center center;
+}
+.next{
+  right:0;
+  background: url(../image/btn_next.png)no-repeat center center;
+}
+
+.slide-item{
+  transition: 500ms;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+
+.pic{
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.caption{
+  color: white;
+  font: bold 20px/24px serif;
+  font-style: italic;
+  position: absolute;
+  left: 100px;
+  top: 100px;
+  width: 300px;
+  height: 100px;
+}
+.slide-item.active h2{
+  transform: translateX(0px) translateY(40px);
+}
+.slide-item.active h3{
+  font-size: 50px;
+  transform: translateX(0px) translateY(-80px);
+}
+.caption h2,.caption h3{
+  transition: 2000ms;
+}
+.caption h2{
+  font-size: 50px;
+  transform: translateX(-80px);
+}
+.caption h3{
+  font-size: 40px;
+  font-weight: 500;
+  transform: translateX(80px);
+}
+
+/* 导航栏 */
+.nav{
+  width: 100%;
+  height: 16px;
+  display: flex;
+  background: white;
+}
+.nav-item{
+  position: relative;
+  height: 100%;
+  flex: 1;
+  background-color: rgb(97, 99, 99);
+}
+.nav-item + .nav-item{
+  margin-left: 2px;
+}
+.nav-item img{
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 16px;
+  transition: 500ms;
+  transform: translateY(-40%);
+  opacity: 0;
+}
+.nav-item.active{
+  background-color: rgba(223, 100, 137, 0.51);
+}
+.nav-item::after{
+  position: absolute;
+  left: 0;
+  top: 0;
+  content: '';
+  width: 0;
+  height: 100%;
+  transition: 500ms;
+  background-color: rgba(194, 194, 194, 0.73);
+}
+.nav-item:hover::after{
+  width: 100%;
+}
+
+.nav-item:hover img{
+  z-index: 3;
+  transform: translateY(0);
+  opacity: 1;
+  -webkit-box-reflect: below 0px -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(transparent),
+    color-stop(80%, transparent),
+    to(rgba(255,255,255,.7))
+  );
+}
+
+
