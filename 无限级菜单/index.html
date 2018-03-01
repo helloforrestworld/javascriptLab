@@ -1,241 +1,192 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title></title>
-		<style>
-			html {
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    *{
+      padding: 0;
+      margin: 0;
+    }
 
-				width: 100%;
-				height: 100%;
-			}
-			body{
-				margin: 0px;
-				width: 100%;
-				height: 100%;
-			}
-			.main {
-				width: 100%;
-				height: 1000px;
-				background: url(./image/bg.png) no-repeat;
-				background-size: 100% 100%;
-				overflow: hidden;
-			}
-			.logo {
-				display: block;
-				width: 200px;
-				height: 55px;
-				background: url(./image/logo.png) no-repeat;
-				margin: 20px auto;
-			}
-			ul{	
-				cursor: pointer;
-				list-style: none;
-				font-size: 22px;
-				color: #8c949c;
-				font-weight: bold;
-				
-			}
+    .main{
+      padding-top: 100px;
+      min-height: 900px;
+      background: url(./img/bg.png)no-repeat;
+      background-size: 100% 100%;
+    }
+    .tree{
+      width: 100%;
+      height: 100%;
+    }
+    li{
+      list-style: none;
+      font-size: 24px;
+      margin: 5px 20px 5px 80px;
+    }
+    li span{
+      cursor: pointer;
+      padding-left: 20px;
+      display: inline-block;
+      margin-bottom: 10px;
+      background: url(./img/icon.png) -999px -999px no-repeat;
+      background-size: 14px;
+    }
+    li span.has-child{
+      background-position: -1px -54px;
+    }
+    li span.open{
+      background-position: 0px 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="main">
+    <div class="tree">
+      <ul class="top-ul">
+        <!-- <li>
+          <span>第一级菜单</span>
+          <ul>
+            <li>
+              <span>第二级菜单</span>
+            </li>
+            <li>
+              <span>第二级菜单</span>
+            </li>
+          </ul>
+        </li>
+        <li><span>第一级菜单</span></li>
+        <li><span>第一级菜单</span></li> -->
+      </ul>
+    </div>
+  </div>
+</body>
+<script>
+  var data =  [
+    {
+        title : "第一级菜单",
+        child : [
+          {title:"第二集菜单"},
+            {title:"第二集菜单",
+            child:[
+                {title:"第三集菜单"},
+                {title:"第三集菜单",
+                child:[
+                  {title:"第四集菜单"},
+                  {title:"第四集菜单"},
+                  {title:"第四集菜单"}
+                ]
+                },
+                {title:"第三集菜单"}
+              ]
+          },
+            {
+              title:"第二集菜单",
+              child:[
+                {title:"第三集菜单"},
+                {title:"第三集菜单"}
+              ]
+            }
+        ]
+    },
+    {
+        title : "第一级菜单",
+        child : [
+          {title:"第二集菜单"},
+            {title:"第二集菜单",
+            child:[
+                {title:"第三集菜单"},
+                {title:"第三集菜单",
+                child:[
+                  {title:"第四集菜单"},
+                  {title:"第四集菜单"},
+                  {title:"第四集菜单"}
+                ]
+                },
+                {title:"第三集菜单"}
+              ]
+          },
+            {
+              title:"第二集菜单",
+              child:[
+                {title:"第三集菜单"},
+                {title:"第三集菜单"}
+              ]
+            }
+        ]
+    },
+    {
+      title:"第一集菜单",
+      child : [
+          {title:"第二集菜单"},
+            {title:"第二集菜单",
+            
+          },
+            {
+              title:"第二集菜单",
+              child:[
+                {title:"第三集菜单"},
+                {title:"第三集菜单"}
+              ]
+            }
+        ]
+    }
+];
+var oUl = document.getElementsByClassName('top-ul')[0];
+var main = document.getElementsByClassName('main')[0];
 
-			ul li {
-				display: block;
-				position: relative;
-				padding-left: 10px;
-				
-			}
+// 生成
+oUl.innerHTML = createMenu(data);
 
-			ul li div{
-				height: 98%;
-				width: 1px;
-				border-left: 1px dotted #ccc;
-				position: absolute;
-				left: 14px;
-				top: 18px;
-			}
 
-			ul ul{
-				display: none;
-			}
-			ul.active{
-				display: block;
-			}
-			ul li span {
-				width: 150px;
-				display: block;
-				line-height: 32px;
-				padding-left: 15px;
-				background: url(./image/icon.png) no-repeat left 500px;
+// 添加点击事件
+(function listShow(oUl){
+  var list = oUl.children,
+      len = list.length; 
+  
+  if(list[0].firstElementChild.onclick) return //事件添加一次就可以了
+  
+  for(let i = 0; i < len; i++){
+    list[i].firstElementChild.onclick = function(){
+      var next = this.nextElementSibling;
+      if(next){
+        // 收起
+        next.style.display = next.style.display === 'none'? 'block':'none';
+        this.classList.toggle('open');
+        
+        // 处理子菜单
+        if(!this.classList.contains('open')){
+          var childUl = next.querySelectorAll('ul'),
+              childHead = next.querySelectorAll('span');
+          // 收起的时候 子Ul全部收起
+          for(var i = 0; i < childUl.length; i++){
+            childUl[i].style.display = 'none';
+          }
+          // 收起的时候 所有子span图标改变
+          for(var i = 0; i < childHead.length; i++){
+            childHead[i].classList.remove('open');
+          }  
+        }
+        // 为下一层添加添加事件
+        listShow(next);
+      }
+    }
+  }
+}(oUl))
 
-			}
-			
-			ul li span.add {
-				background-position: 0px -32px;
-			}
-			ul li span.active{
-				background-position: 0px 10px;
-			}
-			ul li span.line {
-				background-position: 0px 11px;
-			}
-			
-			span::selection{
-				background: none;
-			}
-
-			.tree {
-				margin-left: 300px;
-			}
-
-		</style>
-		<script>
-			var arr = [
-		    {
-		        title : "第一级菜单",
-		        child : [
-		        	{title:"第二集菜单"},
-		            {title:"第二集菜单",
-		            child:[
-		            		{title:"第三集菜单"},
-		            		{title:"第三集菜单",
-		            		child:[
-		            			{title:"第四集菜单"},
-		            			{title:"第四集菜单"},
-		            			{title:"第四集菜单"}
-		            		]
-		            		},
-		            		{title:"第三集菜单"}
-		            	]
-		        	},
-		            {
-		            	title:"第二集菜单",
-		            	child:[
-		            		{title:"第三集菜单"},
-		            		{title:"第三集菜单"}
-		            	]
-		            }
-		        ]
-		    },
-		    {
-		        title : "第一级菜单",
-		        child : [
-		        	{title:"第二集菜单"},
-		            {title:"第二集菜单",
-		            child:[
-		            		{title:"第三集菜单"},
-		            		{title:"第三集菜单",
-		            		child:[
-		            			{title:"第四集菜单"},
-		            			{title:"第四集菜单"},
-		            			{title:"第四集菜单"}
-		            		]
-		            		},
-		            		{title:"第三集菜单"}
-		            	]
-		        	},
-		            {
-		            	title:"第二集菜单",
-		            	child:[
-		            		{title:"第三集菜单"},
-		            		{title:"第三集菜单"}
-		            	]
-		            }
-		        ]
-		    },
-		    {
-		    	title:"第一集菜单",
-		    	child : [
-		        	{title:"第二集菜单"},
-		            {title:"第二集菜单",
-		            
-		        	},
-		            {
-		            	title:"第二集菜单",
-		            	child:[
-		            		{title:"第三集菜单"},
-		            		{title:"第三集菜单"}
-		            	]
-		            }
-		        ]
-		         
-		    }
-		];
-		</script>
-	</head>
-
-	<body>
-		<div class="main">
-			<a href="http://www.miaov.com" class="logo"></a>
-			<div class="tree">
-				<ul id="oUl">
-					
-				</ul>
-			</div>
-		</div>
-		
-		<script src="./miaov.js">	</script>;
-		<script>
-			
-			var oUl = mv.$('#oUl');
-			
-			
-			oUl.innerHTML = creatTree(arr);
-			
-			function creatTree(data){
-				var str = '';
-				
-				for(var i = 0 ;i<data.length;i++){
-					str += `<li><span class ="${data[i].child?'add':''}">${data[i].title}</span>`;
-					
-					if(data[i].child){
-						str += `<ul>${creatTree(data[i].child)} </ul>`
-					}
-					
-					str += `</li>`
-				}
-				
-				return str;
-			}
-			
-			
-			//获取所有的span;
-			var title  = mv.$('span',oUl);
-			
-			//拿到所有的子ul;
-			var aUl = mv.$('ul ul');
-			
-			var prev = -1;
-			//每个h2的点击展开与收起
-			for(var i = 0;i<title.length;i++){
-				title[i].index = i;
-				title[i].onclick = function(){
-					//如果点到是大标题  移除所有ul的active 让其隐藏
-					if(this.parentNode.parentNode.id==='oUl'&&this.index != prev){//如果不是点它自己才做全部隐藏的事
-						for(var i =0;i<aUl.length;i++){
-							aUl[i].classList.remove('active');
-						}
-						//清楚所有的减号
-						for(var i = 0;i<title.length;i++){
-							title[i].classList.remove('active');
-						}
-						//所选ul
-						//第一次 className要是空 然后active
-						this.nextElementSibling.classList.add('active');
-						//减号
-						this.classList.add('active');
-						prev = this.index;
-						return;
-					}
-					//有子菜单的展开 
-					if(this.nextElementSibling){
-						//ul
-						this.nextElementSibling.classList.toggle('active');
-						//减号
-						this.classList.toggle('active');
-					}
-				}
-			}
-			
-			
-		</script>
-	</body>
+// 递归生成菜单
+function createMenu(data){
+  var str = ``;
+  for(var i = 0; i < data.length; i++){
+    str += `<li><span class="${data[i].child? 'has-child':''}">${data[i]['title']}</span>`;
+    if(data[i].child){
+      str += `<ul style="display:none">${createMenu(data[i].child)}</ul>`
+    }
+    str +=`</li>`
+  }
+  return str
+}
+</script>
 </html>

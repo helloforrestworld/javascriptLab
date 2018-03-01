@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .tab_wrap {
+      /*width: 60%;*/
+      margin: 0 auto;
+      background-color: #f0f0f0;
+      display: flex;
+    }
+    .tab_item {
+      width: 300px;
+      box-shadow: 2px 0px 4px rgba(0, 0, 0, 2);
+      margin: 0 40px;
+      
+    }
+    .btns {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btns span {
+      flex: 1;
+      display: block;
+      text-align: center;
+      border-bottom: 2px solid #000;
+      padding: 5px 0;
+      transition: 200ms;
+      cursor: default;
+    }
+    .btns span:hover {
+      border-bottom: 2px solid rgb(46, 131, 242);
+    }
+    .btns span.active {
+      border-bottom: 2px solid rgb(46, 131, 242);
+      background-color: rgba(46, 131, 242, .2);
+    }
+    .container {
+      height: 260px;
+    }
+    .container p{
+      display: none;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      line-height: 260px;
+    }
+    .container p.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="tab_wrap">
+    <div class="tab_item" id="tab1">
+      <div class="btns">
+        <span class="active">美食</span>
+        <span>好吃</span>
+        <span>吃不停</span>
+      </div>
+      <div class="container">
+        <p class="active">红烧鲫鱼</p>
+        <p>驴肉蒸饺</p>
+        <p>酸菜火锅</p>
+      </div>
+    </div>
+    <div class="tab_item" id="tab2">
+      <div class="btns">
+        <span class="active">美食</span>
+        <span>好吃</span>
+        <span>吃不停</span>
+      </div>
+      <div class="container">
+        <p class="active">红烧鲫鱼</p>
+        <p>驴肉蒸饺</p>
+        <p>酸菜火锅</p>
+      </div>
+    </div>
+    <div class="tab_item" id="tab3">
+      <div class="btns">
+        <span class="active">美食</span>
+        <span>好吃</span>
+        <span>吃不停</span>
+        <span>北京</span>
+      </div>
+      <div class="container">
+        <p class="active">红烧鲫鱼</p>
+        <p>驴肉蒸饺</p>
+        <p>酸菜火锅</p>
+        <p>烤鸭</p>
+      </div>
+    </div>
+    <div class="ctrlBtns">
+    <input type="button" value="停止播放第一个" />
+      <input type="button" value="开始播放第二个" />
+  		<input type="button" value="开始播放所有" />
+  		<input type="button" value="停止播放所有" />
+    </div>
+  </div>
+</body>
+<script>
+  //构造函数
+  function Tab(item){
+    var tab = document.getElementById(item);
+    
+    this.btns = tab.querySelectorAll('span');
+    this.texts = tab.querySelectorAll('p');
+    this.prev = 0 ;
+    this.len = this.btns.length;
+
+
+    this.timer = null;
+    this.current = 0;
+    
+    return this;
+  }
+
+  Tab.prototype.toTap = function(){
+    var _this = this;
+    for(var i = 0;i<this.len;i++){
+      this.btns[i].index = i;
+      this.btns[i].onclick = function(){
+        _this.play(this.index);
+      }
+    }
+  }
+
+  Tab.prototype.play = function(index){
+    
+    this.btns[this.prev].classList.remove('active');
+    this.texts[this.prev].classList.remove('active');
+        
+    this.btns[index].classList.add('active');
+    this.texts[index].classList.add('active');
+        
+    this.prev = index;
+  }
+
+  Tab.prototype.autoPlay = function(){
+    var _this = this;
+    clearInterval(this.timer);
+    this.timer = setInterval(function(){
+      _this.current  =  _this.current<_this.len-1? ++_this.current:0;
+      _this.play(_this.current);
+    },1000)
+  }
+  Tab.prototype.stopPlay = function(){
+    clearInterval(this.timer);
+  }
+
+
+  var tab1 = new Tab('tab1');
+  tab1.toTap();
+  tab1.autoPlay();
+  var tab2 = new Tab('tab2');
+  tab2.toTap();
+  tab2.autoPlay();
+  var tab3 = new Tab('tab3');
+  tab3.toTap();
+  tab3.autoPlay();
+
+  var btns = document.querySelectorAll('input');
+  btns[0].onclick =function(){
+    tab1.stopPlay();
+  }
+  btns[1].onclick =function(){
+    tab2.autoPlay();
+  }
+  btns[2].onclick =function(){
+    tab1.autoPlay();
+    tab2.autoPlay();
+    tab3.autoPlay();
+  }
+  btns[3].onclick =function(){
+    tab1.stopPlay();
+    tab2.stopPlay();
+    tab3.stopPlay();
+  }
+</script>
+</html>

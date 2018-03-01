@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script>
+
+  class Person{
+    constructor(age,name){
+      this.age = age;
+      this.name = name;
+    }
+    sayName(){
+      console.log(this.name);
+    }
+    static fn(){
+      console.log(this);
+    }
+  }
+  var p1 = new Person('12',"王八");
+</script>
+</html>

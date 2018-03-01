@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script>
+  
+  function copy(target,origin,isDeep){
+    var target = target || {};
+    
+    for(var key in origin){
+      
+      if(origin.hasOwnProperty(key)){
+        
+        if(typeof origin[key] === 'object' && origin[key] !== null && isDeep && origin[key] !== target){
+          target[key] =  Array.isArray(origin[key])? [] : {};
+          copy(target[key],origin[key],true);
+        }else{
+          target[key] = origin[key];
+        }
+        
+      }
+    }
+    return target
+  }
+  
+</script>
+</html>
