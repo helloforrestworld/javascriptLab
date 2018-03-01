@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style media="screen">
+    .demo,.demo1{
+      margin: 100px auto;
+      width: 100px;
+      height: 100px;
+      background: gold;
+      border-radius: 50%;
+      position: absolute;
+      left: 100px;
+      top: 100px;
+    }
+    .demo1{
+      background-color: skyblue;
+      left:500px;
+    }
+  </style>
+</head>
+<body>
+<div class="demo"></div>
+<div class="demo1"></div>
+</body>
+<script src="lau.js" charset="utf-8"></script>
+<script>
+var demo = document.getElementsByClassName('demo')[0];
+var demo1 = document.getElementsByClassName('demo1')[0];
+
+demo.onclick = function(){
+  lau.css(this,{translateY:0});
+  lau.shake(this,'left',20);
+}
+demo1.onclick = function(){
+  lau.css(this,{translateX:0});
+  lau.clockMove(this,'translateX',300,0.1,10000);
+}
+function shake(ele,attr,range,fn){
+  var arrRange = [],index = 0;
+  var beginValue = parseFloat( lau.css(ele,attr) ); 
+  for(var i = range; i > 0; i--){
+    arrRange.push(i,-i);
+  };
+  (function fn(){
+    ele.shake = window.requestAnimationFrame(fn,ele);
+    lau.css(ele,attr,arrRange[index++] + beginValue);
+    if(index >= arrRange.length){
+      window.cancelAnimationFrame(ele.shake);
+      lau.css(ele,attr,beginValue);
+    }
+  }())
+}
+
+function clockMove(ele,attr,range,speed,duration,callback){
+  var startTime = Date.now(),
+      beginValue = parseFloat(lau.css(ele,attr)),
+      rad = 0;
+  
+  (function fn(){
+    var lastT = Date.now() - startTime;
+    ele.clock = window.requestAnimationFrame(fn,ele);
+    lau.css(ele,attr,Math.sin(rad)*range);
+    rad += speed;
+    
+    if(lastT >= duration){
+      window.cancelAnimationFrame(ele.clock);
+      lau.css(ele,attr,beginValue);
+      if(typeof callback === 'function'){
+        callback.call(ele);
+      }
+    }
+    
+  }())
+  
+}
+
+
+</script>
+</html>

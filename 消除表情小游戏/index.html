@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .wrap{
+      margin: 100px auto;
+      width: 714px;
+      height: 612px;
+      border: 2px solid black;
+    }
+    .head{
+      width: 100%;
+      height: 60px;
+      line-height: 60px;
+      text-align: center;
+      color: white;
+      background: rgba(37, 37, 37, 0.75);
+    }
+    .main-contain{
+      width: 100%;
+      height: calc(100% - 60px);
+      background: url(./image/bg.png)no-repeat;
+      background-size: cover;
+      position: relative;
+    }
+    .main-contain .get,
+    .main-contain .lose,
+    .main-contain .level{
+      padding: 8px;
+      position: absolute;
+      left: 0px;
+      width: 0px;
+      height: 50px;
+      opacity: 0;
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      transition: 500ms;
+    }
+    .main-contain .get{
+      top:30px;
+      background-color: rgb(134, 175, 148);
+    }
+    .main-contain .lose{
+      top:100px;
+      background-color: rgb(231, 160, 87);
+    }
+    .main-contain .level{
+      top:170px;
+      background-color: rgb(193, 116, 169);
+    }
+    .main-contain.active .lose,
+    .main-contain.active .get,
+    .main-contain.active .level
+    {
+      width: 50px;
+      opacity: 1;
+    }
+    
+    
+    .main-contain .game,.main-contain .cover{
+      position: absolute;
+      overflow: hidden;
+      width: 490px;
+      height: 442px;
+      left: 106px;
+      top: 63px;
+      z-index: 1;
+    }
+    .main-contain .game span{
+      cursor: pointer;
+      z-index: 999;
+      position: absolute;
+      left: 0px;
+      top: -36px;
+      width: 36px;
+      height: 36px;
+      background-repeat:no-repeat;
+      background-size: 100% 100%; 
+    }
+    .main-contain .cover{
+      transition: 500ms;
+      background-color: rgba(59, 154, 74, 0.18);
+      z-index: 2;
+    }
+    .main-contain.active .cover{
+      width: 0px;
+      height: 0px;
+    }
+    .main-contain .start{
+      transition: 300ms;
+      border: 2px solid black;
+      background-color: rgb(231, 152, 48);
+      color: white;
+      position: absolute;
+      bottom: 50px;
+      left: calc(50% - 70px);
+      width: 140px;
+      height: 30px;
+      font: bold 24px/30px;
+      z-index: 3;
+    }
+    .main-contain.active .start{
+      bottom: -30px;
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="head">
+      你的鼠标有多快?
+    </div>
+    <div class="main-contain">
+      <span class="get"><em>0</em>分<br>得分</span>
+      <span class="lose"><em>0</em>分<br>失分</span>
+      <span class="level">关卡<br><em>0</em></span>
+      
+      <div class="game">
+      </div>
+      <div class="cover">
+      </div>
+      
+      <button class="start">开始</button>
+    </div>
+  </div>
+</body>
+<script src="lau.js" charset="utf-8"></script>
+<script>
+  var contain = document.getElementsByClassName('main-contain')[0];
+  var start = contain.getElementsByClassName('start')[0];
+  
+  var gameWrap = contain.getElementsByClassName('game')[0];
+  var gameEmojs = gameWrap.getElementsByTagName('span');
+  
+  var pointGet = contain.querySelector('.get em');
+  var pointLose = contain.querySelector('.lose em');
+  var levelInfo = contain.querySelector('.level em');
+  
+  var emoj = ['./image/demonI.png','./image/demonII.png','./image/demonIII.png','./image/demonIV.png','./image/demonV.png','./image/demonVI.png'];
+  var index = 0;//控制第几个正在下落
+  var level = 1;
+  var gameData = [
+    {num:20,speed:3200,interval:1000},
+    {num:30,speed:3000,interval:800},
+    {num:40,speed:2900,interval:700},
+    {num:40,speed:2500,interval:600},
+    {num:40,speed:2400,interval:500},
+    {num:60,speed:2300,interval:400},
+    {num:50,speed:2000,interval:380}
+  ];
+  
+  
+  // 初始化
+  gameInit();
+  
+  
+  // 点击开始
+  start.onclick = function(){
+    contain.classList.add('active');//进入界面
+    gameStart();
+  }
+  
+  
+  
+  // 取消默认事件
+  contain.addEventListener('mousedown',function(e){
+    var e = e || window.event;
+    e.preventDefault();
+    e.returnValue = false;
+  },false) 
+  
+  
+  
+  // 表情点击 
+    // 1.清除运动 
+    // 2.抖动
+    // 3.加分
+  gameWrap.onclick = function(e){
+    var e = e || window.event;
+    var tar = e.target || e.srcElement;
+    e.preventDefault();
+    if(tar.nodeName === 'SPAN'){
+      window.cancelAnimationFrame(tar.anim);
+      lau.shake(tar,'left',14,function(){
+        // 得分
+        var point = parseInt(pointGet.innerHTML) + 1;
+        pointGet.innerHTML = point;
+        // 隐藏
+        tar.style.display = 'none';
+        
+        // 下一关
+        if(this === gameEmojs[len - 1]){
+          level++;
+          if(level > gameData.length){
+            alert('厉害啊 都通过了');
+            level = 1;
+          }else{
+            alert('下一关');
+          }
+          gameInit();
+          start.innerHTML = '下一关';
+        }
+      });
+    }
+  }
+  
+  
+  // 游戏初始化
+  function gameInit(){
+    // 重置
+    index = 0;
+    // 更新 显示的关卡数
+    levelInfo.innerHTML = level;
+    // 清空表情
+    gameWrap.innerHTML = '';
+    // 分数归0
+    pointLose.innerHTML = 0;
+    pointGet.innerHTML = 0;
+    //界面载入
+    contain.classList.remove('active');
+  }
+  
+  // 游戏开始
+  function gameStart(){
+    gameWrap.innerHTML = createEmoj();//生成表情
+    goDown();//表情下落
+  }
+  
+  
+  
+  // 表情下落
+  function goDown(){
+    var timer = null,
+        speed = gameData[level-1]['speed'];
+        inv = gameData[level-1]['interval'],
+        len = gameData[level-1]['num'];
+    timer = setInterval(function(){
+      lau.css(gameEmojs[index],{translateY:0})
+      lau.move( gameEmojs[index],{translateY:480},speed,function(){
+        //失分
+        var point = parseInt(pointLose.innerHTML) + 1;
+        pointLose.innerHTML = point;
+        
+        //游戏结束
+        if(point >= 10){
+          clearInterval(timer);
+          for(var i = 0; i < len; i++){
+            window.cancelAnimationFrame( gameEmojs[i].anim);
+          }
+          gameInit();
+          start.innerHTML = '重新开始';
+          alert('游戏结束');
+          return
+        }
+        // 下一关
+        if(this === gameEmojs[len - 1]){
+          level++;
+          if(level > gameData.length){
+            alert('厉害啊 都通过了');
+            level = 1;
+          }else{
+            alert('下一关');
+          }
+          gameInit();
+          start.innerHTML = '下一关';
+        }
+      });
+      index ++;
+      if(index >= len){
+        clearInterval(timer);
+        index = 0;
+      }
+    },inv)
+  }
+  
+  
+  // 生成表情
+  function createEmoj(){
+    var len = gameData[level-1]['num'],
+        str = '';
+    for(var i = 0; i < len; i++){
+      // 20~450
+      str += `<span style="background-image:url(${emoj[i%6]});left:${20 + Math.random()*420}px"></span>`
+    }
+    return str
+  }
+  
+  // 1.生成表情
+  //   1.通过level控制生成表情数目 和 下落速度
+  // 2.表情下落
+  //   1.定期器每隔inteval毫秒下落一个
+  //   2.下落速度由speed决定
+  //   3. 最后一个下落完成游戏通关
+  //   4. 失分到达10游戏结束
+  // 3.事件委托 抖动 得分
+  //   1.点击停止向下运动
+  //   2.抖动 然后display none 加一分
+  //   3.当点击是最后一个时 游戏通关
+  // 4.游戏通关
+  //   1.level ++ 判断是否最后一关
+  //   2.初始化{
+  //      界面重新载入(改变class)
+  //      分数清零
+  //      关卡数显示更新
+  //      表情全部清除
+  //    }
+  // 5.按钮点击执行 第1 第2 部
+  
+</script>
+</html>

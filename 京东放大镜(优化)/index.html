@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body{
+      margin: 0;
+    }
+    .small{
+      position: relative;
+      width: 400px;
+      height: 400px;
+      border: 2px solid black;
+      box-shadow: 2px 2px 9px rgba(48, 50, 46, 0.62);
+      background: url(./img/pic.jpg)no-repeat;
+      background-size: 100%;
+      cursor: move;
+    }
+    .small .cover{
+      width: 200px;
+      height: 200px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      background: rgba(235, 143, 22, 0.8);
+      display: none;
+    }
+    .large{
+      display: none;
+      position: absolute;
+      left: 500px;
+      top: 0px;
+      width: 600px;
+      height: 600px;
+      background: url(./img/pic.jpg)no-repeat;
+      background-size:200% 200%;
+    }
+  </style>
+</head>
+<body>
+  <div class="small">
+    <div class="cover"></div>
+  </div>
+  <div class="large"></div>
+</body>
+<script>
+
+  // 保证 放大镜/内容框 = 放大框 / 背景图   比例相同
+
+  var small = document.getElementsByClassName('small')[0];
+  var cover = small.getElementsByClassName('cover')[0];
+  var large = document.getElementsByClassName('large')[0];
+  
+  small.onmouseenter = function(e){
+    cover.style.display = 'block';
+    // 放大镜宽高
+    var cWidth = cover.offsetWidth,
+        cHeight = cover.offsetHeight,
+    // 图片区宽高
+        sWidth = small.offsetWidth,
+        sHeight = small.offsetHeight;
+    
+    
+    // 显示放大区域
+    large.style.display = 'block';
+    
+    small.onmousemove = function(e){
+      var e = e || window.event;
+      
+      // 放大镜坐标
+      var x = e.pageX - cWidth/2;
+      var y = e.pageY - cHeight/2;
+      
+      // 防止放大镜超出框内
+      x = x >= sWidth - cWidth?sWidth - cWidth:x;
+      x = x <= 0? 0 :x;
+      
+      y = y >= sHeight - cHeight? sHeight - cHeight:y;
+      y = y <= 0? 0 :y;
+      
+      cover.style.left = x + 'px';
+      cover.style.top = y + 'px';
+      
+      // 移动放大区域背景图
+      large.style.backgroundPosition = `${x / sWidth * 100 * 2}% ${y / sHeight * 100 * 2}%`;
+    }
+  }
+  
+  small.onmouseleave = function(e){
+    
+    cover.style.display = 'none';
+    small.onmousemove = null;
+    
+    large.style.display = 'none';
+  }
+  
+
+</script>
+</html>
