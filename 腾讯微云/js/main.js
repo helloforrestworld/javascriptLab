@@ -450,6 +450,12 @@
         tools.removeClass(checkAll,'checked');
         empty.style.display = 'block';
       }
+      showTips('ok',`已删除${allSelected.length}个文件夹`);
+      
+    }else{
+      
+      // 没有选中元素
+      showTips('warn','请选择文件');
       
     }
   })
