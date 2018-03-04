@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		body {
+			font-size: 14px;
+			font-family: "Lantinghei SC Extralight",Arial;
+		}
+		ul {
+			padding: 0;
+			margin: 0;
+			list-style: none;
+		}
+		a {
+			text-decoration: none;
+		}
+		img {
+			vertical-align: top;
+		}
+		#wrap {
+			width: 760px;
+			height: 260px;
+			margin: 100px auto;
+			padding: 145px 120px 95px;
+			background: url(img/bg.jpg) no-repeat 0 0;
+		}
+		#section {
+			width: 760px;
+			height: 260px;
+			-moz-box-shadow: 0px 0px 4px rgba(0,0,0,.2); 
+			box-shadow: 0px 0px 4px rgba(0,0,0,.2);
+		}
+		#choose {
+			width: 760px;
+			height: 50px;
+			margin: 0 auto;
+			background: url(img/nav_bg.png) no-repeat 0 0;
+			line-height: 50px;
+			text-indent: 21px;
+		}
+		#type {
+			width: 100%;
+			height: 210px;
+			background: url(img/type_bg.png) no-repeat 0 0;
+			padding: 17px 0 16px 28px;
+		}
+		#type li {
+			height: 44px;
+			color: #8a8a8a;
+			line-height: 44px;
+		}
+		#type a {
+			text-decoration: none;
+			margin: 0 12px 0 11px;
+			color: #000;
+		}
+		#type a.active {
+			color: deepskyblue;
+		}
+		.choose mark {
+			position: relative;
+			display: inline-block;
+			height: 24px;
+			line-height: 24px;
+			border: 1px solid #28a5c4;
+			color: #28a5c4;
+			margin: 12px 5px 0;
+			background: none;
+			padding: 0 30px 0 6px;
+			text-indent: 0;
+		}
+		.choose mark a {
+			cursor: pointer;
+			position: absolute;
+			top: 3px;
+			right: 2px;
+			display: inline-block;
+			width: 18px;
+			height: 18px;
+			background: #28a5c4;
+			color: #fff;
+			line-height: 18px;
+			font-size: 16px;
+			text-align: center;
+		}
+		
+	</style>
+</head>
+<body>
+	<div id="wrap">
+		<section id="section">
+			<nav id="choose">
+			你的选择:
+      <span class="choose"> 
+			</span>
+			</nav>
+			<ul id="type">
+				<li class="brand">
+					品牌：
+					<a href="javascript:;">苹果</a>
+					<a href="javascript:;">小米</a>
+					<a href="javascript:;">锤子</a>
+					<a href="javascript:;">魅族</a>
+					<a href="javascript:;">华为</a>
+					<a href="javascript:;">三星</a>
+					<a href="javascript:;">OPPO</a>
+					<a href="javascript:;">vivo</a>
+					<a href="javascript:;">乐视</a>
+					<a href="javascript:;">360</a>
+					<a href="javascript:;">中兴</a>
+					<a href="javascript:;">索尼</a>
+				</li>
+				<li class="size">
+					尺寸：
+					<a href="javascript:;">3.0英寸以下</a>
+					<a href="javascript:;">3.0-3.9英寸</a>
+					<a href="javascript:;">4.0-4.5英寸</a>
+					<a href="javascript:;">4.6-4.9英寸</a>
+					<a href="javascript:;">5.0-5.5英寸</a>
+					<a href="javascript:;">6.0英寸以上</a>
+				</li>
+				<li class="system">
+					系统：
+					<a href="javascript:;">安卓 ( Android )</a>
+					<a href="javascript:;">苹果 ( IOS )</a>
+					<a href="javascript:;">微软 ( WindowsPhone )</a>
+					<a href="javascript:;">无</a>
+					<a href="javascript:;">其他</a>
+				</li>
+				<li class="net">
+					网络：
+					<a href="javascript:;">联通3G</a>
+					<a href="javascript:;">双卡单4G</a>
+					<a href="javascript:;">双卡双4G</a>
+					<a href="javascript:;">联通4G</a>
+					<a href="javascript:;">电信4G</a>
+					<a href="javascript:;">移动4G</a>
+				</li>
+			</ul>
+		</section>
+	</div>
+</body>
+<script>
+  var oUl = document.querySelector('#type');
+  var choiceWrap = document.querySelector('.choose');
+  var aLi = Array.prototype.slice.call(oUl.children); //四组li
+  var choiceType = {brand:null,size:null,system:null,net:null} //每个分类各一种
+  
+  // 事件委托  a >= oUl 点击添加标签
+  oUl.onclick = function(e){
+    var e = e || window.event;
+    var target = e.target || e.srcElement;
+    if(target.nodeName === 'A'){
+      
+      var type = target.parentNode.className;
+      
+      // 更新 choiceType
+      choiceType[type] = target.innerHTML;
+      
+      // 生成标签
+      choiceWrap.innerHTML = createChoice();
+      
+      // 清除当前组选项active
+      cleanGroup(type);
+      // 点击选项加上active
+      target.className = 'active';
+      
+    }
+  }
+  
+  // 事件委托 mark => choiceWrap 点击清除标签 并且移除该组选项的active
+  choiceWrap.onclick = function (e) {
+    
+    var e = e || window.event;
+    var target = e.target || e.srcElement;
+     if(target.nodeName === 'A'){
+      var className = target.dataset.key
+      // 清除选项的active
+      cleanGroup(className);
+      // 清除choiceType信息
+      choiceType[className] = null;
+      // 标签移除
+      target.parentNode.remove();
+    }
+    
+  }
+  
+  
+  // 生成标签 innerHTML
+  function createChoice(){
+    var str = '';
+    for(var key in choiceType){
+      if(choiceType[key]){
+        str += `<mark>${choiceType[key]}<a data-key = "${key}" href="javascript:;">X</a></mark>`
+      }
+    }
+    return str
+  }
+  
+  // 清除一个分类的active
+  function cleanGroup(className){
+    aLi.forEach(function(value,index){
+       if(value.classList.contains(className)){
+         var childs = value.children,len = childs.length;
+         // 清除当前 a 的active
+         for(var i = 0; i < len; i++){
+           childs[i].className = '';
+         }
+       }
+    })
+  }
+</script>
+</html>
