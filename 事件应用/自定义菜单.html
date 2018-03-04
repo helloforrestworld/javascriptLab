@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    .menu{
+      display: none;
+      position: absolute;
+      left:0;
+      top: 0;
+    }
+    .menu ul{
+      box-shadow: 2px 2px 16px rgba(61, 61, 61, 0.49);
+    }
+    .menu li{
+      list-style: none;
+      width: 180px;
+      padding: 4px 4px 4px 10px;
+    }
+    .menu li:hover{
+      background-color: rgb(217, 218, 209);
+    }
+  </style>
+</head>
+<body>
+  <div class="menu">
+    <ul>
+      <li>菜单一</li>
+      <li>菜单一</li>
+      <li>菜单一</li>
+      <li>菜单一</li>
+      <li>菜单一</li>
+    </ul>
+  </div>
+</body>
+<script>
+  var menu = document.querySelector('.menu');
+  document.oncontextmenu = function(e){
+    
+    // 防止溢出
+    var x = e.pageX >= window.innerWidth - menu.offsetWidth? window.innerWidth - menu.offsetWidth:e.pageX;
+    var y = e.pageY >= window.innerHeight - menu.offsetHeight? window.innerHeight - menu.offsetHeight:e.pageY;
+    
+    menu.style.left = x + 'px';
+    menu.style.top = y + 'px'; 
+    menu.style.display = 'block';
+    return false
+  }
+  document.onclick = function(){
+    menu.style.display = 'none';
+  }
+</script>
+</html>

@@ -279,7 +279,7 @@
     // 每次出来之前拉回原位
     fullTipBox.style.top ='-32px';
     fullTipBox.style.transition = 'none';
-    fullTipBox.style.className = 'full-tip-box';
+    fullTipBox.className = 'full-tip-box';
     
     
     setTimeout(function(){
@@ -356,6 +356,105 @@
     }
   })
   
+  
+  // 重命名
+  let rename = tools.$('.rename')[0];
+  tools.addEvent(rename,'mouseup',function(e){
+    // 仅且选中一个才能重命名
+    let fileSelected = whoSelect(); 
+    if(fileSelected.length === 1){
+      
+      // 元素获取
+      let id = fileSelected[0].firstElementChild.dataset['fileId'],
+          fileTile = tools.$('.file-title',fileSelected[0])[0],
+          fileEditor = tools.$('.file-edtor',fileSelected[0])[0];
+          editor = tools.$('.edtor',fileSelected[0])[0];
+      // 元素显示隐藏 聚焦
+     fileTile.style.display = 'none';
+     fileEditor.style.display = 'block';
+     editor.select();
+      
+      // 文档点击 验证重命名
+     tools.addEvent(document,'mousedown',downRename)
+      // 验证重命名的逻辑
+     function downRename(){
+      let value = editor.value,
+           pId = getpid.value,
+           isSuccess = false;
+       
+      if(value.trim() === ''){
+             //提示框 
+        showTips('warn','名字不能为空');
+        value = fileTile.innerHTML;
+      }else if(dataControl.isNameExsit(datas,pId,value,id)){
+          //名字重复了
+        showTips('warn','名字重复了'); 
+        value = fileTile.innerHTML;
+      }else{
+        showTips('ok','修改成功');
+        isSuccess = true;
+      }
+      fileTile.innerHTML = value;
+      fileTile.style.display = 'block';
+      fileEditor.style.display = 'none';
+       
+        //文件选中取消
+      let checkbox = tools.$('.checkbox',fileSelected[0])[0];
+      tools.removeClass(checkbox,'checked');
+      tools.removeClass(fileSelected[0],'file-checked');
+      
+      if(isSuccess){
+          //修改数据
+        dataControl.changeNameById(datas,id,value);
+          //修改树形菜单
+        let treeOne = treeMenu.querySelector(`.tree-title[data-file-id="${id}"]`);
+        let treeTitle = tools.$('.ellipsis',treeOne)[0];
+        treeTitle.innerHTML = value;
+      }
+       
+        // 清除down事件
+       tools.removeEvent(document,'mousedown',downRename);
+     }
+       
+    }else if(fileSelected.length === 0){
+        //提示框 
+      showTips('warn','请选择文件');
+    }else{
+      //提示框 
+      showTips('warn','一次只能修改一条');
+    }
+  })
+  
+  // 删除数据
+  let del = tools.$('.delect')[0];
+  tools.addEvent(del,'mouseup',function(e){
+    let allSelected = whoSelect();
+    if(allSelected.length){
+       //循环删除选中的
+      allSelected.forEach(function(item,index){
+        let id = item.firstElementChild.dataset['fileId'];
+        let treeOne = treeMenu.querySelector(`.tree-title[data-file-id = "${id}"]`);
+          // 文件夹
+        item.remove();
+          //树形菜单
+        treeOne.parentNode.remove();
+          //更新数据
+        datas = dataControl.delectDataAndSon(datas,id);//delectDataAndSon是封装的删除某数据及所有子数据的方法
+      })
+      
+      // 如果该目录删除完 相应的提醒显示 树形菜单图标去掉
+      let childs = dataControl.getChildById(datas,getpid.value);//本目录子数据
+      if(childs.length === 0){
+        let treeOne = treeMenu.querySelector(`.tree-title[data-file-id = "${getpid.value}"]`);
+        tools.addClass(treeOne,'tree-contro-none');
+        tools.removeClass(checkAll,'checked');
+        empty.style.display = 'block';
+      }
+      
+    }
+  })
+  
+  // 移动文件夹
   
 }())
 

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body{
+      margin: 0;
+    }
+    .wrap {
+      margin: auto;
+      width: 1000px;
+      height: 600px;
+      display: flex;
+      flex-direction: column;
+    }
+    .btns {
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 1px solid #000;
+    }
+    .btns button {
+      width: 120px;
+      height: 40px;
+      margin: 0 20px;
+    }
+    .box {
+      flex: 1;
+      width: 100%;
+      position: relative;
+      border: 2px solid black;
+    }
+    .box div {
+      cursor: pointer;
+      width: 230px;
+      height: 230px;
+      margin-left: 12px;
+      margin-top: 22px;
+      border: 2px solid rgba(0, 0, 0, 0);
+      float: left;
+      text-align: center;
+      font: 100px/240px Arial;
+    }
+    .box div.active{
+      color: gold;
+    }
+    .box div:hover {
+      box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.4);
+    }
+    button::selection,div::selection{
+      background: none;
+    }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="btns">
+      <button>随机打乱</button>
+      <button>从大到小</button>
+    </div>
+    <div class="box">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+      <div>5</div>
+      <div>6</div>
+      <div>7</div>
+      <div>8</div>
+    </div>
+  </div>
+</body>
+<script src="lau.js"></script>
+<script>
+  var box = document.querySelector('.box');
+      cards = document.querySelectorAll('.box div'),
+      btn = document.querySelectorAll('.btns button'),
+      len = cards.length,
+      arrPos = []//存放位置信息;
+  
+  // 布局转换
+  for(let i = 0; i < len; i++){
+    
+    // 储存信息
+    arrPos.push({left:cards[i].offsetLeft,top:cards[i].offsetTop});
+    
+    // 添加拖拽
+    drag(cards[i],box);
+  }
+  
+  // 更新位置
+  posChange(arrPos);
+  
+  // 小 => 大    大 => 小
+  btn[1].onclick = function(){
+    arrPos.reverse();
+    this.innerHTML = this.innerHTML === '从大到小'?'从小到大':'从大到小';
+    posChange(arrPos);
+  }
+  
+  // 随机打乱
+  btn[0].onclick = function(){
+    var arrPosCopy = arrPos.slice();
+    
+    arrPosCopy.sort(function(a,b){
+      return Math.random() - 0.5 
+    })
+    
+    posChange(arrPosCopy);
+  }
+  
+  // 更新位置
+  function posChange(arrPos){
+    for(let i = 0; i < len; i++){
+      cards[i].style.position = 'absolute';
+      cards[i].style.margin = 0;
+      
+      // 运动交换位置
+      lau.move(cards[i],{left: arrPos[i]['left'],top:arrPos[i]['top']},400);
+      cards[i].style.backgroundColor = `rgb(${~~(22 + Math.random()* 200)},${~~(22 + Math.random()* 200)},${~~(22 + Math.random()* 200)})`
+    }
+  }
+  
+  // 拖拽函数
+  function drag(ele,wrap){
+    var disX,
+        disY,
+        pW = wrap.offsetWidth, //父级宽
+        pH = wrap.offsetHeight,
+        eW = ele.offsetWidth, //拖拽元素宽
+        eH = ele.offsetHeight,
+        tar,//碰撞的元素
+        originPos = {}; //拖拽前的位置
+        
+    ele.addEventListener('mousedown',fnDown,false);
+    
+    function fnDown(e){
+      
+      // 元素lau.move完成后才能获取初始位置
+      if(!ele['anim']){
+        originPos.left = ele.offsetLeft;
+        originPos.top = ele.offsetTop;
+      }
+      
+      ele.style.zIndex = 99;
+      disX = e.pageX - ele.offsetLeft;
+      disY = e.pageY - ele.offsetTop;
+      document.addEventListener('mousemove',fnMove,false);
+      document.addEventListener('mouseup',fnUp,false);
+    }
+    
+    function fnUp(e){
+      
+      
+      // 鼠标抬起交换位置
+      if(tar){
+        var tarLeft = tar.offsetLeft,tarTop = tar.offsetTop;
+        lau.move(ele,{left:tarLeft,top:tarTop});
+        lau.move(tar,{left:originPos.left,top:originPos.top});
+      }else{
+        lau.move(ele,{left:originPos.left,top:originPos.top});
+      }
+      
+      // 移除up move事件
+      document.removeEventListener('mouseup',fnUp,false);
+      document.removeEventListener('mousemove',fnMove,false);
+      ele.style.zIndex = '';
+      tar = null;
+    }
+    
+    function fnMove(e){
+      var x = e.pageX - disX;
+      var y = e.pageY - disY;
+      
+      // 限制
+      x = x <= 0? 0 :x;
+      x = x >= pW - eW ? pW- eW : x;
+      
+      y = y <= 0?  0 : y;
+      y = y >= pH - eH? pH - eH : y;
+      ele.style.left = x + 'px';
+      ele.style.top = y + 'px';
+      
+      // 找碰撞且距离最小 的目标
+      tar =  getTar(ele);
+      for(var i = 0; i < len ; i++){
+        cards[i].className = '';
+      }
+      if(tar){
+        tar.className = 'active';
+      }
+    }
+  }
+  
+  
+  // 找满足条件的元素 
+    // 1.碰撞
+    // 2.距离最小的一个
+  function getTar(origin){
+    var min = Infinity,tar = null;
+    for(let i = 0; i < len; i++){
+      
+      if(cards[i] === origin)continue
+      
+      if(lau.isCrash(origin,cards[i]) && min > distance(origin,cards[i]) ){
+        min = distance(origin,cards[i]);
+        tar = cards[i];
+      }
+      
+    }
+    return tar
+  }
+  
+  
+  // 求两个元素中心点的距离
+  function distance(ele1,ele2){
+  
+    var x =  ele1.offsetLeft - ele2.offsetLeft;
+    var y = ele1.offsetTop  - ele2.offsetTop;
+    
+    return  Math.sqrt(x*x + y*y);
+    
+  }
+</script>
+</html>

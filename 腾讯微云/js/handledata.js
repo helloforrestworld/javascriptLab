@@ -13,7 +13,7 @@ var dataControl = {
 	//找到当前数据的所有父级的name名字
 	getParentsNameAll: function (currentId){
 		return getParents(currentId).map(function (item){
-			return item.name
+			return item.title
 		});
 	},
 	//获取当前id在第几层
@@ -94,11 +94,19 @@ var dataControl = {
 			return !dataControl.contains(childs,item)
 		});
 	},
+	// 删除该数据 和 它的所有子数据
+	delectDataAndSon:function(data,id){
+	 	//自身以及所有子数据
+		var allChilds = dataControl.getChilds(data,id,true);
+		
+		//返回删除后的数据
+		return dataControl.delectDataByData(data,allChilds);
+	},
 	//数据中是否已经存在这个名字
 	isNameExsit:function (data,id,names,currentId){
 		var childs = dataControl.getChildById(data,id);
 		for( var i = 0; i < childs.length; i++ ){
-			if( childs[i].name === names && childs[i].id != currentId ){
+			if( childs[i].title === names && childs[i].id != currentId ){
 				return true;
 				break;
 			}
@@ -109,7 +117,7 @@ var dataControl = {
 	changeNameById:function (data,id,names){
 		for( var i = 0; i < data.length; i++ ){
 			if( data[i].id == id ){
-				data[i].name = names;
+				data[i].title = names;
 				return true;
 			}
 		}

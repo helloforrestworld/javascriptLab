@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .move{
+      position: absolute;
+      left: 100px;
+      top: 100px;
+      width: 100px;
+      height: 100px;
+      background-color: gold;
+    }
+    .stay{
+      position: absolute;
+      height: 100px;
+      width: 100px;
+      left: 500px;
+      top: 500px;
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="stay"></div>
+  <div class="move"></div>
+</body>
+
+<script>
+  var divMove = document.getElementsByClassName('move')[0];
+  var divStay = document.getElementsByClassName('stay')[0];
+  
+  
+  divMove.onmousedown = function(e){
+    var disX  = e.pageX - this.offsetLeft;
+    var disY = e.pageY - this.offsetTop;
+    
+    document.onmousemove = function(e){
+      divMove.style.left = e.pageX - disX + 'px';
+      divMove.style.top = e.pageY - disY + 'px';
+      
+      console.log( isCrash(divMove,divStay));
+    }
+  }
+  document.onmouseup = function(e){
+    document.onmousemove = null;
+  }
+  
+  function isCrash(current,target){
+    var curR = current.getBoundingClientRect(),
+        tarR = target.getBoundingClientRect();
+        
+    return curR['right'] >= tarR['left'] && curR['left'] <= tarR['right'] && curR['bottom'] >= tarR['top'] && curR['top'] <= tarR['bottom'] 
+  }
+</script>
+
+</html>

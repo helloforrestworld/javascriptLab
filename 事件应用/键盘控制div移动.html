@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .demo{
+      position:absolute;
+      left: 100px;
+      top: 100px;
+      width: 100px;
+      height: 100px;
+      background-color: gold;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo"></div>
+</body>
+<script>
+  var demo = document.getElementsByClassName('demo')[0];
+  var prevTime = 0;
+  var speed = 10;//速度
+  var g = {'37':0,'38':0,'39':0,'40':0};//加速度 长按
+  
+  window.onkeydown = function(e){
+    var keyCode = e.keyCode,
+        key = e.key,
+        time = Date.now() - prevTime;
+    prevTime = Date.now();
+    
+    //间隔小于30毫米 长按
+    if(time < 30){
+      // 清除上一个动画帧
+      window.cancelAnimationFrame(demo[key]);
+      demo[key] = null;
+      // 加速度+
+      g[keyCode]++;
+    }
+    
+    switch(keyCode){
+      
+      case 37:
+        run(demo,key,'left',-speed-g[keyCode]);
+        break;
+      case 39:
+        run(demo,key,'left',speed+g[keyCode]);
+        break;
+      case 38:
+        run(demo,key,'top',-speed-g[keyCode]);
+        break;
+      case 40:
+        run(demo,key,'top',speed+g[keyCode]);
+        break;  
+    }
+    
+  }
+  
+  // 松开方向键 清除动画帧
+  window.onkeyup = function(e){
+    var keyCode = e.keyCode,key = e.key;
+    
+    // 该键抬起 清除该方向的动画帧
+    window.cancelAnimationFrame(demo[key]);
+    demo[key] = null;
+    
+    // 加速度归0
+    g[keyCode] = 0;
+  }
+  
+  // 按下方向键 元素开始移动
+  function run(ele,key,attr,speed){
+      if(ele[key]) return
+      
+      (function fn(){
+        
+        ele[key] = window.requestAnimationFrame(fn,ele);
+        ele.style[attr] = attr === 'top'? ele.offsetTop + speed + 'px':ele.offsetLeft + speed + 'px';
+        
+      }())
+  }
+  
+</script>
+</html>

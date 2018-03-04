@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			.wrap{
+				width: 500px;
+				height: 400px;
+				box-shadow: 2px 2px 8px black;
+				border: 2px solid sandybrown;
+				box-sizing: border-box;
+				overflow: hidden;
+				position: relative;
+				margin: 50px auto;
+			}
+			.text{
+				width: calc(100% - 20px);
+				position: absolute;
+				left: 0;
+				top: 0;
+				padding-top:4px;
+				font-size: 14px;
+				word-break: break-all;
+			}
+			.scrollW{
+				position: absolute;
+				right: 0;
+				top: 0;
+				width: 20px;
+				height: 100%;
+				border-left: 2px solid sandybrown;
+			}
+			.scrollB{
+				width: 100%;
+				height: 160px;
+				position: absolute;
+				left: 0;
+				top: 0;
+				background: #BBADA0;
+				border-radius: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<p class="text">爸爸把首都十大科技时代科技是受伤的爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤的爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受
+			爸爸把首都十大科技时代科技是受伤的爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤
+			爸爸把首都十大科技时代科技是受伤的爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤
+			爸爸把首都十大科技时代科技是受伤的爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤
+			爸爸把首都十大科技时代科技是受伤的爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤
+			爸爸把首都十大科技时代科技是受伤的爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤爸爸把首都十大科技时代科技是受伤
+			</p>
+			<div class="scrollW">
+				<div class="scrollB"></div>
+			</div>
+		</div>
+	</body>
+	<script>
+		var wrap = document.querySelector('.wrap');
+		var tx  = document.querySelector('.text');
+		var scrollW = document.querySelector('.scrollW');
+		var scrollB = document.querySelector('.scrollB');
+		
+		var maxT = scrollW.clientHeight - scrollB.offsetHeight;
+		
+		scrollB.addEventListener('mousedown',function(e){
+			e.preventDefault();
+			var  dis = e.pageY -  wrap.offsetTop - 2 - this.offsetTop;
+			
+			document.onmousemove = function(e){
+				var T = e.pageY - wrap.offsetTop - 2 - dis
+				
+				if(T<=0) T = 0;
+				if(T>=maxT)T = maxT;
+				
+				scrollB.style.top = T + 'px';
+				
+				tx.style.top  =  - scrollB.offsetTop +'px';
+			}
+			document.onmouseup = function(e){
+				document.onmouseup = document.onmousemove = null;
+			}
+		})
+		
+		
+		var speed =  (scrollW.clientHeight -  scrollB.offsetHeight)/20;
+		mouseScroll(fnUp,fnDown);
+		function fnUp(){
+		 	var T =  scrollB.offsetTop>speed?scrollB.offsetTop-speed:0;
+		 	scrollB.style.top = T +'px';
+		 	tx.style.top  =  - scrollB.offsetTop +'px';
+		}
+		function fnDown(){
+		 	var T = maxT -scrollB.offsetTop>speed?scrollB.offsetTop+speed:maxT;
+		 	scrollB.style.top = T +'px';
+		 	tx.style.top  =  - scrollB.offsetTop +'px';
+		}
+		
+		
+		tx.addEventListener('mousedown',function(e){
+			e.preventDefault();
+		})
+		
+		function mouseScroll(fnUp,fnDown){
+			if(window.navigator.userAgent.indexOf('Firefox')!==-1){
+				document.addEventListener('DOMMouseScroll',fnScroll);
+			}else{
+				
+				document.addEventListener('mousewheel',fnScroll);
+			}
+			function fnScroll(e){
+				if(e.target.className!=='text')return;
+				var dir ;
+				if(e.detail){ //火狐
+					dir = e.detail<0? true:false;
+				}
+				
+				if(e.wheelDelta){//ie 谷歌
+					dir = e.wheelDelta>0?true:false;
+				}
+				
+				if(dir){
+					fnUp&&fnUp();
+				}else{
+					fnDown&&fnDown();
+				}
+			}
+		}
+		
+	</script>
+</html>
