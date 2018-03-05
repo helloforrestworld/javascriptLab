@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s
+  }
+  .fade-enter, .fade-leave-active {
+    opacity: 0
+  }
+  </style>
+</head>
+<body>
+  <div id="app" v-bind:title="message">
+    {{message}}
+  </div>
+  <div id="app1" v-bind:title="message">
+    <p v-if="seen">你不一定能看到我</p>
+  </div>
+  <div id="app2" v-bind:title="message">
+    <transition name = "fade">
+      <p v-if="seen">你不一定能看到我</p>
+    </transition>
+  </div>
+  <ol id="app3">
+    <li v-for="todo in todos">
+      {{todo.text}}
+    </li>
+  </ol>
+  <div id="app4">
+    {{message}}
+    <button v-on:click = 'changeMessage'>翻转</button>
+  </div>
+  
+  <div id="app5">
+    {{message}}
+    <input type="text" v-model="message">
+  </div>
+  <div id="app6">
+    <ol>
+      <todo-item v-for="item in groceryList" v-bind:todo = "item"></todo-item>
+    </ol>
+  </div>
+</body>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script>
+ // 绑定数据
+  var app = new Vue({
+    el:'#app',
+    data:{
+      message:'Hello Vue' + Date.now()
+    }
+  })
+  
+  app.message = '动态修改' + + Date.now();
+  
+  // 显示隐藏
+  var app1 = new Vue({
+    el:"#app1",
+    data:{
+      seen:true,
+      message:'通过v-if显示隐藏'
+    }
+  })
+  // 加上过渡
+  var app2 = new Vue({
+    el:"#app2",
+    data:{
+      seen:true,
+      message:'加入过渡'
+    }
+  })
+  // v-for
+  var app3 = new Vue({
+    el:"#app3",
+    data:{
+      todos:[
+        {text:"第一条"},
+        {text:"第二条"},
+        {text:"第三条"}
+      ]
+    }
+  })
+  // app3.todos.push({text:"新添加的"});
+  
+  // v-on绑定事件
+  var app4 = new Vue({
+    el:'#app4',
+    data:{
+      message:'hello vue !'
+    },
+    methods: {
+      changeMessage:function(){
+        this.message = this.message.split('').reverse().join('');
+      }
+    }
+  })
+  // v-model
+  
+  var app5 = new Vue({
+    el:'#app5',
+    data:{
+      message:'hello'
+    }
+  })
+  
+  // 组件构建应用
+  Vue.component('todo-item',{
+    props:['todo'],
+    template: '<li>{{todo.text}}</li>'
+  })
+  var app6 = new Vue({
+    el:'#app6',
+    data:{
+      groceryList:[
+        {text:'first'},
+        {text:'second'},
+        {text:'third'}
+      ]
+    }
+  })
+</script>
+</html>

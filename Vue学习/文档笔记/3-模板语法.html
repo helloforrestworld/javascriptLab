@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <div v-html='rawHtml'></div>
+  </div>
+  <div id="app1">
+    <button :id="id" :disabled = "isDis">按钮</button>
+  </div>
+  <div id="app2" :class = "'list-'+id">
+    {{3 + 4 + id}}
+  </div>
+  <div id="app3">
+    {{message|trim|upCase}}
+  </div>
+</body>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script>
+
+// 插值
+  // ----------------文本--------------------------------------
+    // {{message}} Mustache语法
+    
+    // v-once 执行一次插值 后续数据改变内容不会更新
+    // 请留心这会影响到该节点上所有的数据绑定
+  
+  
+  
+  // ----------------纯HTML--------------------------------------
+  
+    // v-html 被插入内容被当作纯html
+    var vm = new Vue({
+      el:'#app',
+      data:{
+        rawHtml:`<ul>
+          <li>11111</li>
+          <li>22222</li>
+        </ul>`
+        // 这里就不要再复合模板了
+      }
+    })
+    // v-html='rawHtml'
+  
+  
+  
+  
+  // ----------------属性--------------------------------------
+  
+  var vm1 = new Vue({
+    el:'#app1',
+    data:{
+      id:'abc',
+      isDis: false
+    }
+  })
+  // v-bind:attr = ''
+  // 简写
+  // :id="id" :disabled = "isDis"
+  
+
+    
+  // ----------------使用javascript表达式--------------------------------------
+  var vm2 = new Vue({
+    el:'#app2',
+    data:{
+      id:'abc'
+    }
+  })
+  // {{3 + 4 + id}}
+  // :class = "'list-'+id"
+  
+  
+  // ----------------过滤器--------------------------------------
+  var vm3 = new Vue({
+    el:'#app3',
+    data:{
+      message:' abc'
+    },
+    filters:{
+      trim(value){
+        return value.trim()
+      },
+      upCase(value){
+        return value.substr(0,1).toUpperCase() + value.substr(1)
+      }
+    }
+  })
+  // 但是filters只能在{{}}里面使用
+  // 推荐使用computed 
+  
+
+// 指令
+  //------------------ 参数--------------
+  // v-bind:href = "url"
+  // 在这里 href 是参数，告知 v-bind 指令将该元素的 href 属性与表达式 url 的值绑定。
+  
+  // <a v-on:click="doSomething">
+  // 在这里参数是监听的事件名。
+  
+  //-------------------修饰符----------------
+  // 修饰符（Modifiers）是以半角句号 . 指明的特殊后缀，用于指出一个指定应该以特殊方式绑定。例如，.prevent 修饰符告诉 v-on 指令对于触发的事件调用 event.preventDefault()：
+  // <form v-on:submit.prevent="onSubmit"></form>
+  
+// 缩写
+// v-on:click  => @click
+// v-bind:attr  => :attr
+  
+</script>
+</html>

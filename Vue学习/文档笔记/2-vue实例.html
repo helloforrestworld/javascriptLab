@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="wrap"></div>
+  <div class="" id="app1"></div>
+  <div id="app2">
+    <new-extend></new-extend>
+  </div>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script>
+
+// ---------构造器 构造器扩展  组件注册和获取--------------------------------------
+// 构造实例
+  // var vm = new Vue({
+  //   // 挂载元素，数据，方法，模本，钩子等
+  // })
+
+// 注册组件
+   // Vue.component('defined-by-you',{
+   //   // 数据，方法，模本，钩子等
+   // })
+   // Vue.component('defined-by-you',Vue.extend({
+   //   
+   // }))
+ // 获取注册的组件
+ // Vue.component('you-have-defined')
+
+// 创建可复用的组件构造器
+  var MyComponent = Vue.extend({
+    template:'<p>{{firstName}}{{lastName}}aka{{alias}}</p>',
+    data(){
+      return {
+        firstName:'Walter',
+        lastName: 'White',
+        alias: 'Heisenberg'  
+      }
+    }
+  })
+  
+  // new MyComponent().$mount('#app1');
+  var vm = new MyComponent({
+    el:'#app1'
+  })
+  // 上面等价于这里
+  var vm2 = new Vue({
+    el:'#wrap',
+    template:'<p>{{firstName}}{{lastName}}aka{{alias}}</p>',
+    data(){
+      return {
+        firstName:'Walter',
+        lastName: 'White',
+        alias: 'Heisenberg'  
+      }
+    }
+  })
+  // 注册为组件
+  Vue.component('new-extend',MyComponent);
+  var vm3 = new Vue({
+    el:'#app2',
+  })
+  // 获取组件
+  console.log(Vue.component('new-extend'));
+  // ---------构造器 构造器扩展  组件注册和获取--------------------------------------
+  
+  
+  // ---------属性和方法--------------------------------------
+  var data = {a:1};
+  var vm = new Vue({
+    data:data
+  })
+  console.log(vm.a); //1
+  vm.a = 3
+  console.log(data.a)//3
+  //这些属性都是响应的 如果在创建后添加的属性不会触发视图更新
+
+  // 一些挂在实例上有用的方法和属性
+  console.log(data === vm.$data)//true
+  // vm.$el 获取挂载的元素
+  
+  vm.$watch('a',function(newVal,oldVal){
+    console.log(newVal,oldVal);
+  })
+  vm.a = 2;  //2 3
+  // 注意在回调中不要使用箭头函数 this默认指向vm
+  // ---------属性和方法--------------------------------------
+  
+  
+  
+  
+  
+  // ---------实例生命周期--------------------------------------
+  // 说明： 每个实例创建之前 会经历一系列初始化 如编译模板 挂载DOM元素 等 ,在这个过程以后调用生命周期钩子函数
+  
+  // 例如created
+  var vmlive = new Vue({
+    data:{a:1},
+    created() {
+      // this 指向vm实例
+      console.log('a is ' + this.a);
+    }
+  })
+  // 还有mounted、 updated 、destroyed
+  
+  // ---------实例生命周期---------------------------------------------------------
+
+  // ---------生命周期图示---------------------------------------------------------
+  // http://doc.vue-js.com/v2/guide/instance.html
+</script>
+</html>
