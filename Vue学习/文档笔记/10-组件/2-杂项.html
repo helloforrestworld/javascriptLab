@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script>
+  // 编写可复用的组件
+    //API:Vue 组件的 API 来自三部分 - props, events 和 slots 
+  
+  // 子组件索引
+    // 有时需要在javascript中访问 子组件 使用 ref
+    // <parent id="parent">
+    //  <example ref = 'profile'></example>
+    // </parent>
+    
+    // var parent = new Vue({
+    //  el:'#parent'
+    // })
+    // 
+    // parent.$refs.profile
+    
+    // 当 ref 和 v-for 一起使用时， ref 是一个数组或对象，包含相应的子组件。
+    
+    
+    // $refs 只在组件渲染完成后才填充，并且它是非响应式的。它仅仅作为一个直接访问子组件的应急方案——应当避免在模版或计算属性中使用 $refs
+    
+    
+    // 异步组件
+    // Webpack 的代码分割功能
+    
+    
+    // 组件命名的约定
+      // 当注册组件（或者 props）时，可以使用 kebab-case ，camelCase ，或 TitleCase 。Vue 不关心这个。
+      // 在组件定义中
+      // components: {
+      //   // 使用 camelCase 形式注册
+      //   'kebab-cased-component': { /* ... */ },
+      //   'camelCasedComponent': { /* ... */ },
+      //   'TitleCasedComponent': { /* ... */ }
+      // }
+      // <!-- 在HTML模版中始终使用 kebab-case -->
+      // <kebab-cased-component></kebab-cased-component>
+      // <camel-cased-component></camel-cased-component>
+      // <title-cased-component></title-cased-component>
+      
+      
+      // 还是那句 在 模板中 随便
+      
+      // 如果组件未经 slot 元素传递内容，你甚至可以在组件名后使用 / 使其自闭合：
+      // <my-component/>不过这个也是在字符串模板中有效
+      
+      
+      //递归组件
+      // 必须有name和终止条件
+      // Vue.component('unique-name-of-my-component',{
+      //   data(){
+      //     num:5
+      //   }
+      //   name:'stack-overflow',
+      //   template:'<div><stack-overflow v-if="num--"></stack-overflow></div>'
+      // })
+      
+      
+      // 内联模板
+      
+      // <my-component inline-template>
+      //   <div>
+      //     <p>These are compiled as the component's own template.</p>
+      //     <p>Not parent's transclusion content.</p>
+      //     {{message}}
+      //   </div>
+      // </my-component>
+      
+      // Vue.component('my-component',{
+      //   data(){
+      //     message:'messsssss'
+      //   }
+      // })
+      
+      
+      // X-template
+      // <script type="text/x-template" id="hello-world-template">
+      //   <p>Hello hello hello</p>
+      // <//script>
+      // 
+      // Vue.component('hello-world', {
+      //   template: '#hello-world-template'
+      // })
+      
+      
+      // 使用v-once 在组件中缓存大量的静态内容
+      // Vue.component('terms-of-service', {
+      // template: '\
+      //   <div v-once>\
+      //     <h1>Terms of Service</h1>\
+      //     ... a lot of static content ...\
+      //   </div>\
+      // '
+      // })
+</script>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app1" :class = "{active:isActive,click:isClick}"></div>
+  <hr>
+  <div id="app2" :class = "classObject"></div>
+  <hr>
+  <div id="app3" :class = "classObject"></div>
+  <hr>
+  <div id="app4" :class = "[class1,class2]"></div>
+  <hr>
+  <div id="app5" :class = "[isActive?add:'']"></div>
+  <hr>
+  <div id="app6" :style = "{width:'500px',height:hei + 'px',backgroundColor:color}"></div>
+  <hr>
+  <div id="app7" :style = "styleObj"></div>
+  <hr>
+  <div id="app8" :style="[styleObj1,styleObj2]">123</div>
+  <hr>
+  <div id="app9" :style="obj">123</div>
+</body>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script>
+  // v-bind:class  v-bind:style 
+  // 因为字符串拼接容易出错， Vue在这两部分做了增强
+
+//:class 
+  // 对象语法
+  var vm1 = new Vue({
+    el:'#app1',
+    data:{
+      isActive:true,
+      isClick:true
+    }
+  })
+  
+  // 直接绑定一个对象Class
+  var vm2 = new Vue({
+    el:'#app2',
+    data:{
+      classObject:{
+        isActive:true,
+        isClick:true
+      }
+    }
+  })
+  
+  // 还可以这样 与计算属性结合
+  var vm3 = new Vue({
+    el:'#app3',
+    data:{
+      isActive:true,
+      str:'abcde'
+    },
+    computed:{
+      classObject(){
+        return {class1: this.isActive&&this.str.length > 5,class2:this.str[0] === 'a'}
+      }
+    }
+  })
+  
+  
+  // 数据语法
+  var vm4 = new Vue({
+    el:'#app4',
+    data:{
+      class1:'active1',
+      class2:'active2'
+    }
+  })
+  // :class = '[class1,class2]' => class = "active1, active2"
+  // 当然也可以使用三元
+  // :class = '[isActive?willadd:'',anotherClass]'
+  // 如果多个三元或者有点繁琐
+  // 也可以在数组里面 用对象
+  // :class = [{theadd:isActive},anotherClass]
+  
+  var vm5 = new Vue({
+    el:'#app5',
+    data:{
+      isActive:true,
+      add:'active'
+    }
+  })
+  
+  // 用在组件上
+  Vue.component('item1',{
+    template:'<div class = "foo baz"></div>'
+  })
+  // <item1 class = "bar aa"></item1>
+  // 最终渲染为 <div class = "foo baz bar aa"></div>不会被覆盖
+  // :class 也同样适用
+  // <item :class = "{active:isActive}"></item>
+  // <div class = "foo baz active"></div>
+
+//:style 
+  var vm6 = new Vue({
+    el:'#app6',
+    data:{
+      color:'red',
+      hei:100
+    }
+  })
+  // 当然 清晰一点应该这样写
+  var vm7 = new Vue({
+    el:'#app7',
+    data:{
+      styleObj:{
+        width:'100px',
+        height:'100px',
+        backgroundColor:'gold'
+      }
+    }
+  })
+  // 当然也可以用数组绑定多个属性对象
+  var vm8 = new Vue({
+    el:'#app8',
+    data:{
+      styleObj1:{
+        width:'100px',
+        height:'100px',
+        backgroundColor:'gold'
+      },
+      num:2
+    },
+    computed:{
+      styleObj2(){
+        return {fontSize:this.num * 6 + 'px'}
+      }
+    }
+  })
+  
+  // 自动添加前缀
+  // 当 v-bind:style 使用需要特定前缀的 CSS 属性时，如 transform ，Vue.js 会自动侦测并添加相应的前缀。
+  
+  var vm9 = new Vue({
+    el:'#app9',
+    data:{
+      obj:{
+        fontSize:'16px',
+        transform:'scale(1.2)',
+        width:'100px',
+        height:'100px',
+        backgroundColor:'red'
+      }
+    }
+  })
+
+
+</script>
+</html>

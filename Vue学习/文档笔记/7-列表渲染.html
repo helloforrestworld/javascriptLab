@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app1">
+    <ul>
+      <li v-for="(item,index) in items">
+        {{item + '-' + index}}
+      </li>
+    </ul>
+  </div>
+  <hr>
+  <div id="app2">
+    <ul>
+      <template v-for="item in items">
+        <li>{{item.message}}</li>
+        <li>哈哈哈</li>
+      </template>
+    </ul>
+  </div>
+  
+  <div id="app3">
+    <ul>
+      <li v-for="(item,key,index) in obj">
+        item:{{item}},key:{{key}},index:{{index}}
+      </li>
+    </ul>
+  </div>
+  <hr>
+  <div id="app4">
+    <ul>
+      <li v-for="n in 10">{{n}}</li>
+    </ul>
+  </div>
+  <hr>
+  <div id="app5">
+    <input 
+      type="text" 
+      v-model="text"
+      placeholder="add a list"
+      @keyup.enter="addList">
+    <ul>
+      <li       
+        is="todo-item"
+        v-for="(item,index) in todos"
+        :title = "item"
+        @remove = "todos.splice(index,1)"
+      >
+      </li>
+    </ul>
+  </div>
+  
+  <hr>
+  <div id="app6">
+    <ul>
+      <li v-for="item in even">{{item}}</li>
+    </ul>
+  </div>
+  <hr>
+  <div id="app7">
+    <ul>
+      <li v-for="item in even()">{{item}}</li>
+    </ul>
+  </div>
+</body>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script>
+  // v-for = "(item,index) in items" 数组
+  // v-for = "(item,key,index)in obj" 对象
+  // 当然 in 也可以用of 替代
+  
+  // 基本语法
+  var vm1 = new Vue({
+    el:'#app1',
+    data:{
+      items:[
+        'aaa',
+        'bbb',
+        'ccc'
+      ]
+    }
+  })
+  
+  // template v-for
+  var vm2 = new Vue({
+    el:'#app2',
+    data:{
+      items:[
+        {message:'aaa',id:0},
+        {message:'ccc',id:1},
+        {message:'ccc',id:2}
+      ]
+    }
+  })
+  
+  
+  // 对象的迭代 v-for
+  var vm3 = new Vue({
+    el:'#app3',
+    data:{
+      obj:{
+        firstName:'Warter',
+        lasteName:'White',
+        fullName:'Warter White'
+      }
+    }
+  })
+  
+  
+  // 整数迭代
+  var vm4 = new Vue({
+    el:'#app4'
+  })
+  
+  
+  // 组件和v-for
+  // 简易的todolist
+  
+  Vue.component('todo-item',{
+    template :`
+    <li>
+      {{title}}
+      <button @click = "$emit('remove')">X</button>
+    </li>`,
+    props:['title']
+  })
+  var vm5 = new Vue({
+    el:'#app5',
+    data:{
+      text:'',
+      todos:[
+        'todolist1',
+        'todoslit2',
+        'todoslist3'
+      ]
+    },
+    methods: {
+      addList() {
+        if(this.text.trim() !== '') {
+          this.todos.push(this.text);
+        }
+        this.text = ''
+      }
+    }
+  })
+  
+  
+  // key 给Vue一个提示 以便追踪身份
+  // 当v-for 更新已经渲染过的列表时，如数据顺序发生变化，Vue做的是更新数据 而不是 切换DOM顺序以对应数据列表
+  
+  // <div v-for="item in items" :key="item.id">
+  //   <!-- 内容 -->
+  // </div>
+  
+  
+  
+  
+  // 数组更新检测
+  
+    // 变异方法
+      //这些方法会触发视图更新
+        // pop()
+        // shift()
+        // unshift()
+        // splice()
+        // sort()
+        // reverse()
+    
+    // 数组重朔
+      // 例如： filter(), concat(), slice() 这些方法不会改变原数组 处理后需要给数组赋上新的引用
+      // example1.items = example1.items.filter(function (item) {
+      //   return item.message.match(/Foo/)
+      // })
+      // 而且 Vue做了优化 会重用之前的DOM
+    
+    // 注意事项 
+      // 例如 items[0] = new Val  item.length = 2 这两种情况是不会触发视图改变的
+      // 要达到同样的效果
+      // 1.    Vue.set(item,0,newVal)/  item.splice(0,1,newVal)
+      // 2.    item.splice(newLength)
+  
+  
+  
+  
+  
+  // 显示过滤/排序结果
+  // 有时你不希望改变原来的数组
+  // 这种情况下可以使用计算属性/methods
+  
+  var vm6 = new Vue({
+    el:'#app6',
+    data:{
+      arr:[0,1,2,3,4,5,6]
+    },
+    computed:{
+      even(){
+        return  this.arr.filter(function(item){
+          return item % 2 === 0 
+        })
+      }
+    }
+  })
+  
+  var vm7 = new Vue({
+    el:'#app7',
+    data:{
+      arr:[0,1,2,3,4,5,6]
+    },
+    methods: {
+      even() {
+        return  this.arr.filter(function(item){
+          return item % 2 === 0 
+        })
+      }
+    }
+  })
+</script>
+</html>

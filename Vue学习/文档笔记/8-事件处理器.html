@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app1">
+    <button @click = "count +=1 ">点击</button>
+    <p>这个按钮点击了{{count}}次</p>
+  </div>
+  <hr>
+  <div id="app2">
+    <button @click = "greet">greet</button>
+  </div>
+  <hr>
+  <div id="app3">
+    <button @click = "say('Hi',$event)">Hi</button>
+    <button @click = "say('Vue',$event)">Vue</button>
+  </div>
+</body>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script>
+
+// 基本栗子
+  var vm1 = new Vue({
+    el:'#app1',
+    data:{
+      count:0
+    }
+  })
+
+//更复杂的栗子 接受一个方法 
+var vm2 = new Vue({
+  el:'#app2',
+  data:{
+    name:'Hello Vue !'
+  },
+  methods: {
+    greet(ev) {
+      alert(this.name);
+      alert(ev.target.tagName);
+    }
+  }
+})
+
+// 内联处理器方法
+var vm3 = new Vue({
+  el:'#app3',
+  methods:{
+    say(message,ev){
+      console.log(ev)
+      alert(message);
+    }
+  }
+})
+// 关于原生的事件对象
+  // 如果v-on: event = '' 绑定的是一个事件
+  // 那默认第一个参数就是event
+  // 如果绑定的是内联的javascript 则需要声明 $event  如 @click = 'say('hi',$event)' 
+
+
+
+
+// 修饰符
+// 
+// 事件修饰符
+
+// Vue.js 为 v-on 提供了 事件修饰符。通过由点(.)表示的指令后缀来调用修饰符。
+  // <!-- 阻止单击事件冒泡 -->
+  // <a v-on:click.stop="doThis"></a>
+  // <!-- 提交事件不再重载页面 -->
+  // <form v-on:submit.prevent="onSubmit"></form>
+  // <!-- 修饰符可以串联  -->
+  // <a v-on:click.stop.prevent="doThat"></a>
+  // <!-- 只有修饰符 -->
+  // <form v-on:submit.prevent></form>
+  // <!-- 添加事件侦听器时使用事件捕获模式 -->
+  // <div v-on:click.capture="doThis">...</div>
+  // <!-- 只当事件在该元素本身（而不是子元素）触发时触发回调 -->
+  // <div v-on:click.self="doThat">...</div>
+
+// 按键修饰符
+  // 只有在 keyCode 是 13 时调用 vm.submit() 
+  // <input v-on:keyup.13="submit">
+  
+  //   <!-- 同上 -->
+  // <input v-on:keyup.enter="submit">
+  // <!-- 缩写语法 -->
+  // <input @keyup.enter="submit">
+  // 
+  // 常用按键别名
+  // enter
+  // tab
+  // delete (捕获 “删除” 和 “退格” 键)
+  // esc
+  // space
+  // up
+  // down
+  // left
+  // right
+</script>
+</html>

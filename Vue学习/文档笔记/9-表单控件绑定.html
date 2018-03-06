@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app1">
+    <input v-model="message" placeholder="add">
+    <p>the message is {{message}}</p>
+  </div>
+  <hr>
+  <div id="app2">
+    <span>multipie text:</span>
+    <p style="white-space:pre">{{message}}</p>
+    <textarea v-model="message"></textarea>
+  </div>
+  <hr>
+  <div id="app3">
+    <input type="checkbox" v-model="checked" id="c1">
+    <label for="c1">{{checked}}</label>
+  </div>
+  <hr>
+  <div id="app4">
+    <input  id = "john"type="checkbox" value = "john" v-model="checkValue">
+    <label for="john">john</label>
+    <input  id = "jack"type="checkbox" value = "jack" v-model="checkValue">
+    <label for="jack">jack</label>
+    <input  id = "Marshall"type="checkbox" value = "Marshall" v-model="checkValue">
+    <label for="Marshall">Marshall</label>
+    <hr>
+    <p>the checkVal:{{checkValue}}</p>
+  </div>
+  <hr>
+  <div id="app5">
+    <input type="radio"  name="num" value="one" id="one" v-model="picked">
+    <label for="one">one</label>
+    <input type="radio"  name="num" value="two" id="two" v-model="picked">
+    <label for="two">two</label>
+    <p>picked:{{picked}}</p>
+  </div>
+  <div id="app6">
+    <select v-model="selected">
+      <option>A</option>
+      <option>B</option>
+      <option>C</option>
+    </select>
+    <p>selected:{{selected}}</p>
+  </div>
+  <hr>
+  <div id="app7">
+    <select v-model="selected" multiple>
+      <option>A</option>
+      <option>B</option>
+      <option>C</option>
+    </select>
+    <p>selected:{{selected}}</p>
+  </div>
+  <hr>
+  <div id="app8">
+    <select v-model="selected">
+      <option v-for="opt in opts"  :value="opt.value">
+        {{opt.text}}
+      </option>
+    </select>
+    <p>selected:&nbsp&nbsp&nbsp{{selected}}</p>
+  </div>
+  <hr>
+  <div id="app9">
+    <input type="radio" v-model="picked" :value="activeValue1">
+    <input type="radio" v-model="picked" :value="activeValue2">
+    <p>picked{{picked}}</p>
+  </div>
+  <hr>
+  <div id="app10">
+    <input 
+      type="checkbox"
+      v-model="toggle"
+      :true-value="a"
+      :false-value="b"
+    >
+    <p>
+      toggle:{{toggle}}
+    </p>
+  </div>
+  <hr>
+  <div id="app11">
+    <select v-model="selected" >
+      <option :value = "{number:123}">123</option>
+    </select>
+  </div>
+</body>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script>
+// 基础用法
+  //文本
+   var vm1 = new Vue({
+     el:'#app1',
+     data:{
+       message:''
+     }
+   })
+  // 多行文本
+  var vm2 = new Vue({
+    el:'#app2',
+    data:{
+      message:''
+    }
+  })
+  // 复选框
+  var vm3 = new Vue({
+    el:'#app3',
+    data:{
+      checked:false
+    }
+  })
+  // 多个复选框绑定到一个数组
+  var vm4 = new Vue({
+    el:'#app4',
+    data:{
+      checkValue:[]
+    }
+  })
+  // 单选按钮
+  var vm5 = new Vue({
+    el:'#app5',
+    data:{
+      picked:''
+    }
+  })
+  
+  // 单选列表
+  var vm6 = new Vue({
+    el:'#app6',
+    data:{
+      selected:''
+    }
+  })
+  
+  //多选列表
+  var vm7 = new Vue({
+    el:'#app7',
+    data:{
+      selected:[]
+    }
+  })
+  // v-for动态渲染
+  var vm8 = new Vue({
+    el:'#app8',
+    data:{
+      selected:'',
+      opts:[
+        {text:'One',value:'A'},
+        {text:'Two',value:'B'},
+        {text:'Three',value:'C'}
+      ]
+    }
+  })
+
+// 绑定value
+  //v-model = 'some'; 
+  // checkbox radio没有value some默认返回时布尔值 如果value则返回value值
+  // checkbox还有绑定一个数组 勾选中了 向数组push值
+  // select 默认some 返回时的是option文本字符串  绑定了value 则返回value
+  // <select multipie></select> 加上multipie可以绑定数组
+  
+  // 但是有时我们想绑定 value 到 Vue 实例的一个动态属性上，
+  // 这时可以用 v-bind 实现，并且这个属性的值可以不是字符串
+  
+  //单选
+  var vm9 = new Vue({
+    el:'#app9',
+    data:{
+      picked:'',
+      activeValue1:90,
+      activeValue2:900
+    }
+  })
+  // 复选
+  var vm10 = new Vue({
+    el:'#app10',
+    data:{
+      a:1,
+      b:'123123',
+      toggle:''
+    }
+  })
+  //选项列表
+  var vm11 = new Vue({
+    el:'#app11',
+    data:{
+      selected:''
+    }
+  })
+  // typeof vm.selected
+  // console.log(vm.selected.number)
+  
+  
+  
+// 修饰符
+  // v-model.lazy = ""  应用change 而不是 input
+  // v-model.number = "" 转为数字  如果结果是NaN则返回原值
+  // v-model.trim = " " 去空格呗
+  
+</script>
+</html>

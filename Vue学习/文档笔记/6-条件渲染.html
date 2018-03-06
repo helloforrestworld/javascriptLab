@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app1" v-if="seen">ok</div>
+  <div v-else>error</div>
+  
+  <div id="app2">
+    <template v-if="seen">
+      <h1>Tilte</h1>
+      <p>一组vseen</p>
+      <p>paapapapa</p>
+    </template>
+    <template v-else>
+      <div>eles</div>
+      <h2>h2h2h2h2h</h2>
+    </template>
+    <hr>
+  </div>
+  <div id="app3">
+    <h3 v-show="seen">h3h3h3vshowvshow</h3>
+  </div>
+</body>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script>
+  // v-if 
+  var vm1 = new Vue({
+    el:'#app1',
+    data:{
+      seen:false
+    }
+  })
+  // v-if v-else 一定要靠着
+  
+  // template v-if   
+  var vm2 = new Vue({
+    el:'#app2',
+    data:{
+      seen:true
+    }
+  })
+  
+  // v-show
+  var vm3 = new Vue({
+    el:'#app3',
+    data:{
+      seen:true
+    }
+  })
+  
+  // 对比
+  // v-if是真实的条件渲染 也是惰性的 如果条件为false就什么都不做
+  // 相比于v-show 不管条件如何都会渲染 条件切换 导致的是css的切换
+  // 总的来说 v-if更多切换消耗 v-show更多初始渲染消耗
+  // 需要频繁切换的 选择 v-show 如果 条件不太会改变的选择v-if
+</script>
+</html>

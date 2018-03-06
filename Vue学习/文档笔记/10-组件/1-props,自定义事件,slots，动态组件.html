@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app1">
+    <my-component></my-component>
+  </div>
+  <hr>
+  <div id="app2">
+    <child message="message"></child>
+  </div>
+  <hr>
+  <div id="app3">
+    {{total}}
+    <increment-t @increment="incrementTotal"></increment-t>
+    <increment-t @increment="incrementTotal"></increment-t>
+  </div>
+  <hr>
+  <div id="app4">
+    {{value}}
+    <input type="text" :value="value" @input = "value = $event.target.value">
+  </div>
+  <hr>
+  <div id="app5">
+    <have-slot>
+      <h1>如果里面有slot,我将会显示</h1>
+    </have-slot>
+  </div>
+  <hr>
+  <div id="app6">
+    <app-layout>
+      <h1 slot="header">我是标题1</h1>
+      <p>我是main</p>
+      <h1 slot="footer">我是footer</h1>
+    </app-layout>
+  </div>
+  <hr>
+  <div id="app7">
+    <keep-alive>
+      <component :is="currentView"></component>
+    </keep-alive>
+  </div>
+</body>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script type="text/javascript">
+  // 注册再使用
+    // 注册
+    // Vue.component('my-component', {
+    //   template: '<div>A custom component!</div>'
+    // })
+    // // 创建根实例
+    // new Vue({
+    //   el: '#example'
+    // })
+    
+  //局部注册
+  var child = {
+    template:`<div>{{text}}</div>`,
+    data(){
+      return {
+        text:'the-text'
+      }
+    }
+  }
+  var vm1 = new Vue({
+    el:'#app1',
+    components: {
+      'my-component':child
+    }
+  })
+  
+  
+  // DOM模板解释说明
+  // ul ol table select等元素对其包裹的内容有限制
+  // 如： 
+  // <table>
+      // <my-row></my-row>
+  // </table>
+  // 这样my-row会被认为是无效内容
+  
+  // 推荐 is解决
+  // <table>
+  //   <tr is = "my-row"></tr>
+  // </table>
+  //当然.vue文件和template: ' <select> <optioncomp></optionc omp></select>'这样就不存在这样的限制
+  
+  
+  // data必须是函数
+  // Vue.component('my',{
+  //   data(){
+  //     return{
+  // 
+  //     }
+  //   }
+  // })
+  // 
+  // 函数返回一个新的对象引用
+  // 如果不是函数 而是普通对象 则各组件公用一个data{}则会造成混乱
+  
+  // 父子组件的交互 
+  // props down  = >    <= event up
+  
+  
+  
+  // 使用props传递数据
+  var vm2 = new Vue({
+    el:'#app2',
+    data:{
+      message: 'message from father'
+    },
+    components: {
+      child:{
+        props:['message'],
+        template:'<div>{{message}}</div>'
+      }
+    }
+  })
+  
+  // 大驼峰VS kebab-case（短横线隔开）
+  
+  // Vue.component('child', {
+  // // camelCase in JavaScript
+  // props: ['myMessage'],
+  // template: '<span>{{ myMessage }}</span>'
+  // })
+  // <!-- kebab-case in HTML -->
+  // <child my-message="hello!"></child>
+  // 如果使用字符串模板就不用在意这限制
+  
+  
+  
+  
+   // 动态props
+   // <child :my-message="parentMsg"></child>
+  
+  
+  
+  // 字面量语法 vs 动态语法
+  // 如果想传递一个数字
+  
+  
+    // <!-- 传递了一个字符串"1" -->
+    // <comp some-prop="1"></comp>
+    
+    
+    // <!-- 传递实际的数字 -->
+    // <comp v-bind:some-prop="1"></comp>
+    
+    
+    
+    
+    // 单项数据流
+    
+    // prop 是单向绑定的：当父组件的属性变化时，将传导给子组件，但是不会反过来。这是为了防止子组件无意修改了父组件的状态——这会让应用的数据流难以理解。
+    
+    // 子组件不应该去改变props
+    
+    // 通常情况的改变是一下两种情况：
+      //1. prop作为初始值传入，子组件将其作为本地数据初始值使用
+      //2. 原始值需要被转变
+      
+       // 也就是一下两种
+       // props: ['initialCounter'],
+       //  data: function () {
+       //    return { counter: this.initialCounter }
+       //  }
+       
+       
+       // props: ['size'],
+       //  computed: {
+       //    normalizedSize: function () {
+       //      return this.size.trim().toLowerCase()
+       //    }
+       
+       // 注意在 JavaScript 中对象和数组是引用类型，指向同一个内存空间，如果 prop 是一个对象或数组，在子组件内部改变它会影响父组件的状态。
+       
+       
+       
+       // prop验证
+       Vue.component('example',{
+         props:{
+           // 必须是字符串
+           propA:'String',
+           propB:'Number',
+           // 多种类型
+           propC: ['Array','Object'],
+           // 默认值
+           propD: {
+             type:'Number',
+             default:100
+           },
+           // 必须传
+           propE:{
+             type:'String',
+             required:true
+           },
+           // 数组／对象的默认值应当由一个工厂函数返回
+           propF:{
+             type:'Object',
+             default:function(){
+               return {message:'hello'}
+             }
+           },
+           // 自定义验证函数s
+           propsG:{
+             validator:function(value){
+               return value > 10
+             }
+           }
+         }
+       })
+       // type 可以是自定义的 用的是 instanceof 验证
+      
+      
+      
+      
+      // 自定义事件
+      // 使用 $on(eventName) 监听事件
+      // 使用 $emit(eventName) 触发事件
+      
+      Vue.component('increment-t',{
+        data(){
+          return {
+            count:0
+          }
+        },
+        methods: {
+          increment() {
+            this.count++;
+            this.$emit('increment');
+          }
+        },
+        template:'<button @click = "increment">{{count}}</button>'
+      })
+      
+      var vm3  = new Vue({
+        el:'#app3',
+        data:{
+          total:0
+        },
+        methods: {
+          incrementTotal() {
+            this.total++
+          }
+        }
+      })
+      
+      // 给组件绑定原生事件
+      // <my-component v-on:click.native="doTheThing"></my-component>
+      
+      
+      
+      // 使用自定义事件的表单输入组件
+      // v-model 语法糖
+      //实现：
+      
+      var vm4 = new Vue({
+        el:'#app4',
+        data:{
+          value:''
+        }
+      })
+      // <input type="text" :value="value" @input = "value = $event.target.value">
+      // 实现双向绑定就行了
+      
+      
+      
+      // 非父子组件通信
+      // var bus = new Vue()
+      // 触发组件 A 中的事件
+      // bus.$emit('id-selected', 1)
+
+      // 在组件 B 创建的钩子中监听事件
+      // bus.$on('id-selected', function (id) {
+      //   // ...
+      // })
+      
+      
+      
+      // 使用slots分发内容
+        // 混合父子组件模板用的
+        
+        
+        // 编译作用域
+        // 父组件模板的内容在父组件作用域内编译；子组件模板的内容在子组件作用域内编译。
+        // <child-component>
+        //   {{ message }}
+        // </child-component>
+        // message属于父组件
+      
+        
+        
+       //单个slot
+       Vue.component('have-slot',{
+         template:`
+          <div>
+            111
+            <slot></slot>
+          </div>
+         `
+       })
+       var vm5 = new Vue({
+         el:'#app5'
+       })
+       
+       // 具名slot
+       var child = {
+         template:`
+          <div class="container">
+            <header>
+              <slot name="header" ></slot>
+            </header>
+            <main>
+              <p>子组件自己的内容</p>
+              <slot></slot>
+            </main>
+            <footer>
+              <slot name="footer"></slot>
+            </footer>
+          </div>
+         `
+       }
+       var vm6 = new Vue({
+         el:'#app6',
+         components: {
+           'app-layout':child
+         }
+       })
+       
+      // 动态组件
+      // keep-alive
+      // <component :is="alive-component"></component> 绑定动态组件
+      
+      
+      var c2 = {
+        'template':'<div>组件一</div>'
+      }
+      var c3 = {
+        'template':'<div>组件一</div>'
+      }
+      var vm7 = new Vue({
+        el:'#app7',
+        data:{
+          currentView:'c1'
+        },
+        components: {
+          'c1':{
+            'template':'<div>组件一</div>'
+          },
+          c2,
+          c3
+        }
+      })
+</script>
+</html>

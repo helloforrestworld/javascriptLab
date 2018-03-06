@@ -7,10 +7,104 @@
   <title>Document</title>
 </head>
 <body>
+  <div id="app1">
+    {{reverseMessage}}
+  </div>
   
+  <hr>
+  
+  <div id="app2">
+    {{reverseMessage()}}
+  </div>
+  <hr>
+  <div id="app3">
+    {{fullName}}
+  </div>
+  
+  <hr>
+  <div id="app4">
+    {{fullName}}
+  </div>
 </body>
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <script>
+  //基础栗子
+  var vm1 = new Vue({
+    el:'#app1',
+    data:{
+      message:'abcsdd,hell'
+    },
+    computed:{
+      reverseMessage(){
+        return this.message.split('').reverse().join('')
+      }
+    }
+  })
+  console.log(vm1.reverseMessage)
   
+  // 计算属性VSMethod
+  var vm2 = new Vue({
+    el:'#app2',
+    data:{
+      message:'hello method'
+    },
+    methods:{
+      reverseMessage(){
+        return this.message.split('').reverse().join('')
+      }
+    }
+  })
+  // 效果是相同的
+  // 区别在于 如果多次访问 message属性没有被改变，计算属性不会重新计算，因为它依赖于缓存，仅当依赖发生改变的时候 才会重新计算
+  // 而 methods每次访问都会重新执行reverseMessage
+  // 如果不需要缓存 就使用methods
+  
+  
+  // 计算属性VS Watched Property
+  var vm3 = new Vue({
+    el:'#app3',
+    data:{
+      firstName:'Barney',
+      lastName:'Stinsen',
+      fullName:'Barney Stinsen'
+    },
+    watch:{
+      firstName:function(val){
+        this.fullName = val +' '+ this.lastName
+      },
+      lastName:function(val){
+        this.fullName = this.firstName +' '+ val
+      }
+    }
+  })
+  // vm3.$watch('firstName',function(newVal,oldVal){
+  //   console.log(newVal)
+  // })
+  
+  
+  
+  // 计算属性默认只有getter 你也可以指定setter
+  var vm4 = new Vue({
+    el:'#app4',
+    data:{
+      firstName:'Barney',
+      lastName:'Stinsen'
+    },
+    computed:{
+      fullName:{
+        get:function(){
+          return this.firstName + ' ' + this.lastName
+        },
+        set:function(newVal){
+          var name = newVal.split(' ');
+          this.firstName = name[0];
+          this.lastName = name[name.length - 1];
+        }
+      }
+    }
+  })
+  
+  // 观察这Watchers
+  // 虽然计算属性在大多数情况下更合适，但有时也需要一个自定义的 watcher 。这是为什么 Vue 提供一个更通用的方法通过 watch 选项，来响应数据的变化。当你想要在数据变化响应时，执行异步操作或昂贵操作时，这是很有用的。
 </script>
 </html>
