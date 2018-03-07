@@ -37,24 +37,34 @@
             background-color: #39f;
             border-color: #39f;
         }
+        .green{
+          color: #fff;
+          background-color: rgb(64, 170, 51);
+          border-color: rgb(94, 157, 45);
+        }
     </style>
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
 </head>
 <body>
     <div id="app">
-        <m-modal modal-title="提醒" @on-ok="ok"></m-modal>
-        <m-modal>
-            <ul slot="modal-content">
-                <li v-for="item of list">{{item}}</li>
-            </ul>
-
-            <div slot="modal-footer">
-                <span>确定</span>
-                <span>重置</span>
-                <span>返回</span>
+        <my-modal
+          modal-title="提醒"
+        >
+          <template slot='modal-content '>
+            <div>
+              <p>提示语</p>
             </div>
-        </m-modal>
-        <m-modal @on-cancel="cancel"></m-modal>
+          </template>
+          
+          <template slot='modal-footer'>
+            <button type="button" class="btn green" @click="ok">自己定制的按钮</button>
+          </template>
+        </my-modal>
+        <hr>
+        <my-modal
+          @on-ok = 'ok'
+          @on-cancel='cancel'
+        ></my-modal>
     </div>
     <script>
         /*
@@ -70,12 +80,20 @@
                 事件名on-cancel   点击取消触发
         */ 
 
-        Vue.component("m-modal",{
+        Vue.component("my-modal",{
             props:{
-                modalTitle:{
-                    type:String,
-                    default:'这是一个模态框'
-                }
+              modalTitle:{
+                type:String,
+                default:'标题'
+              }
+            },
+            methods: {
+              ok() {
+                this.$emit('on-ok')
+              },
+              cancel(){
+                this.$emit('on-cancel')
+              }
             },
             template:`
                 <div class="modal">
@@ -84,47 +102,33 @@
                     </div>
                     <div class="modal-content">
                         <div>
-                            <slot name="modal-content">在这里添加内容</slot>
+                            <slot name="modal-content ">
+                              <p>默认的一段文字</p>
+                            </slot>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <slot name="modal-footer">
-                            <input class="btn blue" type="button" value="确定" @click="okHandle" />
-                            <input class="btn" type="button" value="取消" @click="cancelHandle" />
+                            <input class="btn blue" type="button" value="确定" @click = 'ok' />
+                            <input class="btn" type="button" value="取消" @click='cancel'/>
                         </slot>
                         
                     </div>
                 </div>
-            `,
-            methods:{
-                okHandle(){
-                    //通知父组件 点了确定
-                    alert("我触发了")
-                    this.$emit("on-ok");
-                },
-                cancelHandle(){
-                    alert('取消了');
-                    this.$emit('on-cancel')
-                }
-            }
+            `
         });
-
-        var list = [...'学习VUE'];
-
-        new Vue({
-            el:"#app",
-            data:{
-                list:list
-            },
-            methods:{
-                ok:function (){
-                    alert("改变一个div的样式")    
-                },
-                cancel:function (){
-                    alert("取消了，干别的事情")    
-                }
-            }
-        });
+      
+      let vm = new Vue({
+        el:'#app',
+        methods: {
+          ok() {
+            alert('ok')
+          },
+          cancel(){
+            alert('cancel')
+          }
+        }
+      })
 
     </script>
 </body>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app1">
+    <input type="button" value="组件一" @click="change(1)">
+    <input type="button" value="组件二"@click="change(2)">
+    <input type="button" value="组件三" @click="change(3)">
+    <keep-alive>
+      <component :is="currentView"></component>
+    </keep-alive>
+  </div>
+</body>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script>
+
+  var c1 =  Vue.component('c1',{
+    template:`<div @click="changeBg">组件一</div>`,
+    methods: {
+      changeBg(ev) {
+        ev.target.style.backgroundColor = 'red';
+      }
+    }
+  })
+  var c2 =  {
+    template:`<div>组件二</div>`
+  }
+  
+  var vm = new Vue({
+    el:'#app1',
+    data:{
+      currentView:c1
+    },
+    methods: {
+      change(index) {
+        switch(index){
+          case 1:
+          this.currentView = c1;
+          break;
+          case 2:
+          this.currentView = c2;
+          break;
+          case 3:
+          this.currentView = 'c3'
+        }
+      }
+    },
+    components: {
+      c3:{
+        template:`<div>组件三</div>`
+      }
+    }
+  })
+</script>
+</html>
