@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app1"></div>
+</body>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script type="text/javascript">
+  // 异步组件使用
+  // render函数
+  var vm = new Vue({
+    el:'#app1',
+    render(createElement){
+      return createElement('ul',{
+        class:{
+          active:true,
+          click:true
+        },
+        style:{
+          fontSize:'24px',
+          color:'red'
+        },
+        attrs:{
+          myId:'aaa'
+        },
+        domProps:{
+          // innerHTML:'<li>111</li>'
+        }
+      },[
+        createElement('li',1),
+        createElement('li',2),
+        createElement('li',3)
+      ])
+    }
+  })
+</script>
+</html>

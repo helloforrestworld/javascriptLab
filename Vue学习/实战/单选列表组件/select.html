@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>仿select</title>
+	<link rel="stylesheet" type="text/css" href="./style.css">
+</head>
+<body>
+	<div id="app1">
+		<my-select 
+			btn-v = '查询' 
+			:lists='lists'
+		></my-select>
+		<my-select 
+			btn-v = '查询' 
+			:lists='lists'
+		></my-select>
+		<my-select 
+			btn-v = '查询' 
+			:lists='lists'
+		></my-select>
+	</div>
+	
+
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script>
+
+	Vue.component('my-select',{//select组件
+		props:{
+			btnV:String,
+			lists:Array
+		},
+		data(){
+			return {
+				showing:false,
+				value:''
+			}
+		},
+		methods: {
+		  changeValue(value) {
+		    this.value = value
+		  }
+		},
+		template:`<section class="warp">
+			<div class="searchIpt clearFix">
+				<div class="clearFix">
+					<input type="text" class="keyWord" :value="value" @focus="showing = true" @blur="showing=false" />
+					<input type="button" :value="btnV">
+					<span></span>
+				</div>
+				<list
+					:lists='lists'
+					v-show="showing"
+					@receive="changeValue"
+				></list>
+			</div>
+		</section>`,
+		components: {//list子组件
+		  list:{
+				props:{lists:Array},
+				methods: {
+				  receive(item) {//点击触发父组件订阅的recieve
+				    this.$emit('receive',item);
+				  }
+				},
+				template:`
+				<ul class="list">
+					<li 
+						v-for="item in lists"
+						@mousedown = "receive(item)"
+					>{{item}}</li>
+				</ul>`
+			}
+		}
+	})
+	let vm = new Vue({//实例
+		el:'#app1',
+		data:{
+			lists:['北京','上海','成都']
+		}
+	})
+</script>
+</body>
+</html>
