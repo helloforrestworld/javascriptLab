@@ -185,23 +185,23 @@
        Vue.component('example',{
          props:{
            // 必须是字符串
-           propA:'String',
-           propB:'Number',
+           propA:String,
+           propB:Number,
            // 多种类型
            propC: ['Array','Object'],
            // 默认值
            propD: {
-             type:'Number',
+             type:Number,
              default:100
            },
            // 必须传
            propE:{
-             type:'String',
+             type:String,
              required:true
            },
            // 数组／对象的默认值应当由一个工厂函数返回
            propF:{
-             type:'Object',
+             type:Object,
              default:function(){
                return {message:'hello'}
              }

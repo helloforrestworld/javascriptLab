@@ -38,7 +38,7 @@
     <input type="radio"  name="num" value="one" id="one" v-model="picked">
     <label for="one">one</label>
     <input type="radio"  name="num" value="two" id="two" v-model="picked">
-    <label for="two">two</label>
+    <label for="two">two</label>555
     <p>picked:{{picked}}</p>
   </div>
   <div id="app6">
@@ -89,6 +89,7 @@
   <div id="app11">
     <select v-model="selected" >
       <option :value = "{number:123}">123</option>
+      {{selected}}
     </select>
   </div>
 </body>
