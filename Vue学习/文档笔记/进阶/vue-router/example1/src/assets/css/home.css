@@ -1,0 +1,52 @@
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+.nav-box {
+  background: #eff4f8;
+  padding: 0px 300px;
+}
+.nav {
+  overflow: hidden;
+}
+.nav li{
+   float: left;
+   padding: 30px;
+   cursor: pointer;
+}
+.nav li a {
+  text-align: center;
+}
+.router-link-active {
+  background: #fff;
+}
+
+.router-link-active a{
+  color: blue;
+}
+
+.slider {
+  width: 100px;
+  height: 1000px;
+  border-right: 1px solid #ccc;
+  float: left;
+}
+
+.center {
+  text-align: center;
+  font-size: 50px;
+}
+
+.is-active {
+  background: rgb(246, 189, 169);
+}
+
+.nav-active {
+  background: rgb(237, 176, 146);
+}

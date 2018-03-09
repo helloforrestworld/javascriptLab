@@ -6,6 +6,9 @@ import router from './router'
 // 组件
 import App from './App'
 
+// css入口
+import '@/assets/css/app'
+
 Vue.config.productionTip = false
 
 
