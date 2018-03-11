@@ -111,5 +111,17 @@
 
   // ---------生命周期图示---------------------------------------------------------
   // http://doc.vue-js.com/v2/guide/instance.html
+  
+  // 梳理
+  // beforeCreate vm实例创建前
+  // created  vm实例创建完成
+  // 模板解析渲染
+  // beforeMount 模板解析渲染完成 
+  // Mount vm.$el  = el 
+  //               if(update){beforeUpdate => update}
+  // if(vm.$destroy())
+  // beforeDestroy
+  // 解除绑定
+  // destroyed
 </script>
 </html>
