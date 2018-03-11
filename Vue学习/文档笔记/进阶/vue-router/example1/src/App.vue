@@ -12,7 +12,7 @@
           <span>Home</span>
         </router-link>
         <router-link 
-          :to="{path:'/doc'}" 
+          :to="{path:'/doc#abc'}" 
           tag="li"
           active-class="nav-active"
         >
@@ -24,6 +24,13 @@
           active-class="nav-active"
         >
           <span>About</span>
+        </router-link>
+        <router-link 
+          to="/user" 
+          tag="li"
+          active-class="nav-active"
+        >
+          <span>User</span>
         </router-link>
       </ul>
     </div>
