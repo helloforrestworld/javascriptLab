@@ -5,7 +5,14 @@ import VueRouter from 'vue-router'
 import About from '@/components/About'
 import Home from '@/components/Home'
 import Doc from '@/components/Doc'
+import Slider from '@/components/Slider'
 import Redirect from '@/components/404'
+
+import Study from '@/view/study'
+import Work from '@/view/work'
+import Hobby from '@/view/hobby'
+
+
 // 插件
 Vue.use(VueRouter)
 
@@ -22,11 +29,31 @@ var router = new VueRouter({
     {
       path:'/about',
       component:About,
-      name:'about'
+      children:[
+        {
+          path:'',
+          component:Study,
+          name:'about' //默认的子路由 name要拿过来
+        },
+        {
+          // path:'work',  //  /about/work
+          path:'/work',
+          component:Work,
+          name:'work'
+        },
+        {
+          path:'/hobby',
+          component:Hobby,
+          name:'hobby'
+        }
+      ]
     },
     {
       path:'/doc',
-      component:Doc,
+      components:{
+        default:Doc,
+        slider:Slider
+      },
       name:'doc'
     },
     {

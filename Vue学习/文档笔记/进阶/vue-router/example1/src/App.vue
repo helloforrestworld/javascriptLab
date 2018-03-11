@@ -13,7 +13,6 @@
         </router-link>
         <router-link 
           :to="{path:'/doc'}" 
-          exact 
           tag="li"
           active-class="nav-active"
         >
@@ -21,7 +20,6 @@
         </router-link>
         <router-link 
           to="/about" 
-          exact 
           tag="li"
           active-class="nav-active"
         >
@@ -29,6 +27,8 @@
         </router-link>
       </ul>
     </div>
+    
+    <router-view class="slider" name="slider"/>
     <router-view class="center"/>
   </div>
 </template>
