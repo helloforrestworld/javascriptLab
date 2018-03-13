@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 
 import Select from '@/components/select'
+import Increment from '@/components/increment'
 
 Vue.use(Router)
 
@@ -11,7 +12,10 @@ export default new Router({
     {
       path: '/',
       name: 'Select',
-      component: Select
-    }
+      components: {
+        default:Select,
+        'increment':Increment
+      }
+    },
   ]
 })

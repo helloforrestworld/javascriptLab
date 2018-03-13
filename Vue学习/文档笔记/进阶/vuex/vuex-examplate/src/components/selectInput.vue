@@ -4,7 +4,7 @@
         class="keyWord"
         @focus="showList"
         @blur = "hideList"
-        :value = "value"
+        :value = "title"
       />
       <input type="button" value="GO">
       <span></span>
@@ -15,6 +15,11 @@
 
 export default {
   props:['value'],
+  computed:{
+    title(){
+      return this.$store.state.selectMoudle.title
+    }
+  },
   methods: {
     showList(){
       this.$emit('update:showList',true)

@@ -3,17 +3,19 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import store from './store'
 
 Vue.config.productionTip = false
 
-import '@/assets/css/select.css'
+// axios 配合vue使用
+// npm i axios vue-axios --save
+// 作为插件Vue.use(VueAxios,axios)
+// this.$http[method]()
+
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
-  store,
-  template: '<App/>',
-  components: { App }
+  components: { App },
+  template: '<App/>'
 })
