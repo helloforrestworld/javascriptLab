@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script>
+  // 安装
+  npm i vuex --save
+  import Vuex from 'vuex'
+  var store = new Vuex.store({
+    status,
+    mutations,
+    getters,
+    actions,
+    modules:{
+      namespaced:true,
+      childMoudle
+    }
+  })
+  
+  // 注入
+  new Vue({
+    el: '#app',
+    router,
+    store,
+    template: '<App/>',
+    components: { App }
+  })
+  
+  组件内使用state
+  this.$store.state
+  
+  组件内修改状态(同步 提交mutations)
+  this.$store.commit('somemutations',payload)
+  
+  组件内修改状态(异步 提交actions)
+  this.$store.dispatch('someactions',payload)
+  
+  修改state 只能通过mutations
+  所以在actions内
+  actions:{
+    someactions({commit,dispatch},payload){
+      setTimeout(function(){
+        commit('somemutations',payload)
+      },1000)
+    }
+  }
+  
+  // 这样vue-developtool里面的状态就是一一对应
+  
+  getters相当于计算属性
+  getters:{
+    somegetters(state){
+      return state.count ++
+    }
+  }
+  
+  在组件内
+  this.$store.getters.somegetters
+  
+  
+  
+  // 辅助函数 mapState mapMutations mapActions mapGetters 
+  // 返回一个对象列表 是store里面列表的映射
+  
+  computed: mapState(['state1','state2'])
+  computed: mapState({
+    aa: 'state1',
+    aa: (state)=>state.state2,
+    aa(state){
+      return state.state2
+    }
+  })
+  computed:{
+    ...mapState(['state1','state2']),
+    myCompute(){
+      return ..
+    }
+  }
+  
+  methods: {
+    ...mapMutations({
+      fn1:'Mu1'
+    })
+  }
+  <li @click = "fn1(22)"></li> 需要这样传入参数
+  
+  
+  // 模块
+  var childMoudle = {
+    state,mutations,actions..
+  }
+  var store = new Vuex.store({
+    ...
+    modules:{
+      childMoudle
+    }
+  })
+  
+  // 这样写的话访问子模块的state getters需要加上模块名字
+  this.$store.state.childMoudle.title
+  mutations actions  则不需要
+  
+  如果用辅助函数就不行了
+  需要加上命名空间
+  namespaced:true
+  
+  然后这样
+  ...mapState('/childMoudle',['state1','state2'])
+  
+  
+  也可以这样
+  import {createNamespacedHelpers } from 'vuex'
+  const {mapState} = createNamespacedHelpers ('/childMoudle')
+  然后照常用就ok
+</script>
+</html>

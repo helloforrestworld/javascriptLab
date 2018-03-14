@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script>
+// 安装
+  // npm i vue-cli -g
+  // vue init webpack foldName
+
+
+
+// Vue.config.productionTip = false 关闭生产环境提示
+
+
+// import导入 省略后缀名
+// webpack.base.config
+// resolve: {
+//   extensions: ['.js', '.vue', '.json'],//后缀名省略
+//   alias: {//别名
+//     'vue$': 'vue/dist/vue.esm.js',
+//     '@': resolve('src'),//@ 代表src目录
+//   }
+// }
+
+// alias别名  '@': resolve('src'),//@ 代表src目录
+
+
+// build webpack配置相关
+// config 生产环境 开发环境配置相关
+// node_modules 依赖
+// static 放置第三方资源 .gitkeep 把空文件也上传
+// babelrc es6 草案的 转为es5
+  // {
+  //   "presets": [
+  //     ["env", { //babel-preset-env
+  //       "modules": false,// '风格''cmd' 'amd'
+  //       "targets": {
+  //         "browsers": ["> 1%", "last 2 versions", "not ie <= 8"]
+  //       }
+  //     }],
+  //     "stage-2"//草案
+  //   ],
+  //   "plugins": ["transform-vue-jsx", "transform-runtime"]//插件
+  // }
+
+// editorconfig  设置编辑器风格 如缩进
+// eslintnore  不做eslint风格检查
+// eslintrc   设置代码风格检查
+// gitnore    git提交 忽略的文件
+// postcssrc  css插件
+// index.html  项目模板
+// package.json 依赖描述
+  //dependencies 生产依赖
+  //devDependencies 开发依赖 
+
+
+
+  // eslint设置
+  // 错误提醒里面有链接 里面有教程
+  // 简单把那个错误项设置为0 就是不需要该项提醒
+  
+  
+  
+  // main.js
+  // import Vue from 'vue'
+  // import App from './App'//根组件
+  // import router from './router'//./router/index.js简写
+  // 
+  // Vue.config.productionTip = false//关闭生产环境提示
+  // var test = true;
+  // // 加上下面的注释忽略检查
+  // /* eslint-disable no-new */
+  // new Vue({
+  //   el: '#app',
+  //   router,
+  //   components: { App },//注册
+  //   template: '<App/>'//<App></App>模板
+  // });
+</script>
+</html>

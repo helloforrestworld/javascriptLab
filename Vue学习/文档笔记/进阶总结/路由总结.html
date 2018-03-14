@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script>
+
+  关于css文件导入
+  在css 文件中 @import './path'
+  在js文件中 import './path'
+  使用sass less 只需安装好 在 单页组件.vue  <style lang="less" ></style>
+  
+  
+  // 安装
+  import VueRouter from 'vue-router'
+  Vue.use(VueRouter)
+  var router = new VueRouter({
+    mode:'history',
+    scorllbehavior(to,from,savePosition){
+       可以记录当前路由的滚动条位置
+       return {x:0,y:0}
+       return savePosition
+       通过hash值定锚点
+       if(to.hash){
+         return {
+           selector:to.hash
+         }
+       }
+    }
+    routes:[]
+  })
+  
+  // Vue.use(..)会调用里面的install() 并且把实例传入第一个参数
+  var obj = {
+    install(vm){
+      vm.prototype.$aa = function(){}
+    }
+  }
+  export default obj
+  
+  Vue.use(obj) //作为插件导入全局
+  
+  {
+    path:'',
+    path:'/home/:type?/:userId?',动态路由
+    component:Slide,
+    components:{
+      default:'没名字的routerview对应上',
+      'name': 组件
+    },
+    name:'名字' router-link 除了根据路径匹配路由 还可以通过名字
+    alias: '别名' 通过别名也能匹配上
+    meta:{}元信息
+    children:[
+      嵌套路由
+    ],
+    beforeEnter(to,from,next){进入这个路由前触发的钩子
+      next()
+    }
+  }
+  {
+    path:'*',
+    redirect:'/',
+    redirect:'{path:'/'}',
+    redirect:'{name:'about'}',
+    redirect(to){
+      if(to.....){
+        return '//s//'
+      }
+      return '/'
+    }
+  }
+  
+  钩子
+  全局路由的
+  beforeEach((to,from,next)=>{
+    
+  })
+  afterEach((to,from,next)=>{
+    
+  })
+  
+  组件内钩子
+  beforeRouterEnter(to,from,next) 在beforeCreate前执行  注意next((vm)=>{})
+  beforeRouterUpdate(to,from,next) 子路由更新
+  beforeRouterLeave(to,from,next) 离开前
+  
+  路由信息对象
+  this.$route {
+    query,path,fullPath,matched[记录父路由]
+  }
+  
+  // 监控路由
+  watch:{
+    $route(to,from){}
+  }
+  
+  // 编程导航
+  $router.back()
+  $router.forward()
+  $router.go(step) -后退 +前进
+  $router.push({path:,name}) 跳转到某个路由 并且留下历史记录
+  $router.replace({path:,name})跳转到某个路由 并且替代前一条历史记录
+  
+  
+   // 过渡效果
+   <transition>
+     一个transition只能包一个组件
+   </transition>
+   
+   <style>
+    
+    没有name属性默认用这些
+    .v-enter{}   设置进入前的状态 比如opactiy:0
+    .v-enter-to{} 设置进入前的状态 比如opactiy:1
+    .v-enter-active{}设置进入时的情况  比如transition:500 ms
+    
+    .v-leave{} 设置离开前的状态 比如opactiy:1
+    .v-leave-to{} 设置离开前的状态 比如opactiy:0
+    .v-leave-active{}设置离开时的情况  比如transition:500 ms
+    
+    可以省略写
+    .v-enter{}   设置进入前的状态 比如opactiy:0
+    .v-leave-to{} 设置离开前的状态 比如opactiy:0
+    .v-enter-active,.v-leave-active{}
+    
+   </style>
+   
+   // 设置name后可以应用其他过渡效果
+   <transition name='left'></transition>
+   .left-enter{}   
+   .left-leave-to{} 
+   .left-enter-active,.left-leave-active{}
+   
+   
+   // 还可以设置过渡模式
+   // 默认是同时进同时出的
+   <transition mode='out-in' mode="in-out"></transition>
+</script>
+</html>

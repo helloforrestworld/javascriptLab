@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script>
+  // easy-mock
+
+
+  // axios 配合Vue 使用
+  // npm i axios vue-axios --save
+  // import axios form 'axios'
+  // import VueAxios from 'vue-axios' 
+  // Vue.use(VueAxios,axios)
+  
+  // vm.$http[method]() 就可以用了啊 全局都可以找到
+  
+  
+  npm i axios --save
+  import axios from 'axios'
+  
+  axios.get('url',{
+    params:{a:1,b:2} //query
+  })
+  .then((res)=>{
+    
+  }),
+  catch((err)=>{
+    
+  })
+  
+  
+  axios.post('url',{
+    a:1,
+    b:2  post发送的数据
+  })
+  .then
+  .catch
+  
+  
+  import queryString from queryString
+  
+  配置axios
+  
+  // 令牌
+  var source1 = axios.cancelToken.source()
+  
+  var HTTP = axios.create({
+    baseURL:'',
+    timeout:100,
+    headers:{
+      'mymymymy':'aaaaa',
+      'content-type':'application/x-www-form-urlencoded'
+    },
+    responseType:'json',
+    transformRequest:[function(data){ //格式化发送出去的数据 post put patch 才可以用
+      
+      return queryString.stringify(data) //转为 name=wangtao&age=23的格式 
+                                        // 需要配合'content-type':'application/x-www-form-urlencoded'
+    }],
+    transformResponse:[function(data){//格式化接收到的数据
+      data.age = 2
+      return data 
+    }],
+    validateStatus(status){
+      return status < 404
+    },
+    cancelToken: 令牌  source1.token()  //取消请求 
+  })
+  
+  
+  source1.cancel('用户取消了') //取消
+  // 这样的话请求就会失败  会捕获到错误信息
+  // 分辨的话
+  then((res)=>{})
+  catch((err)=>{
+    if(axios.isCancel(err)){
+      console.log('被你取消的呀')
+    }else{
+      console.log(err)
+    }
+  })
+  
+  
+  // 拦截请求
+  
+  HTTP.interceptors.request.use(function(config){
+    // 对请求信息处理
+    
+    return config
+    
+  })
+  HTTP.interceptors.response.use(function(data){
+    // 对接收的数据处理
+    return data
+  })
+  
+  
+  // 拦截响应
+</script>
+</html>
