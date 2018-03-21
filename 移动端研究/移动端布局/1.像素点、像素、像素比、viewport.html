@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=0.5,minimum-scale=0.5,maximun-scale=0.5"/>
+		<style type="text/css">
+			div{
+				width: 200px;
+				height: 200px;
+				border: 2px solid black;
+			}
+		</style>
+	</head>
+	<body>
+		<div></div>
+	</body>
+	<script type="text/javascript">
+		//分辨率
+		//像素比
+		//虚拟像素点
+		//分辨率 = 像素比 * 虚拟的点  （物理像素）
+		//物理设备 PPI(每英寸可容纳的最大像素)
+		
+		
+		//viewport(视口)
+		//视口大小<meta name="viewport" content="width=device-width"/>
+		//是否允许缩放 user-scalable=no
+		
+		//像素比
+		//设想同样320个像素点
+		//一个屏幕像素比为1 一个为2
+		//那实际像素比为2的清晰很多,两个像素去处理一个像素点
+		
+		
+		//初始缩放比例
+		//initial-scale
+		
+		//允许缩放的最小比例 minimum-scale
+		//允许缩防的最大比例 maximum=scale
+		
+		//关于禁止用户缩放
+		//安全的做法是
+		//user-scalable=no   minimum-scale = 1  maximum=scale = 1
+		//initial-scale = 1
+		//这样还可以控制像素比 ？？？？
+		
+		//如何让1px做1px的事情
+		//假设像素比为2 
+		//那么
+		//user-scalable=no   minimum-scale = 0.5  maximum=scale = 0.5
+		//initial-scale = 0.5这样就可以了
+		
+		//尽可能还原到真实分辨率 
+	</script>
+</html>

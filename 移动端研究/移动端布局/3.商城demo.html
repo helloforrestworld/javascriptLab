@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript">
+			var initScale = 1 / window.devicePixelRatio
+			document.write(`<meta name="viewport" content="width=device-width,initial-scale=${initScale},minimum-scale=${initScale},maximum-scale=${initScale}">`)
+		</script>
+		<script type="text/javascript">
+			var w = document.documentElement.getBoundingClientRect().width;
+			var fontSize = w / 16 + 'px'
+			document.documentElement.style.fontSize = fontSize
+		</script>
+		<style type="text/css">
+			body,ul{
+				margin: 0;
+				padding: 0;
+			}
+			li{
+				list-style: none;
+			}
+			html{
+				width:100%;
+				height: 100%;
+				overflow: hidden;
+			}
+			body{
+				width:100%;
+				height: 100%;
+				overflow: auto;
+			}
+			header{
+				position: absolute;
+				left: 0;
+				top: 0;
+				width:100%;
+				height: 182px;
+				background-color:red;
+				font-size: 30px;
+				line-height: 38px;
+			}
+			header .header_top{
+				height: 92px;
+			}
+			header .header_bot{
+				height:90px ;
+
+			}
+			.clearFix:after{
+				content: '';
+				display: block;
+				clear: both;
+			}
+			.list{
+				margin-top: 182px;
+			}
+			.list .item{
+				float: left;
+				height: 7.5rem;
+				border-top: 1px solid #cccccc;
+				margin: 0.25rem;
+				width: 7.5rem;
+				border: 1px solid black;
+				box-sizing:border-box ;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<div class="header_top"></div>
+			<div class="header_bot"></div>
+		</header>
+		<ul class="list clearFix">
+			<li class="item">11111</li>
+			<li class="item"></li>
+			<li class="item"></li>
+			<li class="item"></li>
+			<li class="item"></li>
+			<li class="item"></li>
+			<li class="item"></li>
+			<li class="item"></li>
+		</ul>
+	</body>
+</html>

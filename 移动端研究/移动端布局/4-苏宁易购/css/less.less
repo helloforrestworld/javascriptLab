@@ -1,0 +1,414 @@
+
+//reset 
+
+body{
+    margin: 0;
+}
+ul,h2{
+    margin: 0;
+    padding: 0;
+}
+li{
+    list-style: none;
+}
+img{
+    border: none;
+    vertical-align: top;
+}
+input{
+    border: none;
+    margin: 0;
+    padding: 0;
+    -webkit-appearance: none;
+}
+a{
+   text-decoration: none;
+   -webkit-tap-highlight-color:transparent;
+   color: #818788;
+}
+p{
+    margin: 0;
+    padding: 0;
+}
+strong,em{
+    font-weight: normal;
+}
+
+
+
+//框架
+html{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+body{
+    widows: 100%;
+    height: 100%;
+    overflow: auto;
+    font-family: Arial,Helvetica,STHeiTi,sans-serif;
+    font-size: 20/@rem;
+}
+
+
+//rem
+@rem:40rem;
+
+
+//工具样式
+.clearfix:after{
+    content: '';
+    display: block;
+    clear: both;
+}
+
+
+//主体部分
+
+.header{
+    z-index: 99;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 76/@rem;
+    background-color: #f6bc09;
+    .head_type{
+        float: left;
+        width: 78/@rem;
+        height: 76/@rem;
+        background: url(../img/ico_fenlei.jpg) no-repeat 22/@rem 10/@rem ;
+        background-size: 33/@rem 54/@rem;
+    }
+    .head_mid{
+        float: left;
+        width: 480/@rem;
+        height: 50/@rem;
+        padding-top: 14/@rem;
+        position:relative;
+        &::before{
+            content: '';
+            position: absolute;
+            top: 25/@rem;
+            left: 16/@rem;
+            width: 22/@rem;
+            height: 24/@rem;
+            background: url(../img/ico_serch.jpg)no-repeat;
+            background-size: 100% 100%;
+        }
+        form{
+            float: left;
+            width: 100%;
+            height: 100%;
+            input{
+                float: left;
+                box-sizing: border-box;
+                width: 100%;
+                height: 100%;
+                border-radius: 6px;
+                background-color:#d5dba9;
+                font-size: 20/@rem;
+                padding-left: 51/@rem;
+            }
+        }
+    }
+    
+    .head_shop{
+        float: left;
+        width: 82/@rem;
+        height: 76/@rem;
+        background:url(../img/ico-shop.jpg)no-repeat 17/@rem 8/@rem;
+        background-size: 49/@rem 57/@rem;
+    }
+}
+
+
+.swiper{
+    width: 100%;
+    overflow: hidden;
+    height: 273/@rem;
+    .swiper_wrap{
+       height: 100%;
+       .item{
+           float: left;
+           width: 640/@rem;
+           height: 100%;
+           a{
+              float: left;
+              width: 100%;
+              height: 100%;
+           }
+           img{
+               width:100%;
+               height: 100%;
+           }
+       }
+    }
+}
+
+.nav{
+    width: 100%;
+    padding:11/@rem 0 11/@rem 0 ;
+    border-top: 1px solid #acd3b3;
+    background-color: #cce3d1;
+   .nav_item{
+       float: left;
+       width: 20%;
+       margin-top: 9/@rem;
+       text-align: center;
+       img{
+           width: 68/@rem;
+           height: 68/@rem;
+           border: 1px solid #c7e0cd;
+       }
+       .nav_title{
+           display: block;
+           font-weight: normal;
+           line-height: 43/@rem;
+       }
+   }
+}
+.scrollnew{
+    width: 100%;
+    height: 87/@rem;
+    border-top: 2/@rem solid #bbdac0;
+    background-color: #cce3d1;
+    .left_hot{
+        float: left;
+        margin-top:22/@rem ;
+        width: 123/@rem;
+        height: 41/@rem;
+        a{
+            float: left;
+            width: 100%;
+            height: 100%;
+        }
+        img{
+            float: left;
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .scroll_line{
+        float: left;
+        width: 2/@rem;
+        height: 35/@rem;
+        margin: 26/@rem 32/@rem 0 15/@rem;
+        background-color: #97c1a0;
+    }
+    .right_new{
+        float: left;
+        width: 376/@rem;
+        height: 52/@rem;
+        padding-top: 15/@rem;
+        p{
+            position: relative;
+            width:376/@rem;
+            padding-left: 17/@rem;
+            box-sizing: border-box;
+            
+            &::before{
+                content: '';
+                width: 6/@rem;
+                height: 6/@rem;
+                background-color: #ffc001;
+                border-radius: 50%;
+                top: 13/@rem;
+                position: absolute;
+                left: 0;
+            }
+            a{
+                float: left;
+                line-height: 26/@rem;
+            }
+        }
+    }
+}
+
+.activitity{
+    width: 100%;
+    border-top: 4/@rem solid #bfcfa9;
+    background-color: #b8d9be;
+    padding-top: 14/@rem;
+    padding-bottom: 20/@rem;
+    .ac_top{
+        border-top: 4/@rem solid #bfcda9;
+        width: 100%;
+        .ac_left{
+            float: left;
+            width: 318/@rem;
+            height: 247/@rem;
+            background: url(../img/act1.jpg)no-repeat;
+            background-size: 100% 100%;
+        }
+        .ac_right_one,.ac_right_two{
+            float: left;
+            margin: 2/@rem;
+            margin-top: 0;
+            width: 318/@rem;
+            height: 123/@rem;
+            background: url(../img/ac2.jpg)no-repeat;
+            background-size: 100% 100%;
+        }
+        .ac_right_two{
+            background-image: url(../img/ac3.jpg);
+        }
+    }
+    .ac_bot{
+        width: 100%;
+        .ac_bot_item{
+            margin-left: 2/@rem;
+            margin-top: 2/@rem;
+            float: left;
+            width: 158/@rem;
+            height: 256/@rem;
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+}
+
+.timelimit{
+    border-top: 14/@rem solid #cdd9c8;
+    background-color: #cce3d1;
+    .time_top{
+        height: 54/@rem;
+        .time_left{
+            float: left;
+            height: 54/@rem;
+            h2{
+              float: left;
+              margin: 1px  16/@rem;
+              width: 116/@rem;
+              height: 39/@rem;
+              background:url(../img/timeheader.jpg)no-repeat;
+              background-size: 100% 100%; 
+            }
+            .begin_time{
+                float: left;
+                color: #ff3134;
+                margin-right: 9/@rem;
+                margin-top: 20/@rem;
+            }
+            .timerun{
+               float: left;
+               margin-top: 15/@rem;
+               .hour,.min,.sec,span{
+                   width: 20/@rem;
+                   height: 20/@rem;
+                   line-height:20/@rem ;
+                   border: 2/@rem solid #809575;
+                   border-radius: 3/@rem;
+                   margin-right: 8/@rem;
+                   box-sizing: border-box;
+               }
+               span{
+                   border: none;
+               }
+               .sec{
+                   color: #ff3639;
+               }
+            }
+        }
+        .time_right{
+            float: right;
+            height: 54/@rem;
+            margin-right: 16/@rem;
+            overflow: hidden;
+            .time_btn{
+                float: left;
+                display: inline-block;
+                width: 103/@rem;
+                height: 29/@rem;
+                background-color: #ffc001;
+                font-size: 17/@rem;
+                line-height: 29/@rem;
+                padding: 0px 8/@rem;
+                text-align: center;
+                color: #476c23;
+                margin-right: 3/@rem;
+                margin-top: 10/@rem;
+                border-radius: 9/@rem;
+            }
+            .arrow{
+               float: left;
+               display: inline-block;
+               width: 14/@rem;
+               height: 24/@rem;
+               background: url(../img/time_arrow.jpg)no-repeat;
+               background-size: 100% 100%;
+               margin-top: 15/@rem;
+            }
+        }
+    }
+    .time_bot{
+        width: 100%;
+        height:204/@rem;
+        overflow: hidden;
+        .time_scrollwrap{
+           float: left;
+           width: 200%;
+           height:204/@rem;
+           .time_item{
+               float: left;
+               margin-right: 16/@rem;
+               width: 190/@rem;
+               height: 204/@rem;
+               a{  
+                   position: relative;
+                   float: left;
+                   width: 184/@rem;
+                   height: 141/@rem;
+                   background-color: #c1d6c0;
+                   padding: 0  1px;
+                   border: 2px solid #abc8a9;
+                   border-bottom: none;
+                   img{
+                      width: 184/@rem;
+                      height: 141/@rem;
+                   }
+                   .time_bot_arrow{
+                       box-sizing: border-box;
+                       font-size: 21/@rem;
+                       position: absolute;
+                       right: 10/@rem;
+                       bottom: -61/@rem;
+                       background: url(../img/timearrow.png)no-repeat;
+                       width: 60/@rem;
+                       height: 65/@rem;
+                       background-size: 100% 100%;
+                       text-align: center;
+                       color: white;
+                       padding-top: 10/@rem;
+                       strong{
+                           font-size: 16/@rem;
+                       }
+                       em{
+                           font-size: 14/@rem;
+                       }
+                   }
+               }
+               .timeitem_bot{
+                   float: left;
+                   margin-left: 2/@rem;
+                   width: 184/@rem;
+                   height: 58/@rem;
+                   background-color: #dddddd;
+                   .time_price{
+                      margin: 6/@rem 0 10/@rem 19/@rem;
+                      font-size: 18/@rem;
+                      color: #dd0000;
+                   }
+                   del{
+                       display: block;
+                       font-size: 13/@rem;
+                       margin-left: 17/@rem;
+                       color:#919191;
+                   }
+               }
+           }
+        }
+    }
+}

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/less.css"/>
+		<script type="text/javascript">
+			
+			//移动端适配
+			
+			//视口大小
+			var initScale  = 1 / window.devicePixelRatio
+			
+			document.write(`<meta name="viewport" content="width=device-width,initial-scale=${initScale},minimum-scale=${initScale},maximum-scale=${initScale}">`)
+			
+			//rem适配
+			
+			var portWidth = document.documentElement.getBoundingClientRect().width
+			
+			document.documentElement.style.fontSize = portWidth / 16 + 'px'
+			
+		</script>
+	</head>
+	<body>
+		<header class="header clearfix">
+			<a href="javascript:;" class="head_type"></a>
+			<div class="head_mid">
+				<form action="">
+					<input type="text" class="head_search" placeholder="荣耀4XXXX"/>
+				</form>
+			</div>
+			<a href="javascript:;" class="head_shop"></a>
+		</header>
+		<section>
+			<div class="swiper">
+				<ul class="swiper_wrap">
+					<li class="item">
+						<a href="javascript">
+							<img src="img/swiper.jpg"/>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<ul class="nav clearfix">
+				<a href="javascript:;"class="nav_item">
+					<img src="img/nav_suning.jpg"/>
+					<strong class="nav_title">苏宁超市</strong>
+				</a>
+				<a href="javascript:;"class="nav_item">
+					<img src="img/nav_suning.jpg"/>
+					<strong class="nav_title">苏宁超市</strong>
+				</a>
+				<a href="javascript:;"class="nav_item">
+					<img src="img/nav_suning.jpg"/>
+					<strong class="nav_title">苏宁超市</strong>
+				</a>
+				<a href="javascript:;"class="nav_item">
+					<img src="img/nav_suning.jpg"/>
+					<strong class="nav_title">苏宁超市</strong>
+				</a>
+				<a href="javascript:;"class="nav_item">
+					<img src="img/nav_suning.jpg"/>
+					<strong class="nav_title">苏宁超市</strong>
+				</a>
+				<a href="javascript:;"class="nav_item">
+					<img src="img/nav_suning.jpg"/>
+					<strong class="nav_title">苏宁超市</strong>
+				</a>
+				<a href="javascript:;"class="nav_item">
+					<img src="img/nav_suning.jpg"/>
+					<strong class="nav_title">苏宁超市</strong>
+				</a>
+				<a href="javascript:;"class="nav_item">
+					<img src="img/nav_suning.jpg"/>
+					<strong class="nav_title">苏宁超市</strong>
+				</a>
+				<a href="javascript:;"class="nav_item">
+					<img src="img/nav_suning.jpg"/>
+					<strong class="nav_title">苏宁超市</strong>
+				</a>
+				<a href="javascript:;"class="nav_item">
+					<img src="img/nav_suning.jpg"/>
+					<strong class="nav_title">苏宁超市</strong>
+				</a>
+			</ul>
+			<div class="scrollnew clearfix">
+				<div class="left_hot">
+					<a href="javascript:;">
+						<img src="img/scroll_left.jpg"/>
+					</a>
+				</div>
+				<div class="scroll_line"></div>
+				<div class="right_new">
+					<p class="clearfix"><a href="javascript:;">分分钟KO宋钟，撩妹“时”的反派</a></p>
+					<p class="clearfix"><a href="javascript:;">火爆小短裤，穿出最精致的你~</a></p>
+				</div>
+			</div>
+			<div class="activitity clearfix">
+				<div class="ac_top clearfix">
+					<a href="javascript"class="ac_left">
+					</a>
+					<a href="javascript"class="ac_right_one">
+					</a>
+					<a href="javascript"class="ac_right_two">
+					</a>
+				</div>
+				<div class="ac_bot clearfix">
+					<a href="javascript" class="ac_bot_item">
+						<img src="img/acbottom.jpg" />
+					</a>
+					<a href="javascript" class="ac_bot_item">
+						<img src="img/acbottom.jpg" />
+					</a>
+					<a href="javascript" class="ac_bot_item">
+						<img src="img/acbottom.jpg" />
+					</a>
+					<a href="javascript" class="ac_bot_item">
+						<img src="img/acbottom.jpg" />
+					</a>
+					<a href="javascript" class="ac_bot_item">
+						<img src="img/acbottom.jpg" />
+					</a>
+					<a href="javascript" class="ac_bot_item">
+						<img src="img/acbottom.jpg" />
+					</a>
+					<a href="javascript" class="ac_bot_item">
+						<img src="img/acbottom.jpg" />
+					</a>
+					<a href="javascript" class="ac_bot_item">
+						<img src="img/acbottom.jpg" />
+					</a>
+				</div>
+			</div>
+			<div class="timelimit">
+				<div class="time_top">
+					<div class="time_left">
+						<h2></h2>
+						<strong class="begin_time">20电场</strong>
+						<div class="timerun">
+							<span class="hour">03</span>
+							<span>:</span>
+							<span class="min">54</span>
+							<span>:</span>
+							<span class="sec">20</span>
+						</div>
+					</div>
+					<div class="time_right">
+						<a href="javascript" class="time_btn">吃货上新季度</a>
+						<a class="arrow"></a>
+					</div>
+				</div>
+				<div class="time_bot">
+					<ul class="time_scrollwrap clearfix">
+						<li class="time_item">
+							<a href="javascript:;">
+								<img src="img/time_item1.jpg" >
+								<i class="time_bot_arrow">2.<strong>8</strong><em>折</em></i>
+							</a>
+							<div class="timeitem_bot">
+								<span class="time_price">￥15.90</span>
+								<del>￥56.00</del>
+							</div>
+						</li>
+						<li class="time_item">
+							<a href="javascript:;">
+								<img src="img/time_item1.jpg" >
+								<i class="time_bot_arrow">2.<strong>8</strong><em>折</em></i>
+							</a>
+							<div class="timeitem_bot">
+								<span class="time_price">￥15.90</span>
+								<del>￥56.00</del>
+							</div>
+						</li>
+						<li class="time_item">
+							<a href="javascript:;">
+								<img src="img/time_item1.jpg" >
+								<i class="time_bot_arrow">2.<strong>8</strong><em>折</em></i>
+							</a>
+							<div class="timeitem_bot">
+								<span class="time_price">￥15.90</span>
+								<del>￥56.00</del>
+							</div>
+						</li>
+						<li class="time_item">
+							<a href="javascript:;">
+								<img src="img/time_item1.jpg" >
+								<i class="time_bot_arrow">2.<strong>8</strong><em>折</em></i>
+							</a>
+							<div class="timeitem_bot">
+								<span class="time_price">￥15.90</span>
+								<del>￥56.00</del>
+							</div>
+						</li>
+						<li class="time_item">
+							<a href="javascript:;">
+								<img src="img/time_item1.jpg" >
+								<i class="time_bot_arrow">2.<strong>8</strong><em>折</em></i>
+							</a>
+							<div class="timeitem_bot">
+								<span class="time_price">￥15.90</span>
+								<del>￥56.00</del>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+	</body>
+	<script type="text/javascript">
+		window.onresize = function(){
+			portWidth = document.documentElement.getBoundingClientRect().width
+			
+			document.documentElement.style.fontSize = portWidth / 16 + 'px'
+		}
+	</script>
+</html>
