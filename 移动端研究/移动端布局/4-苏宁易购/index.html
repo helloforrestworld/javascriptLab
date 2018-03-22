@@ -207,10 +207,12 @@
 		</section>
 	</body>
 	<script type="text/javascript">
-		window.onresize = function(){
+		function reSize(){
 			portWidth = document.documentElement.getBoundingClientRect().width
-			
+			portWidth = portWidth > 1500? 1500 : portWidth;
 			document.documentElement.style.fontSize = portWidth / 16 + 'px'
 		}
+		window.addEventListener('resize',reSize,false)
+		window.addEventListener('orientationchange',reSize,false)
 	</script>
 </html>

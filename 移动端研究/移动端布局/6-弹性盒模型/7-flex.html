@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			/*flex :  flex-grow flex-shrink flex-basis*/
+			.box{
+				width: 800px;
+				height: 500px;
+				border: 2px solid deeppink;
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+
+			}
+			.item{
+				width: 20px;
+				height: 80px;
+				background: indianred;
+				margin-right: 10px;
+			}
+			/*扩张占比*/
+			.item:nth-of-type(1){
+				flex-grow:1
+			}
+			.item:nth-of-type(2){
+				flex-grow:2
+			}
+			.item:nth-of-type(3){
+				flex-grow:3
+			}
+			.item:nth-of-type(4){
+				flex-grow:4
+			}
+			.item:nth-of-type(5){
+				flex-grow:5
+			}
+			.item:nth-of-type(6){
+				flex-grow:6
+			}
+			.item:nth-of-type(7){
+				flex-grow:7
+			}
+			.item:nth-of-type(8){
+				flex-grow:8
+			}
+			
+			
+			.box2{
+				margin-top: 20px;
+				width: 800px;
+				height: 500px;
+				border: 2px solid deepskyblue;
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+			}
+			.item2{
+				width: 300px;
+				height: 80px;
+				background: indianred;
+				margin-right: 10px;
+			}
+			/*压缩占比*/
+			.item2:nth-of-type(1){
+				flex-shrink:1 
+			}
+			.item2:nth-of-type(2){
+				flex-shrink:2 
+			}
+			.item2:nth-of-type(3){
+				flex-shrink:3 
+			}
+			.item2:nth-of-type(4){
+				flex-shrink:4 
+			}
+			.item2:nth-of-type(5){
+				flex-shrink:5 
+			}
+			.item2:nth-of-type(6){
+				flex-shrink:6 
+			}
+			.item2:nth-of-type(7){
+				flex-shrink:7 
+			}
+			.item2:nth-of-type(8){
+				flex-shrink:8 
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<div class="item">1</div>
+			<div class="item">2</div>
+			<div class="item">3</div>
+			<div class="item">4</div>
+			<div class="item">5</div>
+			<div class="item">6</div>
+			<div class="item">7</div>
+			<div class="item">8</div>
+		</div>
+		<div class="box2">
+			<div class="item2">1</div>
+			<div class="item2">2</div>
+			<div class="item2">3</div>
+			<div class="item2">4</div>
+			<div class="item2">5</div>
+			<div class="item2">6</div>
+			<div class="item2">7</div>
+			<div class="item2">8</div>
+		</div>
+	</body>
+</html>

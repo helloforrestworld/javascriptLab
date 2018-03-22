@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta name="format-detection" content="telephone=no, address=no, email=no">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<title>JQuery</title>
+	<link href="css/jq.css" rel="stylesheet">
+	<link href="favicon.ico" rel="icon">
+	<!--[if lt IE 9]>
+	<script src="js/html5shiv.js"></script>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+	<!--[if IE 6]>
+	<script src="js/minmax.js"></script>
+	<![endif]-->
+</head>
+<body>
+<header class="hdWrap">
+	<div class="hd wrap">
+		<nav class="hd-nav hd-icoNav">
+			<a class="hd-nav-link iconS hd-icoNav-link hd-icoNav-linkJQ hd-icoNav-link_active" href="#"></a>
+			<a class="hd-nav-link iconS hd-icoNav-link hd-icoNav-linkUI" href="#"></a>
+			<a class="hd-nav-link iconS hd-icoNav-link hd-icoNav-linkMo" href="#"></a>
+			<a class="hd-nav-link iconS hd-icoNav-link hd-icoNav-linkSi" href="#"></a>
+			<a class="hd-nav-link iconS hd-icoNav-link hd-icoNav-linkQu" href="#"></a>
+		</nav>
+		<nav class="hd-nav hd-textNav">
+			<a class="hd-nav-link hd-textNav-link" href="#">Plugins</a>
+			<a class="hd-nav-link hd-textNav-link" href="#">Contribute</a>
+			<a class="hd-nav-link hd-textNav-link" href="#">Events</a>
+			<a class="hd-nav-link hd-textNav-link" href="#">Support</a>
+			<a class="hd-nav-link hd-textNav-link" href="#">jQuery Foundation</a>
+		</nav>
+	</div>
+</header>
+<div class="logobarWrap">	
+	<div class="logobar wrap clear">
+		<h1 class="logo"><a class="logo-link" href="#">jQuery</a></h1>
+		<a class="introLogo">
+			<img class="introLogo-img" src="img/introLogo.jpg" width="400" height="100"/>
+		</a>
+	</div>
+</div>	
+<div class="containWrap">
+	<div class="wrap">
+		<div class="navbar clear">
+			<ul class="nav clear">
+				<li class="navI"><a class="navI-link" href="#">Download</a></li>
+				<li class="navI"><a class="navI-link" href="#">API Documentation</a></li>
+				<li class="navI"><a class="navI-link" href="#">Blog</a></li>
+				<li class="navI"><a class="navI-link" href="#">Plugins</a></li>
+				<li class="navI"><a class="navI-link" href="#">Browser Support</a></li>
+			</ul>
+			<select class="navSel">
+				<option>Navigate...</option>
+					<option value="#">Download</option>
+					<option value="#">API Documentation</option>
+					<option value="#">Blog</option>
+					<option value="#">Plugins</option>
+					<option value="#">Browser Support</option>
+			</select>
+			<form class="searchbar" action="#" method="get">
+				<input class="searchbar-search" type="text" placeholder="search"/>
+				<button class="searchbar-submit iconF" type="submit">&#xe600;
+				</button>
+			</form>
+		</div>
+		<div class="innerWrap">
+			<div class="banner clear">			
+				<div class="banner-downloadBox">
+					<a class="downloadBox-link">
+						<img class="downloadBox-linkImg"src="img/downloadBox_link.gif">
+					</a>
+					<ul class="downloadBox-list">
+						<li class="downloadBox-listI">
+							<a class="downloadBox-listI-link" href="#">View Source on GitHub →</a>
+						</li>
+						<li class="downloadBox-listI">
+							<a class="downloadBox-listI-link" href="#">How jQuery Works →</a>
+						</li>
+					</ul>
+				</div>
+				<ul class="banner-featureBox">
+					<li class="featureWrap">
+						<div class="feature">
+							<a class="iconS feature-link feature-linkLF"></a>
+							<h2 class="feature-title">Lightweight Footprint</h2>
+							<p class="feature-desc">Only 32kB minified and gzipped. Can also be included as an AMD module</p>
+						</div>
+					</li>	
+					<li class="featureWrap">
+						<div class="feature">
+							<a class="iconS feature-link feature-linkCC"></a>
+							<h2 class="feature-title">CSS3 Compliant</h2>
+							<p class="feature-desc">Supports CSS3 selectors to find elements as well as in style property manipulation</p>
+						</div>
+					</li>	
+					<li class="featureWrap">
+						<div class="feature">
+							<a class="iconS feature-link feature-linkCB"></a>
+							<h2 class="feature-title">Cross-Browser</h2>
+							<p class="feature-desc"><a class="feature-desc-link" href="#">IE, Firefox, Safari, Opera, Chrome, and more</a></p>
+						</div>
+					</li>	
+				</ul>
+			</div>
+			<div class="contentText mt15 clear">
+				<div class="contentText-introWrap">
+					<div class="contentText-intro">
+						<div class="isJq">
+							<h2 class="content-title">What is jQuery?</h2>
+							<p class="content-text">jQuery is a fast, small, and feature-rich JavaScript library. It makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers. With a combination of versatility and extensibility, jQuery has changed the way that millions of people write JavaScript.
+							</p>
+						</div>
+						<div class="corMembers">
+							<h2 class="content-title">Corporate Members</h2>
+							<ul class="content-icoBox">
+								<li class="content-ico">
+									<a class="content-ico-link" ref="#"><img src="img/content_ico/neobux.gif"></a>
+								</li>
+								<li class="content-ico">
+									<a class="content-ico-link" href="#"><img src="img/content_ico/ibm.gif"></a>
+								</li>
+								<li class="content-ico">
+									<a class="content-ico-link" href="#"><img src="img/content_ico/maxcdn.gif"></a>
+								</li>
+								<li class="content-ico">
+									<a class="content-ico-link" href="#"><img src="img/content_ico/famous.gif"></a>
+								</li>
+							</ul>
+							<p class="content-text">
+								Support from our corporate members makes it possible for the jQuery Foundation to continue our work on our JavaScript libraries and pushing the open web forward with events and participation in the standards process. View our <a href="#">members page</a> for a full list of corporate and individual members.
+							</p>
+						</div>
+						<div class="otherJQ">
+							<h2 class="content-title">Other jQuery Foundation Projects</h2>
+							<ul class="content-bgicoBox clear">
+								<li class="content-bgico content-bgicoUI">
+									<a class="iconS content-bgico-link content-bgicoUI-link" href="#"></a>
+								</li>
+								<li class="content-bgico content-bgicoMO">
+									<a class="iconS content-bgico-link content-bgicoMO-link" href="#"></a>
+								</li>
+								<li class="content-bgico content-bgicoQU">
+									<a class="iconS content-bgico-link content-bgicoQU-link" href="#"></a>
+								</li>
+								<li class="content-bgico content-bgicoSI">
+									<a class="iconS content-bgico-link content-bgicoSI-link" href="#"></a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="contentText-resourceWrap">	
+					<div class="contentText-resource">
+						<h3 class="content-Ltitle">Resources</h3>
+						<ul class="contentText-resource-textList">
+							<li class="contentText-resource-text clear">
+								<i class="contentText-resource-ico"></i>
+								<a href="#">jQuery Core API Documentation</a>
+							</li>
+							<li class="contentText-resource-text clear">
+								<i class="contentText-resource-ico"></i>
+								<a href="#">jQuery Learning Center</a>
+							</li>
+							<li class="contentText-resource-text clear">
+								<i class="contentText-resource-ico"></i>
+								<a href="#">jQuery Blog</a>
+							</li>
+
+							<li class="contentText-resource-text clear">
+								<i class="contentText-resource-ico"></i>
+								<a href="#">Contribute to jQuery</a>
+							</li>
+							<li class="contentText-resource-text clear">
+								<i class="contentText-resource-ico"></i>
+								<a href="#">About the jQuery Foundation</a>
+							</li>
+							<li class="contentText-resource-text clear">
+								<i class="contentText-resource-ico"></i>
+								<a href="#">Browse or Submit jQuery Bugs</a>
+							</li>
+						</ul>
+						<a class="contentText-resource-imglink">
+							<img class="contentText-resource-img" src="img/contentText_resource_imglink.jpg">
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="contentCode mt15">
+				<h2 class="content-title">A Brief Look</h2>
+				<div class="DOM">
+					<h3 class="content-Ltitle">DOM Traversal and Manipulation</h3>
+					<p class="contentCode-intro">Get the <code class="contentCode-Lcode code">&lt;button&gt;</code> element with the class 'continue' and change its HTML to 'Next Step...'</p>	
+					<pre class="contentCode-code code"><i class="contentCode-num">1</i>$( <span class="contentCode-string">"button.continue"</span> ).html( <span class="contentCode-string">"Next Step..."</span> )</pre>
+				</div>
+				<div class="EventH">
+					<h3 class="content-Ltitle">Event Handling</h3>
+					<p class="contentCode-intro">Show the <code class="contentCode-Lcode code">#banner-message</code>  element that is hidden with <code class="contentCode-Lcode code">display:none</code> in its CSS when any button in <code class="contentCode-Lcode code">#button-container</code> is clicked.</p>	
+					<pre class="contentCode-code code"><i class="contentCode-num">1</i><span class="contentCode-keyword">var</span> hiddenBox = $( <span class="contentCode-string">"button.continue"</span> );<br/><i class="contentCode-num">2</i>$( <span class="contentCode-string">"#button-container button"</span> ).on( <span class="contentCode-string">"click"</span>, <span class="contentCode-keyword">function</span>( event ) {<br><i class="contentCode-num">3</i>&nbsp; hiddenBox.show();<br><i class="contentCode-num">4</i>});</pre>
+				</div>
+				<div class="Ajax">
+					<h3 class="content-Ltitle">Ajax</h3>
+					<p class="contentCode-intro">Call a local script on the server <code class="contentCode-Lcode code">/api/getWeather</code> with the query parameter <code class="contentCode-Lcode code">zipcode=97201</code> and replace the element <code class="contentCode-Lcode code">#weather-temp</code>'s html with the returned text.</p>	
+					<pre class="contentCode-code code"><i class="contentCode-num">1</i>$.ajax({<br/><i class="contentCode-num">2</i> url: <span class="contentCode-string">"/api/getWeather"</span>,<br><i class="contentCode-num">3</i> data: {<br><i class="contentCode-num">4</i>&nbsp; zipcode: <span class="contentCode-number">97201</span><br><i class="contentCode-num">5</i> },<br><i class="contentCode-num">6</i>success: <span class="contentCode-keyword">function</span>( data ) {<br><i class="contentCode-num">7</i>&nbsp; $( <span class="contentCode-string">"#weather-temp"</span> ).html( <span class="contentCode-string">"&lt;strong&gt;"</span> + data + <span class="contentCode-string">"&lt;/strong&gt; degrees"</span> );<br><i class="contentCode-num">8</i> }<br><i class="contentCode-num">9</i>});</pre>
+				</div>		
+			</div>
+		</div>
+	</div>	
+</div>
+<footer class="footerWrap">
+	<div class="footer wrap">
+		<div class="ft-bookBox">
+			<header class="bookBox-hd">
+				<h3 class="bookBox-title">BOOKS</h3>
+			</header>			
+			<ul class="book">
+				<li class="bookIWrap">
+					<div class="bookI">
+						<a class="bookI-link" href="#">
+							<img  class="bookI-img" src="img/book/book1.jpg"><br>
+							<span class="bookI-title">Learning jQuery Fourth Edition</span><br>
+							<cite class="bookI-author">Karl Swedberg and Jonathan Chaffer</cite>
+						</a>
+					</div>
+				</li>
+				<li class="bookIWrap">
+					<div class="bookI">
+						<a class="bookI-link" href="#">
+							<img  class="bookI-img" src="img/book/book2.jpg"><br>
+							<span class="bookI-title">jQuery in Action</span><br>
+							<cite class="bookI-author">Bear Bibeault, Yehuda Katz, and Aurelio De Rosa</cite>
+						</a>
+					</div>
+				</li>
+				<li class="bookIWrap">
+					<div class="bookI">
+						<a class="bookI-link" href="#">
+							<img  class="bookI-img" src="img/book/book3.jpg"><br>
+							<span class="bookI-title">jQuery Succinctly</span><br>
+							<cite class="bookI-author">Cody Lindley</cite>
+						</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="copyrightbar mt15 clear">
+			<nav class="ftNav clear">
+				<a class="ftNav-link" href="#">
+					<i class="iconF ftNav-link-ico">&#xe606;</i>
+					<span>GitHub</span>
+				</a>
+				<a class="ftNav-link" href="#">
+					<i class="iconF ftNav-link-ico">&#xe605;</i>
+					<span>IRC</span>
+				</a>
+				<a class="ftNav-link" href="#">
+					<i class="iconF ftNav-link-ico">&#xe604;</i>
+					<span>Twitter</span>
+				</a>
+				<a class="ftNav-link" href="#">
+					<i class="iconF ftNav-link-ico">&#xe603;</i>
+					<span>API</span>
+				</a>
+				<a class="ftNav-link" href="#">
+					<i class="iconF ftNav-link-ico">&#xe602;</i>
+					<span>Forum</span>
+				</a>
+				<a class="ftNav-link ftNav-linkB" href="#">
+					<i class="iconF ftNav-link-ico">&#xe601;</i>
+					<span>Learning Center</span>
+				</a>				
+			</nav>
+			<div class="copyright">
+				<div class="copyright-ver clear">
+					<span class="fl">Copyright 2015 &nbsp;</span>
+					<a class="copyright-link" href="#">The jQuery Foundation</a>
+					<span class="fl">.</span>
+					<a class="copyright-link" href="#">&nbsp;jQuery License</a>
+				</div>
+				<ul class="copyright-intro clear">
+					<li class="copyright-introI">
+						<i class="iconS copyright-introI-icoMt copyright-introI-ico"></i>
+						<a class="copyright-link"href="#">Web hosting by Media Temple</a>
+					</li>
+					<li class="copyright-introI">
+						<i class="iconS copyright-intro-icoIM copyright-introI-ico"></i>
+						<a class="copyright-link"href="#">CDN by MaxCDN</a>
+					</li>
+					<li class="copyright-introI">
+						<i class="iconS copyright-intro-icoIW copyright-introI-ico"></i>
+						<a class="copyright-link"href="#">Powered by WordPress</a>
+					</li>
+					<li class="copyright-introI copyright-introILast">
+						<span class="fl">Thanks: &nbsp;</span>
+						<a class="copyright-link" href="#">Members</a>
+						<span class="fl">,</span>
+						<a class="copyright-link" href="#" >&nbsp;Sponsors</a>
+					</li>
+				</ul>
+			</div>			
+		</div>
+	</div>	
+</footer>	
+</body>
+</html>
