@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<script type="text/javascript">
+		//如何适配
+		//1.强制设定视口大小
+//		(function(){
+//			var deWidth = window.screen.width;
+//			var defaultW = 320;
+//			var meta = document.createElement('meta');
+//			meta.name = 'viewport';
+//			
+//			var scale =  deWidth / 320 ;
+//			
+//			meta.content = `initial-scale=${scale},maximum-scale=${scale},minimun-scale=${scale},user-scalable=no`
+//			
+//			document.head.appendChild(meta)
+//			
+//		}())
+
+		//2.还原分辨率 rem适配
+		(function(){
+			//还原分辨率
+			var dpr= window.devicePixelRatio;
+			var meta = document.createElement('meta');
+			meta.name = 'viewport';
+			
+			var scale =  1 / dpr ;
+			
+			meta.content = `width=device-width,initial-scale=${scale},maximum-scale=${scale},minimun-scale=${scale},user-scalable=no`
+			
+			document.head.appendChild(meta);
+			
+			
+			//rem
+			var deviceW = window.screen.width;
+			//除数 任意  目的是保证 rem 与 屏幕大小 成比例
+			document.documentElement.style.fontSize = deviceW/16 + 'px'
+			
+		}())
+		//3.弹性盒模型
+		
+	</script>
+	<body>
+	</body>
+</html>

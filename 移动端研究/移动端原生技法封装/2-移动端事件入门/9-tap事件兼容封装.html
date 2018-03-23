@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<style type="text/css">
+			
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+
+			<ul class="list">
+				
+			</ul>
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+
+		
+		var wrap = document.getElementsByClassName('wrap')[0];
+		var list = document.getElementsByClassName('list')[0];
+		var a  = document.getElementsByTagName('a');
+		var inner = '';
+		for(var i = 0; i < 50 ; i ++){
+			inner += `<li><a href="http://www.baidu.com">我是${i}</a></li>`
+		}
+		
+		wrap.addEventListener('touchstart',function(e){
+			e.preventDefault();
+		},false)
+		
+		list.innerHTML = inner;
+		
+		
+		for(var i = 0 ; i < a.length; i++){
+			tap(a[i],function(e){
+				window.location.href = this.href;
+			})
+		}
+		
+		
+		
+		//el 要点击的元素
+		//fn 触发事件的回调
+		
+		//touchstart记录坐标点 touchend记录坐标点 如果两者小于一定距离则为tap
+		
+		function tap(el,fn){
+			var startPoint = {};
+			var endPoint = {};
+			el.addEventListener('touchstart',function(e){
+				startPoint = {
+					x : e.changedTouches[0].pageX,
+					y : e.changedTouches[0].pageY,
+				}
+			},false)
+			el.addEventListener('touchend',function(e){
+
+				endPoint = {
+					x : e.changedTouches[0].pageX,
+					y : e.changedTouches[0].pageY,
+				}
+				if( Math.abs(startPoint.x - endPoint.x) < 5 && Math.abs(startPoint.y - endPoint.y) < 5){
+					fn && fn.call(el,e);
+				}
+			},false)
+		}
+		
+		
+		
+	</script>
+</html>

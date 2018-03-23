@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1"/>
+		<style>
+			body{
+				/*移动端每台默认字体都一样 而且大部分都没有宋体 微软雅黑*/
+				/*font-family: Helvetica;*/
+				font-family: Arial, Helvetica, STHeiTi, sans-serif;
+				/*禁止用户修改字体大小*/
+				-webkit-text-size-adjust: 100%; 
+			}
+			a,button,input{
+				/*点击黑色背景*/
+				-webkit-tap-highlight-color: rgba(0,0,0,0);
+			}
+			button{
+				/*解决圆角按钮*/
+				-webkit-appearance: none;
+				border-radius: 0;
+			}
+			p{
+				/*长按不选中字体 貌似只有ios起作用  兼容安卓需要js处理*/
+				-webkit-user-select: none;
+			}
+		</style>
+	</head>
+	<body>
+		<a href="http:www.baidu.com">黑色阴影</a>
+		<button>按钮变成圆角了</button>
+		<p>长按不选中的文字</p>
+	</body>
+</html>

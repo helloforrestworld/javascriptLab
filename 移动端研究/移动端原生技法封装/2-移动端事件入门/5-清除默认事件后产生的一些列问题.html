@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<style type="text/css">
+			.box{
+				position: absolute;
+				background: pink;
+				opacity: 0.54;
+				left: 0;
+				top: 0;
+				width: 200px;
+				height: 200px;
+				border: 4px solid black;
+				word-break: break-all;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<a href="http://www.baidu.com">事件点透</a>
+			<div class="box"></div>
+			<ul class="list">
+				
+			</ul>
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+		
+		/*
+		阻止默认事件带来的问题：
+			解决IOS10+ safari 以及部分安卓浏览器 不在支持 viewport的最大缩放值和禁止缩放的问题
+		
+			解决IOS10+ safari下给body加overflow：hidden无效的问题
+				给元素加了 一个绝对定位，但是元素本身没有定位父级，元素如果超出了body的宽度，body 上的overflow对这个元素，不起效果
+				解决办法：
+					给body加上一个相对定位
+		
+			解决事件点透的问题
+		
+			禁止mouse事件执行 :  a标签通过js跳转
+		
+			阻止浏览器的回弹效果 : 也可以自定义
+		
+			阻止触发浏览器的滚动条 ： 自定义滚动
+		
+			阻止触发系统菜单   ：这个还行吧
+		
+			阻止图片文字被选中 ：这个一般跳转页面解决
+		
+			阻止input的输入	：这个一般跳转页面解决
+*/
+		
+		var wrap = document.getElementsByClassName('wrap')[0];
+		var list = document.getElementsByClassName('list')[0];
+		var box = document.getElementsByClassName('box')[0];
+		var inner = '';
+		for(var i = 0; i < 50 ; i ++){
+			inner += `<li><a href="http://www.baidu.com">我是${i}</a></li>`
+		}
+		wrap.addEventListener('touchstart',function(e){
+			e.preventDefault();
+		},false)
+		list.innerHTML = inner;
+		box.addEventListener('touchend',function(e){
+			this.style.display = 'none'
+		},false)
+	</script>
+</html>

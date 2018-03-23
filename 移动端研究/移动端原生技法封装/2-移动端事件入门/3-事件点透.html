@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<style type="text/css">
+			.box{
+				position: absolute;
+				background: pink;
+				opacity: 0.54;
+				left: 0;
+				top: 0;
+				width: 200px;
+				height: 200px;
+				border: 4px solid black;
+				word-break: break-all;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<a href="http://www.baidu.com">事件点透</a>
+		<div class="box"></div>
+	</body>
+	<script type="text/javascript">
+		//box 触发 touch后 立即触发touch事件绑定的事件然后记录坐标
+		//300ms后 在这个坐标找元素  触发其mouse事件
+		//解决办法：清除默认事件呗
+		
+		//新版微信浏览器没有事件点透呵呵
+		
+		var box = document.getElementsByClassName('box')[0];
+		box.addEventListener('touchend',function(e){
+			e.preventDefault();
+			this.style.display = 'none';
+		},false)
+	</script>
+</html>

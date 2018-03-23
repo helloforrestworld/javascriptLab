@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<style type="text/css">
+
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<ul class="list">
+				
+			</ul>
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+
+		
+		var wrap = document.getElementsByClassName('wrap')[0];
+		var list = document.getElementsByClassName('list')[0];
+		var a  = document.getElementsByTagName('a');
+		var inner = '';
+		for(var i = 0; i < 50 ; i ++){
+			inner += `<li><a href="http://www.baidu.com">我是${i}</a></li>`
+		}
+		
+		wrap.addEventListener('touchstart',function(e){
+			e.preventDefault();
+		},false)
+		
+		list.innerHTML = inner;
+		
+		
+		for(var i = 0 ; i < a.length; i++){
+			a[i].addEventListener('touchend',function(e){
+				var href = this.href;
+				window.location.href = href;
+				
+				//问题又来了
+				//touch事件在元素外也能捕捉到
+				//当滑屏经常误触跳转
+				//解决 ： 封装tap事件
+			},false)
+		}
+		
+	</script>
+</html>

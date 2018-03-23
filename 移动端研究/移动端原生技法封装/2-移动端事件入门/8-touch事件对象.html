@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<style type="text/css">
+			.box{
+				width: 200px;
+				height: 400px;
+				background: skyblue;
+				color: white;
+				word-break: break-all;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			
+		</div>
+		<div class="box">
+			
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+		
+		//e.touches  当前屏幕的所有触摸点
+		//e.targetTouches 当前元素上的所有触摸点
+		//e.changedTouches  引发当前事件的触摸点
+		
+		//展开触摸点列表
+		//clientX clientY
+		//pageX pageY
+		//rotationAngle
+		//radiusX radiusY 用户与屏幕最小触摸面(椭圆) X Y
+		
+		var box = document.getElementsByClassName('box')[0];
+		var box2 = document.getElementsByClassName('box')[1];
+		box.addEventListener('touchstart',function(e){
+			console.log(e.touches)
+			this.innerHTML += `touches: ${e.touches.length}<br>`;
+			this.innerHTML += `targetTouches: ${e.targetTouches.length}<br>`;
+			this.innerHTML += `changedTouches: ${e.changedTouches.length}<br>`;
+		},false)
+		box2.addEventListener('touchstart',function(e){
+			console.log(e)
+			this.innerHTML += `touches: ${e.touches.length}<br>`;
+			this.innerHTML += `targetTouches: ${e.targetTouches.length}<br>`;
+			this.innerHTML += `changedTouches: ${e.changedTouches.length}<br>`;
+		},false)
+	</script>
+</html>

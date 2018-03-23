@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<style type="text/css">
+
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<ul class="list">
+				
+			</ul>
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+
+		
+		var wrap = document.getElementsByClassName('wrap')[0];
+		var list = document.getElementsByClassName('list')[0];
+		var a  = document.getElementsByTagName('a');
+		var inner = '';
+		for(var i = 0; i < 50 ; i ++){
+			inner += `<li><a href="http://www.baidu.com">我是${i}</a></li>`
+		}
+		
+		wrap.addEventListener('touchstart',function(e){
+			e.preventDefault();
+		},false)
+		
+		list.innerHTML = inner;
+		
+		
+		for(var i = 0 ; i < a.length; i++){
+			tap(a[i],function(e){
+				window.location.href = this.href;
+			})
+		}
+		
+		
+		
+		//el 要点击的元素
+		//fn 触发事件的回调
+		
+		//touchend判断touchmove有没有触发
+		function tap(el,fn){
+			var isMove = false;
+			el.addEventListener('touchmove',function(e){
+				isMove = true;
+			},false)
+			el.addEventListener('touchend',function(e){
+				if(!isMove){
+					fn && fn.call(el,e);
+				}
+			},false)
+		}
+		
+		//这样封装后 在安卓上某些浏览器也有问题
+		//所谓的大面积触碰 其实就一根手指也会引发
+		//touchstart的一瞬间同样也触发了 touchmove 
+		//这样封装就点击不了
+		
+	</script>
+</html>
