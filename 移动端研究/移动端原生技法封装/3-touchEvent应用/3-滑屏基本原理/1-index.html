@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width,user-scalable=no" />
+<meta charset="UTF-8">
+<title>Document</title>
+<style type="text/css">
+body,html{
+	margin: 0;
+	height: 100%;
+}
+ul{
+	margin: 0;
+	padding: 0;
+}
+li{
+	list-style: none;
+}
+.box{
+	position: relative;
+	overflow: hidden;
+	height: 100%;
+}
+.box .header{
+	width: 100%;
+	z-index: 99;
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 40px;
+	text-align: center;
+	color: white;
+	background-color: black;
+	line-height: 40px;
+	font-size: 24px;
+}
+.wrap{
+	position: absolute;
+	overflow: hidden;
+	top: 40px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+.list{
+	position: absolute;
+	width: 100%;
+	left: 0;
+	top: 0;
+	padding-top: 20px;
+}
+.list li{
+	height: 26px;
+	line-height: 26px;
+	font-size: 18px ;
+	padding-left: 10px;
+	border-top: 1px solid black ;
+}
+.list li:last-child{
+	border-bottom: 1px solid black ;
+}
+
+</style>
+</head>
+<body>
+<div class="box">
+	<header class="header">
+		滑屏原理
+	</header>
+	<div class="wrap">
+		<ul class="list">
+			<li>我是第一条li</li>
+			<li>我是第一条li</li>
+			<li>我是第一条li</li>
+		</ul>
+	</div>
+</div>
+<script type="text/javascript">
+//生成结构	
+(function(){
+	var list = document.getElementsByClassName('list')[0];
+	var str = '';
+	for(var i = 0; i < 100; i++){
+		str += '<li>我是第'+i+'条</li>'
+	}
+	list.innerHTML = str;
+})();
+
+
+//滑屏
+(function(){
+	
+	var wrap = document.getElementsByClassName('wrap')[0];
+	var list = document.getElementsByClassName('list')[0];
+	
+	//touchstart 记录 坐标
+	//touchmove 记录坐标    初始坐标  减去 move坐标 等于 偏移的距离
+	//滚动区域的top + 滚动距离
+	var startPointY = 0;
+	var listTop;
+	
+	wrap.addEventListener('touchstart',function(e){
+		e.preventDefault();
+		startPointY = e.changedTouches[0].pageY;
+		listTop = parseFloat( window.getComputedStyle(list)['top'] );
+	},false)
+	wrap.addEventListener('touchmove',function(e){
+		var disY = e.changedTouches[0].pageY - startPointY;
+		list.style.top = listTop + disY  + 'px'
+	},false)
+	
+}())
+
+
+</script>
+</body>
+</html>

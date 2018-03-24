@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<meta name="viewport" content="width=device-width,user-scalable=no" />
+<style type="text/css">
+body, 
+dl,
+dd {
+	margin: 0;
+}
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+body {
+	background: #f5f5f5;
+}
+.list {
+	border-top: 1px solid #ebebeb;	
+}
+.list dt {
+	border-bottom: 1px solid #ebebeb;
+	font-size: 16px;
+	line-height: 20px;
+	text-indent: 10px;
+	color: #ababab;
+	font-weight: bold;
+}
+.list dd {
+	position: relative;
+	height: 50px;
+	background: #fff;
+	border-bottom: 1px solid #ebebeb;
+	line-height: 50px;
+	font-size: 18px;
+	color: #333;
+	padding-left: 60px;
+}
+.list .avatar {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 50px;
+	height: 50px;
+	background: #fcfcfc;
+	border-right: 1px solid #efefef;
+}
+.list .img {
+	position: absolute;
+	left: 8px;
+	top: 8px;
+	width: 34px;
+	height: 34px;
+	font-size: 34px;
+	line-height: 34px;
+	font-weight: bold;
+	color: #fff;
+	white-space: nowrap;
+	border-radius: 17px;
+	background: #869dce;
+	box-shadow: inset 0 2px 3px rgba(0,0,0,.6);
+	overflow: hidden; 
+}
+#nav {
+	position: fixed;
+	top: 0;
+	right: 0;
+	height: 100%;
+}
+.navList {
+	float: left;
+	width: 30px;
+	border-color: #cdcdcd;
+	background: #f9f9fa;
+	box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+	-webkit-transform-origin: right top;
+	transform-origin: right top;
+}
+.navList li {
+	width: 20px;
+	height: 20px;
+	margin: 2px 5px;
+	font-size: 14px;
+	line-height: 20px;
+	text-align: center;
+	color: #989898;
+	border-radius: 10px;
+	overflow: hidden;
+}
+.navList li.focus {
+	color: #fff;
+	background: #515157;
+}
+.navList .ico {
+	display: block;
+	width: 14px;
+	height: 14px;
+	margin: 3px;
+	background: url(img/ico.png) no-repeat center center;
+	background-size: contain;
+}	
+</style>
+</head>
+<body>
+<dl class="list" id="indexList">
+  <dt data-id="B">B</dt>
+  <dd>
+    <span class="avatar">
+      <span class="img">苞</span></span>苞</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">卞发愈</span></span>卞发愈</dd>
+  <dt data-id="C">C</dt>
+  <dd>
+    <span class="avatar">
+      <span class="img">蔡勳祯</span></span>蔡勳祯</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">常虎云</span></span>常虎云</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">常繁坤</span></span>常繁坤</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">成必萌</span></span>成必萌</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">陈旭銮</span></span>陈旭銮</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">蔡律烈</span></span>蔡律烈</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">蔡静建</span></span>蔡静建</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">车蔓谆</span></span>车蔓谆</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">岑暖起</span></span>岑暖起</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">池榕文</span></span>池榕文</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">岑堂俊</span></span>岑堂俊</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">程熙歆</span></span>程熙歆</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">池尧昌</span></span>池尧昌</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">褚瑜聚</span></span>褚瑜聚</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">陈昼常</span></span>陈昼常</dd>
+  <dt data-id="D">D</dt>
+  <dd>
+    <span class="avatar">
+      <span class="img">邓甫男</span></span>邓甫男</dd>
+  <dt data-id="F">F</dt>
+  <dd>
+    <span class="avatar">
+      <span class="img">傅才共</span></span>傅才共</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">范望桂</span></span>范望桂</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">冯祯沛</span></span>冯祯沛</dd>
+  <dt data-id="G">G</dt>
+  <dd>
+    <span class="avatar">
+      <span class="img">甘甫漳</span></span>甘甫漳</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">郭礼丹</span></span>郭礼丹</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">葛修天</span></span>葛修天</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">葛耀俐</span></span>葛耀俐</dd>
+  <dt data-id="H">H</dt>
+  <dd>
+    <span class="avatar">
+      <span class="img">虎</span></span>虎</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">亨</span></span>亨</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">湖</span></span>湖</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">何博清</span></span>何博清</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">何福磊</span></span>何福磊</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">胡鸿燊</span></span>胡鸿燊</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">韩良培</span></span>韩良培</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">黄棉立</span></span>黄棉立</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">洪宙顺</span></span>洪宙顺</dd>
+  <dt data-id="J">J</dt>
+  <dd>
+    <span class="avatar">
+      <span class="img">蒋伙辉</span></span>蒋伙辉</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">江利生</span></span>江利生</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">姬侠琛</span></span>姬侠琛</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">姜渝纹</span></span>姜渝纹</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">江易祯</span></span>江易祯</dd>
+  <dt data-id="K">K</dt>
+  <dd>
+    <span class="avatar">
+      <span class="img">孔泰宾</span></span>孔泰宾</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">康添叔</span></span>康添叔</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">孔熹策</span></span>孔熹策</dd>
+  <dt data-id="L">L</dt>
+  <dd>
+    <span class="avatar">
+      <span class="img">陆海叙</span></span>陆海叙</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">龙禧胤</span></span>龙禧胤</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">鲁和沛</span></span>鲁和沛</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">刘孝谦</span></span>刘孝谦</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">林康峰</span></span>林康峰</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">廖</span></span>廖</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">梁会武</span></span>梁会武</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">陆鸣灵</span></span>陆鸣灵</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">连隆元</span></span>连隆元</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">赖小恒</span></span>赖小恒</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">梁搏俊</span></span>梁搏俊</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">梁</span></span>梁</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">陆强悦</span></span>陆强悦</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">郎俯朋</span></span>郎俯朋</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">柳望海</span></span>柳望海</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">梁韦琪</span></span>梁韦琪</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">李晨修</span></span>李晨修</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">陆贵亭</span></span>陆贵亭</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">刘茂稚</span></span>刘茂稚</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">刘敏发</span></span>刘敏发</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">李年农</span></span>李年农</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">吕可翔</span></span>吕可翔</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">林友均</span></span>林友均</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">乐耀铿</span></span>乐耀铿</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">李漳霖</span></span>李漳霖</dd>
+  <dt data-id="M">M</dt>
+  <dd>
+    <span class="avatar">
+      <span class="img">木</span></span>木</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">穆</span></span>穆</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">穆润继</span></span>穆润继</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">马伊翼</span></span>马伊翼</dd>
+  <dt data-id="N">N</dt>
+  <dd>
+    <span class="avatar">
+      <span class="img">倪翠健</span></span>倪翠健</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">宁祥超</span></span>宁祥超</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">倪欣圣</span></span>倪欣圣</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">宁优来</span></span>宁优来</dd>
+  <dt data-id="P">P</dt>
+  <dd>
+    <span class="avatar">
+      <span class="img">蒲常庚</span></span>蒲常庚</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">潘光醒</span></span>潘光醒</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">彭顺雪</span></span>彭顺雪</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">蒲翊冶</span></span>蒲翊冶</dd>
+  <dt data-id="Q">Q</dt>
+  <dd>
+    <span class="avatar">
+      <span class="img">秦</span></span>秦</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">邱必霖</span></span>邱必霖</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">丘邦宪</span></span>丘邦宪</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">齐鹊盛</span></span>齐鹊盛</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">钱三冰</span></span>钱三冰</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">钱三昕</span></span>钱三昕</dd>
+  <dt data-id="R">R</dt>
+  <dd>
+    <span class="avatar">
+      <span class="img">任盖可</span></span>任盖可</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">饶儒吟</span></span>饶儒吟</dd>
+  <dt data-id="S">S</dt>
+  <dd>
+    <span class="avatar">
+      <span class="img">沈晨羿</span></span>沈晨羿</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">沈敦亭</span></span>沈敦亭</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">盛风程</span></span>盛风程</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">沈国泰</span></span>沈国泰</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">孙上颖</span></span>孙上颖</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">苏霆清</span></span>苏霆清</dd>
+  <dt data-id="T">T</dt>
+  <dd>
+    <span class="avatar">
+      <span class="img">汤</span></span>汤</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">田安贝</span></span>田安贝</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">童臣华</span></span>童臣华</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">田蒲祖</span></span>田蒲祖</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">童眺尚</span></span>童眺尚</dd>
+  <dt data-id="W">W</dt>
+  <dd>
+    <span class="avatar">
+      <span class="img">吴伦青</span></span>吴伦青</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">伍弘洲</span></span>伍弘洲</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">伍卉夏</span></span>伍卉夏</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">王涵达</span></span>王涵达</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">危节国</span></span>危节国</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">王琅甫</span></span>王琅甫</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">王鹏常</span></span>王鹏常</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">吴松磊</span></span>吴松磊</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">吴士汐</span></span>吴士汐</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">王武齐</span></span>王武齐</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">王巍信</span></span>王巍信</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">吴想康</span></span>吴想康</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">韦永奎</span></span>韦永奎</dd>
+  <dt data-id="X">X</dt>
+  <dd>
+    <span class="avatar">
+      <span class="img">谢昌欢</span></span>谢昌欢</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">许伦之</span></span>许伦之</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">薛窍耿</span></span>薛窍耿</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">辛泰裔</span></span>辛泰裔</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">薛卫修</span></span>薛卫修</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">许学标</span></span>许学标</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">许冶赐</span></span>许冶赐</dd>
+  <dt data-id="Y">Y</dt>
+  <dd>
+    <span class="avatar">
+      <span class="img">殷成佳</span></span>殷成佳</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">易</span></span>易</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">颜炳和</span></span>颜炳和</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">杨楚信</span></span>杨楚信</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">云贵凌</span></span>云贵凌</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">尤隆子</span></span>尤隆子</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">杨诺巍</span></span>杨诺巍</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">岳儒渊</span></span>岳儒渊</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">俞森进</span></span>俞森进</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">云绍熊</span></span>云绍熊</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">杨巍龄</span></span>杨巍龄</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">杨夏凌</span></span>杨夏凌</dd>
+  <dt data-id="Z">Z</dt>
+  <dd>
+    <span class="avatar">
+      <span class="img">章轩经</span></span>章轩经</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">周竟葛</span></span>周竟葛</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">张功怀</span></span>张功怀</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">张变壮</span></span>张变壮</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">朱标勇</span></span>朱标勇</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">赵护寒</span></span>赵护寒</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">钟杭福</span></span>钟杭福</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">张迟珩</span></span>张迟珩</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">邹纯修</span></span>邹纯修</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">征</span></span>征</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">章财谷</span></span>章财谷</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">周甘法</span></span>周甘法</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">周僖众</span></span>周僖众</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">张霄德</span></span>张霄德</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">赵仁善</span></span>赵仁善</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">张希辰</span></span>张希辰</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">庄木奕</span></span>庄木奕</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">周望震</span></span>周望震</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">朱路悦</span></span>朱路悦</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">周历胤</span></span>周历胤</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">周衔坚</span></span>周衔坚</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">张锡若</span></span>张锡若</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">钟轩子</span></span>钟轩子</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">周亚剑</span></span>周亚剑</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">朱愚利</span></span>朱愚利</dd>
+  <dd>
+    <span class="avatar">
+      <span class="img">周衷亨</span></span>周衷亨</dd>
+</dl>	
+<nav id="nav">
+	<ul class="navList" data-indexlist="#indexList">
+		<li><span class="ico"></span></li>
+		<li data-index="A">A</li>
+		<li data-index="B">B</li>
+		<li data-index="C">C</li>
+		<li data-index="D">D</li>
+		<li data-index="E">E</li>
+		<li data-index="F">F</li>
+		<li data-index="G">G</li>
+		<li data-index="H">H</li>
+		<li data-index="I">I</li>
+		<li data-index="J">J</li>
+		<li data-index="K">K</li>
+		<li data-index="L">L</li>
+		<li data-index="M">M</li>
+		<li data-index="N">N</li>
+		<li data-index="O">O</li>
+		<li data-index="P">P</li>
+		<li data-index="Q">Q</li>
+		<li data-index="R">R</li>
+		<li data-index="S">S</li>
+		<li data-index="T">T</li>
+		<li data-index="U">U</li>
+		<li data-index="V">V</li>
+		<li data-index="W">W</li>
+		<li data-index="X">X</li>
+		<li data-index="Y">Y</li>
+		<li data-index="Z">Z</li>
+	</ul>
+</nav>	
+<script type="text/javascript">
+//导航大小自适应
+(function(){
+	var nav = document.getElementById('nav');
+	var list = document.getElementsByClassName('navList')[0];
+	var scale = nav.clientHeight / list.offsetHeight ;
+	list.style.WebkitTransform = list.style.transform = "scale("+scale+")";
+}());
+
+//1.导航点击切换class : focus
+//2.获取data-index 根据index找到dt
+//3.如果找不到对应的index 继续往下走一个 直至最后一个
+//4.滚动条滚到对应位置
+//5.点击完成后 加上 手快速划过导航
+//6.快速划过  导航外层添加touchmove监控changedTouches的pageY 对比 每一个导航top bottom找到对应的导航
+
+//导航点击切换
+
+(function(){
+	
+	var nav = document.getElementById('nav');
+	var list = document.getElementsByClassName('navList')[0];
+	var listItem = list.getElementsByTagName('li'),
+		listLen = listItem.length;
+	
+	
+	
+	list.addEventListener('touchmove',function(e){
+		var pointY = e.changedTouches[0].clientY;
+		getNav(pointY);
+
+	},false)
+	list.addEventListener('touchstart',function(e){
+		var pointY = e.changedTouches[0].clientY;
+		e.preventDefault();
+		getNav(pointY);
+	},false)
+	
+	
+	function getNav(pointY){
+		var rect;
+		for(var i = 1; i < listLen; i++){
+			rect =  listItem[i].getBoundingClientRect();
+			if(rect.top <= pointY && rect.bottom >= pointY){
+				setNav(listItem[i]);
+				scrollDt(listItem[i]);
+				break
+			}
+		}
+	}
+	
+	
+	function setNav(theIndex){
+		for(var i = 1; i < listLen; i++){
+			listItem[i].className = '';
+		}
+		theIndex.className = 'focus';
+	}
+	function getTarget(theIndex){
+		var id = theIndex.dataset.index;
+		var target = document.querySelector('dt[data-id="'+id+'"]');
+		
+		
+		while(!target){
+			theIndex = theIndex.nextElementSibling;
+			
+			if(!theIndex){ //到了z都找不到
+				targets = document.querySelectorAll('dt');
+				target = targets[targets.length - 1];
+				break;
+			}
+			
+			target = getTarget(theIndex)
+		}
+		
+		return target
+	}
+	function scrollDt(theIndex){
+		var target =  getTarget(theIndex);
+		var scrollY = window.scrollY;
+		var targetClientY = target.getBoundingClientRect().top;
+		window.scrollTo(0, scrollY + targetClientY);
+	}
+}())
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,user-scalable=no" />
+		<title></title>
+		<style type="text/css">
+			.box{
+				width: 100px;
+				height: 100px;
+				background-color: red;
+				transition: .3s;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box"></div>
+	</body>
+	<script type="text/javascript">
+		
+		var box = document.getElementsByClassName('box')[0];
+		
+		function css(el,attr,val){
+			var transformAttr = ['rotate','rotateX','rotateY','skew','skewX','skewY','scale','scaleX','scaleY','translate','translateX','translateY'];
+			for(var i = 0 ; i < transformAttr.length; i++){
+				if(attr === transformAttr[i]){
+					//transform属性单独处理
+					el.transform = el.transform || {
+						'rotate':0,
+						'rotateX':0,
+						'rotateY':0,
+						'skew':0,
+						'skewX':0,
+						'skewY':0,
+						'scale':1,
+						'scaleX':1,
+						'scaleY':1,
+						'translate':0,
+						'translateX':0,
+						'translateY':0
+					}; //默认值
+					
+					var str = '';
+					if(val === undefined){
+						return el.transform[attr]
+					}
+					el.transform[attr] = val;
+					
+					for(var key in el.transform){
+						switch(key){
+							case 'rotate':
+							case 'rotateX':
+							case 'rotateY':
+							case 'skew':
+							case 'skewX':
+							case 'skewY':
+								str += key + '(' + el.transform[key] + 'deg) '
+								break
+							case 'translate':
+							case 'translateX':
+							case 'translateY':
+								str += key + '(' + el.transform[key] + 'px) '
+								break
+							default:
+								str += key + '(' + el.transform[key] + ') '
+						}
+					}
+					el.style.transform = str;
+					return
+				}
+			}
+			
+			
+			if(val === undefined){
+				return parseFloat( window.getComputedStyle(el)[attr] )
+			}
+			if(attr === 'opacity'){
+				el.style[attr] = val;
+			}else{
+				el.style[attr] = val + 'px';
+			}
+		}
+	</script>
+</html>
