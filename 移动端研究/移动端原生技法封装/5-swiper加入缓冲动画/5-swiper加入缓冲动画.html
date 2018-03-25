@@ -239,17 +239,11 @@
 			
 		}())
 		
-		
-		//封装滑屏函数
-		//swiper(init)
+		//缓冲动画
 		/*
-		 init: {
-		 	wrap: wrap        //互动区域父级
-		 	dir: 'x' || 'y'	  //需要滚动的方向
-		 	endFn: fn         //滑动结束后回调
-		 	startFn:fn        //触碰前的回调
-		 }
-		*/
+		 	1. 找到最后一次滑动的速度
+		 	2. 计算缓冲滑动 距离     s = t*t / 2a(摩擦系数)  或者 与速度长正比的滑动距离就行
+		 */
 		
 		function swiper(init){
 			var wrap = init.wrap; //滚动元素的父级
@@ -276,6 +270,11 @@
 				y : 'translateY'
 			}
 			
+			//缓冲动画
+			var lastTime = 0; //上一次滑动时间戳
+			var lastDis = 0;// 当前move与上一次move手指距离
+			var lastTimeDis= 0;//当前move与上一次move时间差
+			
 			
 			wrap.addEventListener('touchstart',function(e){
 				
@@ -300,6 +299,10 @@
 					y : css(scroll,'translateY')
 				}
 				
+				//缓冲动画
+				lastTime = Date.now();
+				lastDis = 0;// 当前move与上一次move手指距离
+				lastTimeDis= 0;//当前move与上一次move时间差
 			},false)
 			
 			wrap.addEventListener('touchmove',function(e){
@@ -326,7 +329,7 @@
 
 				
 				if(checkBug){
-					if(Math.abs(disPoint.x) > Math.abs(disPoint.y)){
+					if(Math.abs(disPoint.x) > Math.abs(disPoint.y)){//判断用户往哪个方向移动
 						//应该横向滑
 						dirBoolean.x = true;
 						dirBoolean.y = false;
@@ -342,17 +345,53 @@
 				if(dirBoolean[dir]){
 					e.preventDefault();
 					css(scroll,translateAttr[dir],targetPoint[dir]);
+					
+					//缓冲动画
+					var nowTime = Date.now();
+					lastTimeDis = nowTime - lastTime;
+					lastDis = nowPoint[dir] - lastPoint[dir];
 				}
 				
-				//上一次的值更新 用于判断是否误触
+				//上一次的值更新 
 				lastPoint.x = nowPoint.x;
 				lastPoint.y = nowPoint.y;
+				//上一次时间值更新
+				lastTime = nowTime;
 				
 			},false)
 			
 			wrap.addEventListener('touchend',function(e){ //结束后回调
 				checkBug = true;
 				init.endFn && init.endFn.call(wrap,e);
+				
+				
+				//缓冲动画
+				var nowTime = Date.now();//抬起时间
+				var lastSpeed = lastDis / lastTimeDis; //最后一次滑动的速度
+				var now =  css(scroll,translateAttr[dir]);//获取当前translate值
+				var s;//缓冲动画滚动距离
+				var target;//目标值对象
+				
+				
+				lastSpeed = lastSpeed? lastSpeed : 0; //触碰瞬间抬起lastSpeed为NaN
+				
+				if(nowTime - lastTime > 100){ //如果抬起期间和move时间相差太远 判定为滑动后长按
+					lastSpeed = 0; //这时候就不需要缓冲动画了
+				}
+				
+				s  = Math.round(lastSpeed * 170) + now; //与速度成正比的滚动距离
+				
+				if(dir === 'x'){//目标值对象
+					target = {'translateX': s}
+				}else{
+					target = {'translateY': s}
+				}
+				startMove({//运动函数
+					el:scroll,
+					type:'easeOutStrong',
+					target:target,
+					time:500
+				})
 			},false)
 		}
 	</script>
