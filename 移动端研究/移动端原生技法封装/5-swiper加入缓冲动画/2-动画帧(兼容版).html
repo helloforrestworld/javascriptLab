@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.box{
+				width: 100px;
+				height: 100px;
+				background: red;
+				position: absolute;
+				left: 0;
+				top: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box"></div>
+	</body>
+	<script type="text/javascript">
+		(function(){
+			
+			//Andirod4.2下 不支持动画帧
+			//某些版本浏览器需要家-webkit- -moz-
+			//取消动画帧函数还有不一样的名字 cancelAnimationFrame cancelRequestAnimationFrame
+			
+			window.requestAnimationFrame = window.requestAnimationFrame||
+				window.webkitRequestAnimationFrame||
+				window.mozRequestAnimationFrame;
+			window.cancelAnimationFrame = window.cancelAnimationFrame||
+				window.webkitCancelAnimationFrame ||
+				window.mozCancelAnimationFrame||
+				window.cancelRequestAnimationFrame||
+				window.webkitCancelRequestAnimationFrame||window.mozCancelRequestAnimationFrame;
+			
+			if(!window.requestAnimationFrame){ //用setTimeout模拟
+				var lastTime = Date.now();
+				window.requestAnimationFrame = function(callback){
+					
+					var index; //编号
+					
+					var nowTime = Date.now();
+					
+					//如果延迟超过16.7毫秒就直接执行
+					var delay =  Math.max( 16.7 - (nowTime - lastTime),0);
+					
+					index = setTimeout(callback,delay);
+					
+					lastTime = nowTime + delay;
+					return index
+				}
+				
+			}
+			
+			if(!window.cancelAnimationFrame){
+				window.cancelAnimationFrame = function(index){
+					clearTimeout(index);
+				}
+			}
+			
+			
+		}())
+		
+		var box = document.getElementsByClassName('box')[0];
+		box.onclick = function(){
+			var num = 0;
+			console.time(num);
+			(function move(){
+				console.timeEnd(num);
+				num ++;
+				var index =  window.requestAnimationFrame(move);
+				
+				box.style.left = box.offsetLeft + 10 + 'px';
+				
+				if(box.offsetLeft > 600){
+					cancelAnimationFrame(index);
+				}
+				console.time(num); //这样就很稳定了
+			}())
+			
+		}
+	</script>
+</html>

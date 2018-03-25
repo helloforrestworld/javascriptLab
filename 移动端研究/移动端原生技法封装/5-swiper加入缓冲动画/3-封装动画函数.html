@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			.box{
+				width:100px;
+				height: 100px;
+				background: red;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box"></div>
+	</body>
+	<script src="tween.js"></script>
+	<script type="text/javascript">
+		(function(){
+			window.requestAnimationFrame = window.requestAnimationFrame||
+				window.webkitRequestAnimationFrame||
+				window.mozRequestAnimationFrame;
+			window.cancelAnimationFrame = window.cancelAnimationFrame||
+				window.webkitCancelAnimationFrame ||
+				window.mozCancelAnimationFrame||
+				window.cancelRequestAnimationFrame||
+				window.webkitCancelRequestAnimationFrame||window.mozCancelRequestAnimationFrame;
+			
+			if(!window.requestAnimationFrame){ //用setTimeout模拟
+				var lastTime = Date.now();
+				window.requestAnimationFrame = function(callback){
+					
+					var index; //编号
+					
+					var nowTime = Date.now();
+					
+					//如果延迟超过16.7毫秒就直接执行
+					var delay =  Math.max( 16.7 - (nowTime - lastTime),0);
+					
+					index = setTimeout(callback,delay);
+					
+					lastTime = nowTime + delay;
+					return index
+				}
+				
+			}
+			
+			if(!window.cancelAnimationFrame){
+				window.cancelAnimationFrame = function(index){
+					clearTimeout(index);
+				}
+			}
+		}())
+		
+		
+		/*
+			init: {
+				el ：运动的元素
+				type: 运动的类型 如linear
+				targets:{  运动的目标
+					'translateX': 300,
+					'translateY': 400
+				}
+				time：运动的时间,
+				callBack:运动完成回调,
+				callIn:运动执行过程中回调
+			}
+		*/
+		
+		
+		var box = document.getElementsByClassName('box')[0];
+		box.onclick = function(){
+			startMove({
+				el:this,
+				type:'easeOutStrong',
+				target:{
+					'translateX':300,
+					'translateY':300,
+					'scale':2,
+					'opacity':0.3
+				},
+				time:1000,
+				callBack(){
+					console.log('完成')
+				},
+				callIn(){
+					console.log('正在执行')
+				}
+			})
+		}
+		
+		function startMove(init){
+			var el = init.el;//运动的元素
+			var target = init.target;//目标值
+			var b = {}; //初始值
+			var c = {}; //初始值 与 目标值 的差值
+			var t =  0; //当前第几次
+			//总次数
+			var d =  Math.ceil( init.time / 16.7 );
+			
+			cancelAnimationFrame(init.el.timer);
+			
+			//初始化
+			for(key in target){
+				b[key] = css(el,key);
+				c[key] = target[key] - b[key];
+			}
+			//执行动画
+			(function moveFn(){
+				t++;
+				if(t > d){
+					cancelAnimationFrame(init.el.timer);
+					init.callBack && init.callBack.call(el);
+				}else{
+					for(key in target){
+						var val  = Tween[init.type](t,b[key],c[key],d)
+						css(el,key,val);
+					}
+					init.callIn && init.callIn.call(el);
+					init.el.timer = requestAnimationFrame(moveFn,el);
+				}
+			}())
+		}
+		
+		
+		
+		function css(el,attr,val){
+			var transformAttr = ['rotate','rotateX','rotateY','skew','skewX','skewY','scale','scaleX','scaleY','translate','translateX','translateY'];
+			for(var i = 0 ; i < transformAttr.length; i++){
+				if(attr === transformAttr[i]){
+					//transform属性单独处理
+					el.transform = el.transform || {
+						'rotate':0,
+						'rotateX':0,
+						'rotateY':0,
+						'skew':0,
+						'skewX':0,
+						'skewY':0,
+						'scale':1,
+						'scaleX':1,
+						'scaleY':1,
+						'translate':0,
+						'translateX':0,
+						'translateY':0,
+						'translateZ':0 //硬件加速
+					}; //默认值
+					
+					var str = '';
+					if(val === undefined){
+						return el.transform[attr]
+					}
+					el.transform[attr] = val;
+					
+					for(var key in el.transform){
+						switch(key){
+							case 'rotate':
+							case 'rotateX':
+							case 'rotateY':
+							case 'skew':
+							case 'skewX':
+							case 'skewY':
+								str += key + '(' + el.transform[key] + 'deg) '
+								break
+							case 'translate':
+							case 'translateX':
+							case 'translateY':
+								str += key + '(' + el.transform[key] + 'px) '
+								break
+							default:
+								str += key + '(' + el.transform[key] + ') '
+						}
+					}
+					el.style.transform = str;
+					return
+				}
+			}
+			
+			
+			if(val === undefined){
+				return parseFloat( window.getComputedStyle(el)[attr] )
+			}
+			if(attr === 'opacity'){
+				el.style[attr] = val;
+			}else{
+				el.style[attr] = val + 'px';
+			}
+		}
+	</script>
+</html>

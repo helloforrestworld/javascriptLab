@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			.box{
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 100px;
+				height: 100px;
+				background: red;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box"></div>
+	</body>
+	<script type="text/javascript">
+		var box = document.getElementsByClassName('box')[0];
+		
+		var timer = null;
+		
+		var num = 0;
+		
+		box.onclick = function(){
+			console.time(num);
+			timer = setInterval(function(){
+				console.timeEnd(num);
+				num ++;
+				box.style.left = box.offsetLeft + 10 + 'px'
+				
+				if(box.offsetLeft > 600){
+					clearInterval(timer);
+				}
+				console.time(num);
+			},20)
+		}
+		
+		
+		// 屏幕都有一定的渲染频率
+		// 动画帧是根据屏幕渲染频率来刷新的  很少会出现丢帧
+		// 而用定时器做动画按一定时间间隔刷新  由于JS是单线程的 当其他任务比较多的时候 容易出现丢帧
+	</script>
+</html>
