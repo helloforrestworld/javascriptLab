@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<style>
+			body{
+				margin: 0;
+				padding: 0;
+			}
+			body,html{
+				height: 100%;
+			}
+			.page{
+				height: 100%;
+				overflow: hidden;
+				position: relative;
+			}
+			.wrap{
+				z-index: 99;
+				position: relative;
+				overflow: hidden;
+			}
+			ul{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				overflow: hidden;
+			}
+			.list li{
+				float: left;
+			}
+			.list li img{
+				width: 100%;
+			}
+			.nav{
+				position: absolute;
+				width: 100%;
+				bottom: 10px;
+				text-align: center;
+			}
+			.nav a{
+				display: inline-block;
+				width: 14px;
+				height: 14px;
+				border-radius: 50%;
+				background: white;
+			}
+			.nav a.active{
+				background: deepskyblue;
+			}
+			.scrollList li{
+				line-height: 24px;
+				height: 24px;
+				font-size: 16px;
+				border-bottom: 1px solid black;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="page">
+			<div class="scroll">
+				<div class="wrap">
+					<ul class="list">
+						<li>
+							<a href="javascript:;">
+								<img src="img/1.jpg"/>
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<img src="img/2.jpg"/>
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<img src="img/3.jpg"/>
+							</a>
+						</li>
+					</ul>
+					<nav class="nav">
+						<a class="active" href="javascript:;"></a>
+						<a href="javascript:;"></a>
+						<a href="javascript:;"></a>
+					</nav>
+				</div>
+	
+				<ul class="scrollList">
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script src="4-动画函数.js"></script>
+	<script type="text/javascript">
+		//布局结构
+		(function(){
+			var wrap = document.getElementsByClassName('wrap')[0];
+			var list = document.getElementsByClassName('list')[0];
+			var lists = list.children;
+			
+			list.innerHTML += list.innerHTML; //复制一份做无缝
+			init();
+			
+			window.onresize = init //窗口变动调整幻灯片大小
+			
+			function init(){
+				list.style.width = lists.length * wrap.clientWidth + 'px';
+				for(var i = 0; i < lists.length; i++){
+					lists[i].style.width = wrap.clientWidth + 'px';
+				}
+			}
+		}());
+		
+		
+		
+		
+		//添加滑动
+		(function(){
+			var wrap = document.getElementsByClassName('wrap')[0];
+			var list = document.getElementsByClassName('list')[0];
+			var lists = list.children; //list 下 li
+			var navs = document.querySelectorAll('.nav a'); //导航
+			var now = 0; //幻灯片索引
+			var timer = null;
+			swiper({
+				wrap:wrap,
+				dir:'x',
+				end:function(e){
+					clearInterval(timer);
+					//判断应该到第几张
+					var nowX = css(list,'translateX'); //当前的偏移量
+					now = Math.round(Math.abs(nowX / wrap.clientWidth)); //索引
+					//设置滚动区偏移
+					list.style.transition = '300ms';
+					css(list,'translateX', - now * wrap.clientWidth);
+					
+					
+					//导航
+					setNav();
+					
+					timer = setInterval(auto,3000);
+					
+					//清除缓冲动画
+					cancelAnimationFrame(list.timer);
+				},
+				start:function(e){
+					clearInterval(timer);
+					list.style.transition = '';
+					//无缝回拉
+					if(now === lists.length - 1){ 
+						now = navs.length - 1
+					}
+					if(now === 0){
+						now = navs.length
+					}
+					css(list,'translateX', - now * wrap.clientWidth);//设置滚动区偏移
+				}
+			})
+			
+			
+			function setNav(){
+				//导航切换
+				for(var i = 0; i < navs.length; i++){
+					navs[i].className = '';
+				}
+				navs[now % navs.length].className = 'active';
+			}
+			
+			
+			//自动播放
+			function auto(){
+				if(now === lists.length - 1){
+					now = navs.length - 1
+					list.style.transition = '';
+					css(list,'translateX', - now * wrap.clientWidth );
+				}
+				now ++;
+				
+				setTimeout(function(){
+					list.style.transition = '300ms';
+					css(list,'translateX', - now * wrap.clientWidth );
+					//导航切换
+					setNav();
+				},0)
+			}
+			
+			timer = setInterval(auto,3000);
+		}());
+		
+		
+		/*
+		 	1.范围做限制  max = 0  min = wrap的宽/高 - 滚动元素宽/高
+		 	2.end的时候做一次限制  move的时候做一次限制
+		 */
+		
+		//列表部分添加滚动
+		(function(){
+			
+			var scrollWrap = document.getElementsByClassName('page')[0];
+			var scrollList = document.getElementsByClassName('scrollList')[0];
+			
+			//布局
+			var inner = '';
+			for(var i = 0; i < 200; i++){
+				inner += '<li>我是第'+i+'个li</li>'
+			}
+			scrollList.innerHTML = inner;
+			
+			swiperBar({
+				wrap:scrollWrap,
+				dir:'y',
+				backOut:'pull',
+				//none : 不能超出
+				//normal: 能正常拉但是会弹回去
+				//pull : 加上弹力
+				start(){
+					//滑动前
+				},
+				end(){
+					//手指抬起
+				},
+				move(){
+					//滑动中
+				},
+				over(){
+					//整个滑动结束
+				}
+			})
+			
+		}())
+		
+		
+		//有滚动条的自定义滑屏
+		function swiperBar(init){
+			var wrap = init.wrap; //外框
+			var scroll = wrap.children[0]; //滚动元素
+			var bar = document.createElement('span'); //滚动条
+			var dir = init.dir; //方向
+			bar.className = 'scrollbar';
+			
+			var scale; //  外框 / 滚动区域
+			
+			var wc = { 
+				x: 'clientWidth',
+				y: 'clientHeight'
+			}
+			var so = {
+				x: 'offsetWidth',
+				y: 'offsetHeight'
+			}
+			var tr = {
+				x: 'translateX',
+				y: 'translateY'
+			}
+			
+			var wrapRect,scrollRect; //外框大小  滚动区域大小
+			
+			 //滚动条初始化
+			wrapRect = wrap[wc[dir]];
+			scrollRect = scroll[so[dir]];
+			scale = wrap[wc[dir]] /  scroll[so[dir]];
+			if(dir === 'x'){
+				bar.style.cssText = 'transition:opacity 300ms;opacity:0; z-index:999;position:absolute;left:0;bottom:0;width:'+scale * wrap.clientWidth +'px;height:4px;background-color:rgba(0,0,0,0.6);border-radius:5px';
+			}else if(dir === 'y'){
+				bar.style.cssText = 'transition:opacity 300ms;opacity:0;z-index:999;position:absolute;right:0;top:0;width:4px;height:'+scale * wrap.clientHeight+'px;background-color:rgba(0,0,0,0.6);border-radius:5px';
+			}
+			
+			wrap.appendChild(bar);
+			
+			
+			//start 滚动条显示 重新获取一下比例 并重设滚动条宽高
+			//over 滚动条隐藏
+			//move 滚动条 按比例移动
+			//滚动条如何移动?
+			/*
+				1.	与scroll移动反方向
+				2.  toMove / scroll =  barMove / wrap
+				3.  scale  =  wrap / scroll 
+				3.  tomove * scale = barMove
+			*/
+			
+			function resetScale(){
+				wrapRect = wrap[wc[dir]];
+				scrollRect = scroll[so[dir]];
+				scale = wrapRect /  scrollRect;
+				if(dir === 'x'){
+					bar.style.width = scale * wrapRect;
+				}else if(dir === 'y'){
+					bar.style.height = scale * wrapRect;
+				}
+			}
+			
+			swiper({
+				wrap:wrap,
+				dir:dir,
+				backOut:init.backOut,
+				start:function(){
+					resetScale();
+					init.start && init.start.call(wrap);
+				},
+				end:function(){
+					init.end && init.end.call(wrap);
+				},
+				move:function(){
+					if(bar.style.opacity === '0'){
+						bar.style.opacity = 1;
+					}
+					var barMove = -css(scroll,tr[dir]) * scale;
+					css(bar,tr[dir],barMove)
+					init.move && init.move.call(wrap);
+				},
+				over:function(){
+					bar.style.opacity = 0;
+					init.over && init.over.call(wrap);
+				}
+			})
+		}
+		
+		function swiper(init){
+			var wrap = init.wrap; //滚动元素的父级
+			var scroll = wrap.children[0];//滚动元素
+			var dir = init.dir;//方向
+			var startPoint = {x:0,y:0}; //触碰初始位置
+			var startTranslate = {x:0,y:0};//初始translate
+			var backOut = init.backOut;
+			
+			//解决横竖滑屏冲突
+			var checkBug = true; //第一次move检测上下左右滑屏是否冲突
+			var dirBoolean = {
+				x : false,
+				y : false
+			}
+			
+			//记录上次的坐标点  防止安卓误触touchmove
+			var lastPoint = {
+				x:0,
+				y:0
+			}
+			
+			var translateAttr = { //方向 对应 要设置的属性名
+				x : 'translateX',
+				y : 'translateY'
+			}
+			
+			//缓冲动画
+			var lastTime = 0; //上一次滑动时间戳
+			var lastDis = 0;// 当前move与上一次move手指距离
+			var lastTimeDis= 0;//当前move与上一次move时间差
+			
+			
+			//范围限制
+			var min = { //最小值
+				x : wrap.clientWidth - scroll.offsetWidth,
+				y : wrap.clientHeight - scroll.offsetHeight
+			}
+			
+			var lastOut = 0 //上一次超出的距离
+			
+			
+			wrap.addEventListener('touchstart',function(e){
+				
+				init.start && init.start.call(wrap,e) //触摸前回调
+				
+				e.preventDefault();
+				
+				var touch = e.changedTouches[0];
+				
+				startPoint = { //触碰位置
+					x : touch.pageX,
+					y : touch.pageY
+				}
+				
+				lastPoint = { //记录上次位置
+					x : touch.pageX,
+					y : touch.pageY
+				}
+				
+				startTranslate = { //初始位置
+					x : css(scroll,'translateX'),
+					y : css(scroll,'translateY')
+				}
+				
+				
+				//缓冲动画
+				lastTime = Date.now();
+				lastDis = 0;// 当前move与上一次move手指距离
+				lastTimeDis= 0;//当前move与上一次move时间差
+				
+				min = { //最小值
+					x : wrap.clientWidth - scroll.offsetWidth,
+					y : wrap.clientHeight - scroll.offsetHeight
+				}
+			},false)
+			
+			wrap.addEventListener('touchmove',function(e){
+				var touch = e.changedTouches[0];
+				var nowPoint = { //当前手指move的位置
+					x : touch.pageX,
+					y : touch.pageY
+				}
+				var disPoint = {  //差值
+					x : nowPoint.x - startPoint.x,
+					y : nowPoint.y - startPoint.y
+				}
+				
+				var targetPoint = { //scroll需要滚动到的位置
+					x: disPoint.x + startTranslate.x,
+					y: disPoint.y + startTranslate.y,
+				}
+				
+				//解决横滑 和 竖滑 冲突
+				
+				if(nowPoint.x === lastPoint.x && nowPoint.y === lastPoint.y){ //防止安卓某些浏览器误触touchmove
+					return
+				}
+
+				
+				if(checkBug){
+					if(Math.abs(disPoint.x) > Math.abs(disPoint.y)){//判断用户往哪个方向移动
+						//应该横向滑
+						dirBoolean.x = true;
+						dirBoolean.y = false;
+						
+					}else{
+						//应该竖向滑
+						dirBoolean.x = false;
+						dirBoolean.y = true;
+					}
+					checkBug = false;
+				}
+				
+				if(dirBoolean[dir]){
+					e.preventDefault();
+					
+					//backOut:none 不允许超出
+					if(backOut === 'none'){
+						targetPoint[dir] = targetPoint[dir] > 0? 0 :targetPoint[dir];
+						targetPoint[dir] = targetPoint[dir] < min[dir]? min[dir]:targetPoint[dir];
+					}else if(backOut === 'pull'){
+					
+					//添加拉力
+					//思路
+					/*
+						1.超出部分 越拉越难 拉力越大   拉力系数越小     超出部分 =  超出部分 * f    如 100 * 0.7
+						2.超出部分 最多为一屏 当超出部分等于一屏时 拉力达到最大 拉力系数为0
+						3.所以 f =  1 -  超出部分/屏幕宽高
+					*/
+						if(targetPoint[dir] > 0){
+							//拉力系数
+							var f = getF(targetPoint[dir]);
+							//新超出的部分 * 新的拉力系数 
+							targetPoint[dir] = (targetPoint[dir] - lastOut) * f + lastOut;
+							//更新超出的新值
+							lastOut = targetPoint[dir];
+						}else if(targetPoint[dir] < min[dir]){
+							//超出部分
+							var out  =  targetPoint[dir] - min[dir];
+							//弹力系数
+							var f = getF(out);
+							
+							targetPoint[dir] = (out - lastOut) * f  + lastOut  + min[dir];
+							
+							lastOut += (out - lastOut) * f;
+						}
+					}
+					
+					
+					css(scroll,translateAttr[dir],targetPoint[dir]);
+					init.move && init.move.call(wrap,e)
+					//缓冲动画
+					var nowTime = Date.now();
+					lastTimeDis = nowTime - lastTime;
+					lastDis = nowPoint[dir] - lastPoint[dir];
+				}
+				
+				//上一次的值更新 
+				lastPoint.x = nowPoint.x;
+				lastPoint.y = nowPoint.y;
+				//上一次时间值更新
+				lastTime = nowTime;
+				
+			},false)
+			
+			wrap.addEventListener('touchend',function(e){ //结束后回调
+				checkBug = true;
+				
+				//缓冲动画
+				var nowTime = Date.now();//抬起时间
+				var lastSpeed = lastDis / lastTimeDis; //最后一次滑动的速度
+				var now =  css(scroll,translateAttr[dir]);//获取当前translate值
+				var s;//缓冲动画滚动距离
+				var target;//目标值对象
+				
+				lastSpeed = lastSpeed? lastSpeed : 0; //触碰瞬间抬起lastSpeed为NaN
+				
+				if(nowTime - lastTime > 100){ //如果抬起期间和move时间相差太远 判定为滑动后长按
+					lastSpeed = 0; //这时候就不需要缓冲动画了
+				}
+				
+				s  = Math.round(lastSpeed * 170) + now; //与速度成正比的滚动距离
+				
+				
+				//范围限制
+				if(s > 0){
+					s = 0;
+				}else if(s < min[dir]){
+					s = min[dir];
+				}
+				//清空上一次的超出距离
+				lastOut = 0;
+				
+				if(dir === 'x'){//目标值对象
+					target = {'translateX': s}
+				}else{
+					target = {'translateY': s}
+				}
+				startMove({//运动函数
+					el:scroll,
+					type:'easeOutStrong',
+					target:target,
+					time:500,
+					callIn:function(){init.move && init.move.call(wrap,e)},
+					callBack:function(){init.over && init.over.call(wrap,e)}
+				})
+				init.end && init.end.call(wrap,e);
+			},false)
+			
+			
+			function getF(out){ //获取弹力系数
+				out = Math.abs(out);
+				var clientDir = {
+					x: 'clientWidth',
+					y: 'clientHeight'
+				}
+				//控制弹力系数倍数缩防
+				var a = 68 * ( out / wrap[clientDir[dir]]) + 1;
+				//弹力系数
+				var f = (1 - out / wrap[clientDir[dir]]) / a; 
+				return f < 0 ? 0 : f
+			}
+		}
+	</script>
+</html>
