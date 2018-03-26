@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<style>
+			body{
+				margin: 0;
+				padding: 0;
+			}
+			body,html{
+				height: 100%;
+			}
+			.page{
+				height: 100%;
+				overflow: hidden;
+				position: relative;
+			}
+			.wrap{
+				z-index: 99;
+				position: relative;
+				overflow: hidden;
+			}
+			ul{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				overflow: hidden;
+			}
+			.list li{
+				float: left;
+			}
+			.list li img{
+				width: 100%;
+			}
+			.nav{
+				position: absolute;
+				width: 100%;
+				bottom: 10px;
+				text-align: center;
+			}
+			.nav a{
+				display: inline-block;
+				width: 14px;
+				height: 14px;
+				border-radius: 50%;
+				background: white;
+			}
+			.nav a.active{
+				background: deepskyblue;
+			}
+			.scrollList li{
+				line-height: 24px;
+				height: 24px;
+				font-size: 16px;
+				border-bottom: 1px solid black;
+			}
+			.footer{
+				text-align: center;
+				font-size: 18px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="page">
+			<div class="scroll">
+				<div class="wrap">
+					<ul class="list">
+						<li>
+							<a href="javascript:;">
+								<img src="img/1.jpg"/>
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<img src="img/2.jpg"/>
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<img src="img/3.jpg"/>
+							</a>
+						</li>
+					</ul>
+					<nav class="nav">
+						<a class="active" href="javascript:;"></a>
+						<a href="javascript:;"></a>
+						<a href="javascript:;"></a>
+					</nav>
+				</div>
+	
+				<ul class="scrollList">
+				</ul>
+				<footer class="footer">下滑加载更多...</footer>
+			</div>
+		</div>
+	</body>
+	<script src="4-动画函数.js"></script>
+	<script src="5-touch整理.js"></script>
+	<script type="text/javascript">
+		//布局结构
+		(function(){
+			var wrap = document.getElementsByClassName('wrap')[0];
+			var list = document.getElementsByClassName('list')[0];
+			var lists = list.children;
+			
+			list.innerHTML += list.innerHTML; //复制一份做无缝
+			init();
+			
+			window.onresize = init //窗口变动调整幻灯片大小
+			
+			function init(){
+				list.style.width = lists.length * wrap.clientWidth + 'px';
+				for(var i = 0; i < lists.length; i++){
+					lists[i].style.width = wrap.clientWidth + 'px';
+				}
+			}
+		}());
+		
+		//幻灯片
+		(function(){
+			var wrap = document.getElementsByClassName('wrap')[0];
+			var list = document.getElementsByClassName('list')[0];
+			var lists = list.children; //list 下 li
+			var navs = document.querySelectorAll('.nav a'); //导航
+			var now = 0; //幻灯片索引
+			var timer = null;
+			swiper({
+				wrap:wrap,
+				dir:'x',
+				end:function(e){
+					clearInterval(timer);
+					//判断应该到第几张
+					var nowX = css(list,'translateX'); //当前的偏移量
+					now = Math.round(Math.abs(nowX / wrap.clientWidth)); //索引
+					//设置滚动区偏移
+					list.style.transition = '300ms';
+					css(list,'translateX', - now * wrap.clientWidth);
+					
+					
+					//导航
+					setNav();
+					
+					timer = setInterval(auto,3000);
+					
+					//清除缓冲动画
+					cancelAnimationFrame(list.timer);
+				},
+				start:function(e){
+					clearInterval(timer);
+					list.style.transition = '';
+					//无缝回拉
+					if(now === lists.length - 1){ 
+						now = navs.length - 1
+					}
+					if(now === 0){
+						now = navs.length
+					}
+					css(list,'translateX', - now * wrap.clientWidth);//设置滚动区偏移
+				}
+			})
+			
+			
+			function setNav(){
+				//导航切换
+				for(var i = 0; i < navs.length; i++){
+					navs[i].className = '';
+				}
+				navs[now % navs.length].className = 'active';
+			}
+			
+			
+			//自动播放
+			function auto(){
+				if(now === lists.length - 1){
+					now = navs.length - 1
+					list.style.transition = '';
+					css(list,'translateX', - now * wrap.clientWidth );
+				}
+				now ++;
+				
+				setTimeout(function(){
+					list.style.transition = '300ms';
+					css(list,'translateX', - now * wrap.clientWidth );
+					//导航切换
+					setNav();
+				},0)
+			}
+			
+			timer = setInterval(auto,3000);
+		}());
+
+		
+		//整个列表滑动
+		(function(){
+			
+			var scrollWrap = document.getElementsByClassName('page')[0];
+			var scorll = scrollWrap.children[0];
+			var scrollList = document.getElementsByClassName('scrollList')[0];
+			
+			//布局
+			var inner = '';
+			for(var i = 0; i < 200; i++){
+				inner += '<li>我是第'+i+'个li</li>'
+			}
+			scrollList.innerHTML = inner;
+			
+			//生成数据
+			var data = [];
+			for(var i = 0; i < 1000; i++){
+				data.push('我是新添的第'+i+'条数据');
+			}
+			var page = 0;
+			var length = 40;
+			//加载
+			function created(){
+				var start = page * length;
+				var end = start + length;
+				for(var i = start; i < end; i++){
+					var li = document.createElement('li');
+					li.innerHTML = data[i];
+					scrollList.appendChild(li);
+				}
+			}
+			var minY;
+			
+			swiperBar({
+				wrap:scrollWrap,
+				dir:'y',
+				backOut:'pull',
+				over:function(){
+					var nowY = css(scorll,'translateY');
+					if(nowY  <=  minY){
+						setTimeout(function(){
+							created();
+							page++;
+						},900)
+					}
+				},
+				start:function(){
+					minY = scrollWrap.clientHeight - scorll.offsetHeight;
+				}
+			})
+		}())
+		
+
+	</script>
+</html>
+

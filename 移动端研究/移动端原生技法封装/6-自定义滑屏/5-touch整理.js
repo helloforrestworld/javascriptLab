@@ -277,9 +277,9 @@ function swiperBar(init){
 		scrollRect = scroll[so[dir]];
 		scale = wrapRect /  scrollRect;
 		if(dir === 'x'){
-			bar.style.width = scale * wrapRect;
+			bar.style.width = scale * wrapRect + 'px';
 		}else if(dir === 'y'){
-			bar.style.height = scale * wrapRect;
+			bar.style.height = scale * wrapRect + 'px';
 		}
 	}
 	
