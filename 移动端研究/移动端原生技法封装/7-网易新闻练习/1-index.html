@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			body,html{
+				height: 100%;
+				margin: 0;
+			}
+			p,ul{
+				padding: 0;
+				margin: 0;
+			}
+			li{
+				list-style: none;
+			}
+			#page{
+				background: #ccc;
+				position: relative;
+				height: 100%;
+				overflow: hidden;
+			}
+			.scroll{
+				min-height: 100%;
+			}
+			#header{
+				height: 40px;
+				background: #fff;
+				color: #FE3338;
+				line-height: 40px;
+				font-size: 22px;
+				text-align: center;
+			}
+			.nav{
+				position: relative;
+				height: 36px;
+				background:#f33;
+				color: #fff;
+				transform-style: preserve-3d;
+				z-index: 2;
+			}
+			.nav .navbar{
+				position: relative;
+				overflow: hidden;
+				height: 36px;
+				margin-right: 40px;
+			}
+			.navbar p{
+				float: left;
+				white-space: nowrap;
+			}
+			.navbar a{
+				margin: 0 8px;
+				display: inline-block;
+				line-height: 36px;
+				font-size: 16px;
+				color: #fff;
+				text-decoration: none;
+			}
+			.navbar:before{
+				z-index: 99;
+				content: '';
+				width: 30px;
+				height: 36px;
+				position: absolute;
+				left: 0;
+				top: 0;
+				background: linear-gradient(90deg,#f33,rgba(255,51,51,0));
+			}
+			.navbar:after{
+				z-index: 99;
+				content: '';
+				width: 30px;
+				height: 36px;
+				position: absolute;
+				right: 0;
+				top: 0;
+				background: linear-gradient(-90deg,#f33,rgba(255,51,51,0));
+			}
+			.nav .navopen{
+				position: absolute;
+				height: 36px;
+				width: 36px;
+				font-size: 18px;
+				line-height: 34px;
+				color: #fff;
+				right: 0;
+				bottom: 0;
+				text-decoration: none;
+			}
+			.nav .navdetail{
+				position: absolute;
+				width: 100%;
+				overflow: hidden;
+				height: 0;
+				top: 36px;
+				left: 0;
+				background-color: #fff;
+				color: #000000;
+				transition: .3s;
+				-webkit-backface-visibility: hidden;
+				backface-visibility: hidden;
+			}
+			.tabImg{
+				position: relative;
+				overflow: hidden;
+				box-shadow: inset 0px -4px 8px rgba(0,0,0,0.5);
+				z-index: 1;
+			}
+			.imglist{
+				overflow: hidden;
+			}
+			.imglist li{
+				float: left;
+			}
+			.imglist img{
+				width:100%;
+			}
+			.tabNumber{
+				position: absolute;
+				right: 10px;
+				bottom: 4px;
+				vertical-align: text-bottom;
+			}
+			.tabNumber .nowindex{
+				color: red;
+				font-size: 18px;
+				vertical-align: text-bottom;
+			}
+			.tabNumber .totalindex{
+				color: #fff;
+				font-size: 16px;
+				vertical-align: text-bottom;
+			}
+			.tabNumber .line{
+				vertical-align: text-bottom;
+				color: #ccc;
+			}
+			.newlist{
+				overflow: hidden;
+			}
+			.newlist .list-item{
+				overflow: hidden;
+				border-bottom: 2px solid black;
+				padding: 10px;
+				background-color: #fff;
+			}
+			.list-item img,.list-item p{
+				float: left;
+			}
+			.list-item img{
+				width: 70px;
+			}
+			.list-item p{
+				margin-left: 10px;
+			}
+			.pull{
+				position: absolute;
+				top: 40px;
+				left: 0;
+				width: 100%;
+				font: 16px/40px "微软雅黑";
+				text-align: center;
+			}
+			#footer{
+				text-align: center;
+				height: 40px;
+				line-height: 40px;
+				font-size: 24px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="page">
+			<div class="scroll">
+				<header id="header">
+					网易新闻
+				</header>
+				<!--导航-->
+				<nav class="nav">
+					<div class="navbar">
+						<p>
+							<a href="javascript">推荐</a><a href="javascript">新闻
+							</a><a href="javascript">娱乐
+							</a><a href="javascript">体育
+							</a><a href="javascript">图片
+							</a><a href="javascript">财经
+							</a><a href="javascript">汽车
+							</a><a href="javascript">军事
+							</a><a href="javascript">游戏
+							</a><a href="javascript">视频
+							</a><a href="javascript">段子
+							</a><a href="javascript">网易
+							</a><a href="javascript">本地</a>
+						</p>
+					</div>
+					
+					<a class="navopen" href="javascript:;">展开</a>
+					<div class="navdetail">
+						这是展开后的内容
+					</div>
+				</nav>
+				<!--下拉刷新-->
+				<p class="pull">
+					下拉更新
+				</p>
+				<!--幻灯片-->
+				<div class="tabImg">
+					<ul class="imglist">
+						<li>
+							<a href="javascript:;">
+								<img src="img/1.webp"/>
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<img src="img/2.jpg"/>
+							</a>
+						</li>
+					</ul>
+					<div class="tabNumber">
+						<span class="nowindex">1</span>
+						<span class="line">/</span>
+						<span class="totalindex">2</span>
+					</div>
+				</div>
+				
+				<!--新闻列表-->
+				<ul class="newlist">
+					<!--<li class="list-item">
+						<img src="img/list.webp" alt="" />
+						<p>这是新闻的描述</p>
+					</li>-->
+				</ul>
+				<footer id="footer">
+					上滑加载更多...
+				</footer>
+			</div>
+		</div>
+	</body>
+	<script src="5-touch整理.js"></script>
+	<script type="text/javascript">
+		//导航滑动
+		(function(){
+			var navbar = document.getElementsByClassName('navbar')[0];
+			swiper({
+				wrap:navbar,
+				dir:'x',
+				backOut:'pull'
+			})
+		}());
+		//点击展开导航
+		(function(){
+			var nav = document.getElementsByClassName('nav')[0];
+			var navopen = document.getElementsByClassName('navopen')[0];
+			var navDetail = document.getElementsByClassName('navdetail')[0];
+			tap(navopen,function(){
+				
+				if(css(navDetail,'height')){
+					css(navDetail,'height',0)
+				}else{
+					var wH = document.documentElement.clientHeight;
+					var openH = wH - nav.getBoundingClientRect().bottom;
+					css(navDetail,'height',openH);
+				}
+				
+			})
+		}());
+		
+		//幻灯片
+		(function(){
+			//布局调整
+			var imgListWrap = document.getElementsByClassName('tabImg')[0];
+			var imgList = document.getElementsByClassName('imglist')[0];
+			var nowIndex = document.getElementsByClassName('nowindex')[0];
+			var totalIndex = document.getElementsByClassName('totalindex')[0];
+			var imgs = imgList.children;
+			var now = 0; //图片索引
+			var wrapW = imgListWrap.clientWidth; //外框宽度
+			var timer = null;
+			
+			imgList.innerHTML += imgList.innerHTML;
+			
+			totalIndex.innerHTML = imgs.length/2;
+			
+			imgList.style.width =  imgs.length + '00%';
+			
+			for(var i = 0; i < imgs.length; i++){
+				imgs[i].style.width = 100/imgs.length + '%';
+			}
+			//幻灯片切换
+			swiper({
+				wrap:imgListWrap,
+				dir:'x',
+				backOut:'none',
+				start:function(){
+					wrapW = imgListWrap.clientWidth;
+					
+					clearInterval(timer);
+					
+					//无缝
+					imgList.style.transition = '';
+					if(now === 0){
+						now = imgs.length / 2;
+					}else if(now === imgs.length - 1){
+						now = imgs.length / 2 - 1;
+					}
+					css(imgList,'translateX', -now * wrapW);
+				},
+				end:function(){
+					clearInterval(timer);
+					timer = setInterval(auto,3000);
+					cancelAnimationFrame(imgList.timer);//取消缓冲滚动
+					
+					var nowX = css(imgList,'translateX');
+					now = Math.abs(Math.round( nowX / wrapW));
+					
+					imgList.style.transition = '.3s';
+					
+					css(imgList,'translateX', -now * wrapW);
+					
+					tabNumber();
+				}
+			});
+			
+			//number切换
+			function tabNumber(){
+				nowIndex.innerHTML = now%(imgs.length/2) + 1;
+			}
+			//自动播放
+			function auto(){
+				if(now === imgs.length - 1){
+					now = imgs.length / 2 - 1;
+					imgList.style.transition = '';
+					css(imgList,'translateX', -now * wrapW);
+				}
+				
+				now++;
+				setTimeout(function(){
+					imgList.style.transition = '.3s';
+					css(imgList,'translateX', -now * wrapW);
+					tabNumber();
+				},0)
+			}
+			timer = setInterval(auto,3000);
+		}());
+		
+		//整屏滑动
+		(function(){
+			var page = document.getElementById('page');
+			var newList = document.getElementsByClassName('newlist')[0];
+			var scroll = document.getElementsByClassName('scroll')[0];
+			var header = document.getElementById('header');
+			var nav = document.getElementsByClassName('nav')[0];
+			var footer = document.getElementById('footer');
+			var pull = document.getElementsByClassName('pull')[0];
+			
+			var minY = 0; //scroll偏移最小值
+			var navTop  = nav.getBoundingClientRect().top;//导航到可视区顶部距离
+			var pullRange = 60;//松开刷新的范围
+			
+			//处理数据
+			var data = [];
+			var nowPage = 0;
+			var length = 40;
+			
+			var dataUpdate=[];
+			var upTime = 0;
+			var upLen = 5;
+			
+			//添加滚动
+			swiperBar({
+				wrap:page,
+				dir:'y',
+				backOut:'pull',
+				start:function(){
+					minY = page.clientHeight - scroll.offsetHeight + footer.offsetHeight;
+				},
+				move:function(){
+					var nowY = css(scroll,'translateY');
+					//导航吸附
+					if(-nowY >= navTop){
+						css(nav,'translateY',-(nowY + navTop ));
+					}else{
+						css(nav,'translateY',0);
+					}
+					//下拉刷新
+					if(nowY >= 0){
+						adjustNav(); //导航和头部固定在最上方
+						
+						if(nowY >= pullRange){
+							pull.innerHTML = '松开刷新'
+						}else{
+							pull.innerHTML = '下拉更新'
+						}
+					}
+				},
+				end:function(){
+					var nowY = css(scroll,'translateY');
+					if(nowY >= pullRange){
+						cancelAnimationFrame(scroll.timer);
+						startMove({
+							el:scroll,
+							type:'linear',
+							time:200,
+							target:{'translateY':pullRange},
+							callBack:function(){
+								pull.innerHTML = '更新中';
+								pullUpdate();
+								upTime++;
+								startMove({
+									el:scroll,
+									type:'linear',
+									time:200,
+									target:{'translateY':0},
+									callIn:function(){
+										adjustNav()
+									}
+								})
+							},
+							callIn:function(){
+								adjustNav()
+							}
+						})
+					}
+				},
+				over:function(){
+					//上滑动加载
+					var nowY = css(scroll,'translateY');
+					if(nowY <= minY){
+						nowPage++;
+						pushLoadMore();
+					}
+				}
+			})
+			
+			
+			for(var i = 0; i < 100; i++){
+				data.push('我是第'+i+'条数据');
+			}
+			for(var i = 0; i < 100; i++){
+				dataUpdate.push('我是更新的'+i+'条数据');
+			}
+			pushLoadMore();
+			//上滑加载数据
+			function pushLoadMore(){
+				var start = nowPage * length;
+				var end = start + length;
+				end = end >= data.length? data.length:end;
+				if(start>=data.length){
+					footer.innerHTML='------我们是有底线的------'
+				}
+				for(var i = start; i < end; i++){
+					var li = document.createElement('li');
+					li.className = 'list-item';
+					li.innerHTML = `
+						<img src="img/list.webp" alt="" />
+						<p>${data[i]}</p>
+					`
+					newList.appendChild(li);
+				}
+			}
+			//下拉更新数据
+			function pullUpdate(){
+				var start = upTime * upLen;
+				var end = start + upLen;
+				var first = newList.firstElementChild;
+				end = end >= dataUpdate.length? dataUpdate.length:end;
+				if(start>=dataUpdate.length){
+					pull.innerHTML='------数据都是最新的------'
+				}
+				for(var i = start; i < end; i++){
+					var li = document.createElement('li');
+					li.className = 'list-item';
+					li.innerHTML = `
+						<img src="img/list.webp" alt="" />
+						<p>${dataUpdate[i]}</p>
+					`
+					newList.insertBefore(li,first);
+				}
+			}
+			
+			//滑动调整导航跟头部位置
+			function adjustNav(){
+				var nowY = css(scroll,'translateY');
+				css(header,'translateY',-nowY);
+				css(nav,'translateY',-nowY);
+			}
+		}());
+	</script>
+</html>
