@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <input type="file" id="file" accept="image/*">
+</body>
+<script type="text/javascript">
+// 图片上传
+  var f = document.getElementById('file');
+  // f.onchange = function(){
+  //   console.log(f.files[0])
+  // }
+/*
+readAsDataURL(); 把文件读取成 dataUrl
+readAsText(); 把文件读取成 text
+readAsBinaryString(); 把文件读取成 二进制编码
+*/
+  f.onchange = function(){
+    var file = f.files[0];
+    var reader = new FileReader();
+    
+    reader.onload = function(e){
+      var dataUrl = e.target.result;
+      var img = new Image();
+      img.src = dataUrl;
+      img.onload = function(){
+        document.body.appendChild(this);
+      }
+    }
+    
+    reader.readAsDataURL(file);
+    
+  }
+
+</script>
+</html>

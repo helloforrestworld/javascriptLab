@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style media="screen">
+    body{
+      margin: 0;
+    }
+    #c{
+      background: #ccc;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <img src="../8-多指操作/img/4.jpg" alt="">
+  <canvas id="c" width="300" height="300"></canvas>
+  <script type="text/javascript">
+    var c = document.getElementById('c');
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+    
+    c.width = w;
+    c.height = h;
+    
+    var ctx = c.getContext('2d'); //画笔
+    ctx.fillRect(0,0,200,200); //画一个方框
+    // 清除画布
+    ctx.clearRect(0,0,200,200); // 0,0 位置开始  清除 width 200 height 200
+    
+    // 再画一个方框呗
+    ctx.fillRect(100,100,300,300);
+    
+    // 读取图片 获取图片信息 裁切图片
+    // ctx.drawImage ctx.getImageData ctx.putImageData 
+    
+    
+    var img = document.getElementsByTagName('img')[0];
+    img.onload = function(){
+      ctx.drawImage(img,0,0,100,100);
+      // 240
+      console.log(img.width);
+      ctx.clearRect(0,0,c.width,c.height);
+      ctx.drawImage(img,0,0,img.width,img.height);
+    }
+    
+    c.onclick = function(){
+      // 需要在服务器环境中使用 
+      var data = ctx.getImageData(0,0,240,240);
+      console.log(data); //data.length = 240 * 240 * 4  (rgba)
+      var len = data.data.length;
+      for(var i = 3; i < len; i += 4){
+        data.data[i] = 20;
+      }
+      // 裁切图片
+      ctx.clearRect(0,0,c.width,c.height);
+      ctx.putImageData(data,0,0);
+    }
+    
+    
+    
+    
+  </script>
+</body>
+</html>
