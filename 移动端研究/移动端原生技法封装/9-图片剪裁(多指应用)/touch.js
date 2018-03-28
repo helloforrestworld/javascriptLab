@@ -626,13 +626,15 @@ function gesture(init){
 		//需要
 		//scale :  本次手指距离  / start时候手指距离
 		//rotation: 本次手指形成的直线 与 start时手指形成的直线的夹角
-		var touch = e.touches;
-		var nowDis = getDis(touch[0],touch[1]);
-		var nowDeg = getDeg(touch[0],touch[1]);
-		
-		e.scale = nowDis / lastDis;
-		e.rotation = nowDeg - lastDeg;
-		init.change && init.change.call(el,e);
+		if(isGesture){
+			var touch = e.touches;
+			var nowDis = getDis(touch[0],touch[1]);
+			var nowDeg = getDeg(touch[0],touch[1]);
+			
+			e.scale = nowDis / lastDis;
+			e.rotation = nowDeg - lastDeg;
+			init.change && init.change.call(el,e);
+		}
 	})
 	
 	function getDis(pointA,pointB){
