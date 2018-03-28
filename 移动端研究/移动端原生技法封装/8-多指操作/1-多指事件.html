@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<style>
+			.box,.box1,.box2{
+				width: 200px;
+				height: 200px;
+				background-color:red;
+				margin-bottom: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box"></div>
+		<div class="box1"></div>
+		<div class="box2"></div>
+		<script type="text/javascript">
+			var box = document.getElementsByClassName('box')[0];
+			var box1 = document.getElementsByClassName('box1')[0];
+			var box2 = document.getElementsByClassName('box2')[0];
+
+			//gesturestart gestureend gesturechange
+			
+			//geturestart
+			//多于一根手指在屏幕上
+			var num = 0;
+			box.addEventListener('gesturestart',function(){
+				num++;
+				box.innerHTML = num;
+			})
+			
+			//触发geturestart后
+			//少于两根手指头在屏幕上
+			//或者元素上一根手指头没有
+			var num1 = 0;
+			box1.addEventListener('gestureend',function(){
+				num1++;
+				box1.innerHTML = num1;
+			})
+			
+			//触发geturestart后
+			//手指位置发生变化后
+			//geturechange触发
+			var num2 = 0;
+			
+			box2.addEventListener('gesturechange',function(e){
+				num2++
+				box2.innerHTML = `
+					次数:${num2}	<br>
+					scale:${e.scale}<br>
+					rotation :${e.rotation}
+				`;
+			})
+		</script>
+	</body>
+</html>

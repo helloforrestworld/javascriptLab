@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		
+		<title></title>
+		<style type="text/css">
+			.box{
+				width: 200px;
+				height: 200px;
+				background: red;
+				margin: 100px auto;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box"></div>
+	</body>
+	<script type="text/javascript">
+		
+		/*
+			init: {
+				el:添加事件的元素,
+				start:  类似gesturestart
+				change: 类似gesturechange
+				end: 类似gestureend
+			}
+		*/
+		var box  = document.getElementsByClassName('box')[0];
+		var startNum = 0;
+		var endNum = 0;
+		
+		gesture({
+			el:box,
+			start:function(e){
+				startNum++;
+				box.innerHTML = 'start:'+ startNum;
+			},
+			end:function(e){
+				endNum++;
+				box.innerHTML = 'end:'+ endNum;
+			},
+			change:function(e){
+				box.innerHTML = `
+					scale: ${e.scale}<br>
+					rotation:${e.rotation}<br>
+				`;
+			}
+		})
+		
+		function gesture(init){
+			var el = init.el;
+			var isGesture = false;//是否在多指操作
+			var lastDis;
+			var lastDeg;
+			
+			el.addEventListener('touchstart',function(e){ //start
+				var touch = e.touches;
+				
+				if(touch.length >= 2){
+					isGesture = true;
+					lastDis = getDis(touch[0],touch[1]);
+					lastDeg = getDeg(touch[0],touch[1]);
+					init.start && init.start.call(el,e)
+				}
+				
+			},false)
+			
+			el.addEventListener('touchend',function(e){//end
+				var touch = e.touches;
+				
+				if(isGesture){
+					isGesture = false;
+					init.end && init.end.call(el,e)
+				}
+				
+			},false)
+			
+			el.addEventListener('touchmove',function(e){//change
+				//需要
+				//scale :  本次手指距离  / start时候手指距离
+				//rotation: 本次手指形成的直线 与 start时手指形成的直线的夹角
+				var touch = e.touches;
+				var nowDis = getDis(touch[0],touch[1]);
+				var nowDeg = getDeg(touch[0],touch[1]);
+				
+				e.scale = nowDis / lastDis;
+				e.rotation = nowDeg - lastDeg;
+				init.change && init.change.call(el,e);
+			})
+			
+			function getDis(pointA,pointB){
+				
+				var x = pointA.pageX - pointB.pageY;
+				var y = pointA.pageY - pointB.pageY;
+				
+				return  Math.sqrt(x*x + y*y)
+				
+			}
+			
+			function getDeg(pointA,pointB){
+				//直线与X轴正方向顺时针夹角
+				var x = pointB.pageX - pointA.pageX;
+				var y = pointB.pageY - pointA.pageY;
+				
+				return Math.atan2(y,x) * 180 / Math.PI 
+				
+			}
+		}
+	</script>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<style type="text/css">
+			.box{
+				background: url(img/4.jpg)no-repeat;
+				background-size:cover;
+				width: 200px;
+				height: 200px;
+				margin: 100px auto;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="page">
+			<div class="box"></div>
+		</div>
+		<script src="5-touch整理.js"></script>
+		<script type="text/javascript">
+			var box = document.getElementsByClassName('box')[0];
+			var page = document.getElementsByClassName('page')[0];
+			var scale = 1;
+			var rotation = 0;
+			
+			page.addEventListener('touchstart',function(e){
+				e.preventDefault()
+			},false)
+			box.addEventListener('gesturestart',function(e){
+				scale = css(box,'scale');
+				rotation = css(box,'rotate');
+			},false)
+			box.addEventListener('gesturechange',function(e){
+				css(box,'scale',e.scale * scale);
+				css(box,'rotate',e.rotation + rotation);
+			},false)
+			
+			//但是 gesture ios下有
+			//adriod等其他的都没有
+		</script>
+	</body>
+	
+</html>
