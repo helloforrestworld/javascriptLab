@@ -78,8 +78,6 @@ canvas {
 	/* margin: -100px 0 0 -100px; */
 	-webkit-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
-	width: 200px;
-	height: 200px;
 	/* background: url('loading.gif') no-repeat center center; */
 }
 #saveBtn {
@@ -230,9 +228,10 @@ canvas {
     file.onchange = function(){
       fileImg = file.files[0];
       if(fileImg.size > maxSize){
-        alert('图片太大了');
+        alert('图片应该少于10m');
         return 
       }
+			console.log(fileImg);
       loadImg(fileImg); //渲染图片
     }
   }());
@@ -441,10 +440,24 @@ canvas {
         },
         move:function(e){
           var pointDis = e.pointDis; //手指差值
-          selectW = selectStartW - pointDis.x;
-          selectL = selectStartL + pointDis.x;
-          selectH = selectStartH - pointDis.y;
-          selectT = selectStartT + pointDis.y;
+          
+					// 范围限制
+          pointDis.x = selectStartL + pointDis.x <= imgL? imgL - selectStartL : pointDis.x ;
+					selectW = selectStartW - pointDis.x;
+					selectL = selectStartL + pointDis.x;
+					if(selectW <= 0 ){
+						selectW = 0;
+						selectL = selectStartL + selectStartW;
+					}
+					// 范围限制
+					pointDis.y = selectStartT + pointDis.y <= imgT? imgT - selectStartT : pointDis.y ;
+					selectH = selectStartH - pointDis.y;
+					selectT = selectStartT + pointDis.y;
+					if(selectH <= 0){
+						selectH = 0;
+						selectT = selectStartT + selectStartH;
+					}
+          
           css(select,'width',selectW);
           css(select,'height',selectH);
           css(select,'translateX',selectL);
@@ -461,12 +474,20 @@ canvas {
           // 初始值
           selectStartW = selectW;
           selectStartH = selectH;
+					selectStartL = selectL;
+          selectStartT = selectT;
           isScaling = true;
         },
         move:function(e){
           var pointDis = e.pointDis; //手指差值
           selectW = selectStartW + pointDis.x;
+					selectW = selectW <= 0? 0 : selectW;
+					selectW = selectStartL + selectW >= imgW + imgL? imgW + imgL - selectStartL:selectW;
+					
           selectH = selectStartH + pointDis.y;
+					selectH = selectH <= 0? 0 : selectH;
+					console.log(selectStartT + selectH,imgH + imgT);
+					selectH = selectStartT + selectH >= imgH + imgT? imgH + imgT - selectStartT:selectH;
           css(select,'width',selectW);
           css(select,'height',selectH);
         },
@@ -474,8 +495,6 @@ canvas {
           isScaling = false;
         }
       })
-      
-      
     }
     
     reader.onload = function(e){ //src到newImage
@@ -484,8 +503,43 @@ canvas {
     }
     
     reader.readAsDataURL(fileImg); //读取图片
-  }
+  };
   
+	
+	// 点击保存
+	(function(){
+		var save = document.getElementById('saveBtn');
+		var pageSave = document.getElementsByClassName('page')[2];
+		var img = document.getElementById('img');
+		var c1 = document.getElementById('c');
+		var ctx1 = c1.getContext('2d');
+		var c2 = document.getElementById('c2');
+		var ctx2 = c2.getContext('2d');
+		var select = document.getElementById('select');
+		
+		tap(save,function(e){
+			
+			var w = css(select,'width');
+			var h = css(select,'height');
+			var l = css(select,'translateX');
+			var t = css(select,'translateY');
+			console.log(w,h);
+			
+			pageSave.classList.remove('pageHide');
+			
+			var imgData = ctx1.getImageData(l,t,w,h);
+			// console.log(imgData);
+			c2.width = w;
+			c2.height = h;
+			ctx2.putImageData(imgData,0,0);
+			img.src = c2.toDataURL('image/png');
+			img.style.width = w + 'px';
+			img.style.heihgt = h + 'px';
+			c2.style.display = 'none';
+		})
+		
+		
+	}())
   
   // 单指拖拽封装
   /*
@@ -538,14 +592,8 @@ canvas {
     },false)
   }
   
-  
-  
-  
-  
-  
-  
-  
-  
+	// 研究一下drawImage getImageData putImageData
+	// 整个回顾
   
   
 </script>
