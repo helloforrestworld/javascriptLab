@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style media="screen">
+    #box{
+      width: 200px;
+      height: 200px;
+      background: red;
+    }
+  </style>
+</head>
+<body>
+  <div id="box"></div>
+  <script type="text/javascript">
+  var box = document.getElementById('box');
+    // window.addEventListener('devicemotion',function(e){
+    //   var motion = e.accelerationIncludingGravity //加速度
+    //   var x = Math.round( motion.x ); //x轴加速度
+    //   var y = Math.round( motion.y ); //y轴加速度
+    //   var z = Math.round( motion.z );//z轴加速度
+    // 
+    //   box.innerHTML = 'x:' + x;
+    //   box.innerHTML += '<br>y:' + y;
+    //   box.innerHTML += '<br>z:' + z;
+    //   // ios下方向与坐标轴一致
+    //   // 安卓下是反的
+    // },false)
+    
+    
+    addMotion(function(e){
+      var motion = e.accelerationIncludingGravity;
+      var x = Math.round( motion.x );
+      var y = Math.round( motion.y );
+      var z = Math.round( motion.z );
+      
+      box.innerHTML = 'x:' + x;
+      box.innerHTML += '<br>y:' + y;
+      box.innerHTML += '<br>z:' + z;
+    })
+    
+    
+    // 封装兼容的
+    function addMotion(callBack){
+      var isAndriod  = !getIos();
+      window.addEventListener('devicemotion',function(e){
+        if(isAndriod){
+          // 安装下方向取反
+          e.accelerationIncludingGravity.x = -e.accelerationIncludingGravity.x;
+          e.accelerationIncludingGravity.y = -e.accelerationIncludingGravity.y; 
+          e.accelerationIncludingGravity.z = -e.accelerationIncludingGravity.z; 
+        }
+        callBack && callBack(e);
+      },false)
+      // 判断是否是ios
+      function getIos(){
+        var u = window.navigator.userAgent;
+        return !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
+      }
+    }
+  </script>
+</body>
+</html>

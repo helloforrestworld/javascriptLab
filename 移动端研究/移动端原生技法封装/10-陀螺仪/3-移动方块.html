@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style media="screen">
+    #box{
+      height: 50px;
+      width: 50px;
+      background: red;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="box"></div>
+  <script src="4-touch.js"></script>
+  <script type="text/javascript">
+    var box = document.getElementById('box');
+    addMotion(function(e){
+      var motion = e.accelerationIncludingGravity;
+      var x = motion.x;
+      var y = motion.y;
+      var nowX = css(box,'translateX');
+      var nowY = css(box,'translateY');
+      
+      css(box,'translateX',x + nowX);
+      css(box,'translateY',nowY - y);
+    })
+  </script>
+</body>
+</html>

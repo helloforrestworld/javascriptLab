@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style media="screen">
+    .box{
+      width: 100px;
+      height: 100px;
+      background: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="box"></div>
+</body>
+<script src="4-touch.js"></script>
+<script type="text/javascript">
+
+  var box = document.getElementsByClassName('box')[0];
+  // 上一次加速度 和 本次加速度 差值 
+  // 当差值变化很大的时候 就判定用户在摇
+  // IOS devicemotion事件执行间隔比较块 所以比较灵敏 可以把限制一下 让安卓苹果灵敏度接近
+  phoneShake(function(){
+    alert('我摇了嘿嘿');
+  })
+  function phoneShake(callBack){
+    var RANGE = 76;
+    var lastX = 0;
+    var lastY = 0;
+    var lastZ = 0;
+    var lastTime = Date.now();
+    var isShake = false;
+    addMotion(function(e){
+      var nowTime = Date.now();
+      if(nowTime - lastTime < 100){ //限制事件执行间隔
+        return
+      }else{
+        lastTime = nowTime;
+      }
+      var motion = e.accelerationIncludingGravity;
+      var x = Math.round( motion.x );
+      var y = Math.round( motion.y );
+      var z = Math.round( motion.z );
+      var dis = Math.abs(x - lastX) + Math.abs(z - lastZ) + Math.abs(y - lastY);
+      box.innerHTML = dis;
+      if(dis > RANGE){
+        isShake = true; //摇动触发 让摇动平稳再触发事件
+      }
+      if(dis < 15 && isShake){
+        callBack && callBack();
+        isShake = false;
+      }
+      lastX = x;
+      lastY = y;
+      lastZ = z;
+    })
+  }
+</script>
+</html>
