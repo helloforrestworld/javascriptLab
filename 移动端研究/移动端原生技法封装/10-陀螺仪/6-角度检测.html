@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style media="screen">
+    .box{
+      width: 200px;
+      height: 200px;
+      background: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="box"></div> 
+</body>
+<script type="text/javascript">
+  var box = document.getElementsByClassName('box')[0];
+  window.addEventListener('deviceorientation',function(e){
+    var x = e.beta; //围绕x轴旋转角度
+    var y = e.gamma;//围绕y轴旋转角度
+    var z = e.alpha;//围绕z轴旋转角度
+    box.innerHTML = 'x:' + x;
+    box.innerHTML += '<br>y:'+ y;
+    box.innerHTML += '<br>Z:'+ z;
+  },false)
+</script>
+</html>

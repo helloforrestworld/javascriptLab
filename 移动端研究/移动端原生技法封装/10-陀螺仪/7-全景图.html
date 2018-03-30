@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style media="screen">
+    body{
+      margin: 0;
+    }
+    .wrap{
+      position: fixed;
+      width:100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      /* 视点 */
+      perspective: 900px ; 
+    }
+    .box3D,
+    .viewZ,
+    .box{
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      -webkit-transform-style: preserve-3d;
+      transform-style: preserve-3d;
+    }
+    .box span{
+      position: absolute;
+      left: 0;
+      top: 0;
+      margin: -512px 0 0 -512px;
+      width: 1024px;
+      height: 1024px;
+      backface-visibility: hidden;
+      -wekit-backface-visibility:hidden;
+    }
+  </style>
+  <script src="4-touch.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <div class="box3D">
+      <div class="viewZ">
+        <div class="box">
+          <span><img src="img/neg-x.png" alt=""></span>
+          <span><img src="img/pos-z.png" alt=""></span>
+          <span><img src="img/pos-x.png" alt=""></span>
+          <span><img src="img/neg-z.png" alt=""></span>
+          <span><img src="img/pos-y.png" alt=""></span>
+          <span><img src="img/neg-y.png" alt=""></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    (function(){
+      var box = document.getElementsByClassName('box')[0];
+      var spans = box.getElementsByTagName('span');
+      for(var i = 0; i < spans.length; i++){
+        if(i < 4){
+          css(spans[i],'rotateY',-i * 90);
+        }
+        // css(spans[i],'translateZ',-512); 有白边
+        css(spans[i],'translateZ',-510);
+      }
+      css(spans[4],'rotateX',-90);
+      css(spans[5],'rotateX',90);
+      
+      // 3D适配
+      (function(){
+        // 保证垂直方向看到的东西一样多
+        var wrap = document.getElementsByClassName('wrap')[0];
+        var box3D = document.getElementsByClassName('box3D')[0];
+        var viewZ = document.getElementsByClassName('viewZ')[0];
+        var deg = 51.6; //固定的视野夹角
+        var Z = Math.tan(deg / 180 * Math.PI) * wrap.clientHeight / 2; //视点距离
+        wrap.style.perspective = wrap.style.WebkitPerspective = Z + 'px';
+        // 视野夹角固定后 元素Z轴方向往前推同样的距离
+        css(box3D,'translateZ',Z);
+        css(viewZ,'translateZ',-160);
+      }())
+      
+      // 陀螺仪操作
+      window.addEventListener('deviceorientation',function(e){
+        var x = e.beta;
+        var y = e.gamma;
+        var z = e.alpha;
+        var rotateX = x - 90;
+        var rotateY = (z + y) % 360;
+        css(box,'rotateX',rotateX);
+        css(box,'rotateY',rotateY);
+      })
+    }())
+  </script>
+</body>
+</html>

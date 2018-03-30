@@ -165,7 +165,7 @@ var Tween = { //Tween算法
 
 //css函数
 function css(el,attr,val){
-	var transformAttr = ['rotate','rotateX','rotateY','skew','skewX','skewY','scale','scaleX','scaleY','translate','translateX','translateY'];
+	var transformAttr = ['rotate','rotateX','rotateY','skew','skewX','skewY','scale','scaleX','scaleY','translate','translateX','translateY','translateZ'];
 	for(var i = 0 ; i < transformAttr.length; i++){
 		if(attr === transformAttr[i]){
 			//transform属性单独处理
@@ -204,6 +204,7 @@ function css(el,attr,val){
 					case 'translate':
 					case 'translateX':
 					case 'translateY':
+					case 'translateZ':
 						str += key + '(' + el.transform[key] + 'px) '
 						break
 					default:
