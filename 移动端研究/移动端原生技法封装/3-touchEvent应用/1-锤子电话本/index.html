@@ -649,8 +649,8 @@ body {
 	var nav = document.getElementById('nav');
 	var list = document.getElementsByClassName('navList')[0];
 	var listItem = list.getElementsByTagName('li'),
-		listLen = listItem.length;
-	
+			listLen = listItem.length;
+	var dts = document.getElementsByTagName('dt');
 	
 	
 	list.addEventListener('touchmove',function(e){
@@ -665,7 +665,12 @@ body {
 	},false)
 	
 	
-	function getNav(pointY){
+	window.onscroll = function(){ //设置滑动区域匹配导航
+		scrollFindIndex();
+	}
+	
+	
+	function getNav(pointY){ //设置导航和滑动区域
 		var rect;
 		for(var i = 1; i < listLen; i++){
 			rect =  listItem[i].getBoundingClientRect();
@@ -678,13 +683,13 @@ body {
 	}
 	
 	
-	function setNav(theIndex){
+	function setNav(theIndex){ //导航样式切换
 		for(var i = 1; i < listLen; i++){
 			listItem[i].className = '';
 		}
 		theIndex.className = 'focus';
 	}
-	function getTarget(theIndex){
+	function getTarget(theIndex){ //找到手指划过的是哪个导航
 		var id = theIndex.dataset.index;
 		var target = document.querySelector('dt[data-id="'+id+'"]');
 		
@@ -703,11 +708,29 @@ body {
 		
 		return target
 	}
-	function scrollDt(theIndex){
+	function scrollDt(theIndex){ //滑动区匹配当前选中的导航
 		var target =  getTarget(theIndex);
 		var scrollY = window.scrollY;
 		var targetClientY = target.getBoundingClientRect().top;
 		window.scrollTo(0, scrollY + targetClientY);
+	}
+	
+	function scrollFindIndex(){ //滑动时匹配导航
+		for(var i = 0; i < dts.length; i ++){
+			var nowRectTop = dts[i].getBoundingClientRect().top;
+			if(!dts[i + 1]){
+				if(window.scrollY > 0){
+					setNav(listItem[listLen - 1]);
+				}
+				break
+			}
+			var nextRectTop = dts[i + 1].getBoundingClientRect().top;
+			if(nowRectTop <= 0 && nextRectTop > 0){
+				var theIndex = document.querySelector('li[data-index='+dts[i].dataset.id+']');
+				setNav(theIndex);
+				break
+			}
+		}
 	}
 }())
 
