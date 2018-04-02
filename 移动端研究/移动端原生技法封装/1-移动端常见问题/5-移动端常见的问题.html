@@ -7,43 +7,49 @@
 	<script type="text/javascript">
 		//如何适配
 		//1.强制设定视口大小
-//		(function(){
-//			var deWidth = window.screen.width;
-//			var defaultW = 320;
-//			var meta = document.createElement('meta');
-//			meta.name = 'viewport';
-//			
-//			var scale =  deWidth / 320 ;
-//			
-//			meta.content = `initial-scale=${scale},maximum-scale=${scale},minimun-scale=${scale},user-scalable=no`
-//			
-//			document.head.appendChild(meta)
-//			
-//		}())
-
-		//2.还原分辨率 rem适配
 		(function(){
-			//还原分辨率
-			var dpr= window.devicePixelRatio;
+			var deWidth = window.screen.width;
+			var defaultW = 320;
 			var meta = document.createElement('meta');
 			meta.name = 'viewport';
-			
-			var scale =  1 / dpr ;
-			
-			meta.content = `width=device-width,initial-scale=${scale},maximum-scale=${scale},minimun-scale=${scale},user-scalable=no`
-			
-			document.head.appendChild(meta);
-			
-			
-			//rem
-			var deviceW = window.screen.width;
-			//除数 任意  目的是保证 rem 与 屏幕大小 成比例
-			document.documentElement.style.fontSize = deviceW/16 + 'px'
-			
+		
+			var scale =  deWidth / 320 ;
+		
+			console.log(deWidth);
+			meta.content = `initial-scale=${scale},maximum-scale=${scale},minimum-scale=${scale},user-scalable=no`
+			// 这里不需要写width = device-width 
+			// 默认的缩放参照值就是按照ideal-viewport 也就是device-width
+			// 而且width = device-width 在ipad,iphone下 都会按照竖屏时的宽度计算
+			// initial-scale device-width优先取较大的
+			// （ps:在uc9浏览器中，当initial-scale=1时，无论width属性的值为多少，此时viewport的宽度永远都是ideal viewport的宽度）
+			document.head.appendChild(meta)
+		
 		}())
+
+		//2.还原分辨率 rem适配
+		// (function(){
+		// 	//还原分辨率
+		// 	var dpr= window.devicePixelRatio;
+		// 	var meta = document.createElement('meta');
+		// 	meta.name = 'viewport';
+		// 
+		// 	var scale =  1 / dpr ;
+		// 
+		// 	meta.content = `width=device-width,initial-scale=${scale},maximum-scale=${scale},minimun-scale=${scale},user-scalable=no`
+		// 
+		// 	document.head.appendChild(meta);
+		// 
+		// 
+		// 	//rem
+		// 	var deviceW = window.screen.width;
+		// 	//除数 任意  目的是保证 rem 与 屏幕大小 成比例
+		// 	document.documentElement.style.fontSize = deviceW/16 + 'px'
+		// 
+		// }())
 		//3.弹性盒模型
 		
 	</script>
 	<body>
+		<div style="width:100px;height:100px;background-color:red"></div>
 	</body>
 </html>
