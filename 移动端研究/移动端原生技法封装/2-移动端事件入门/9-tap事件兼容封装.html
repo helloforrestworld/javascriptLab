@@ -52,6 +52,7 @@
 			var startPoint = {};
 			var endPoint = {};
 			el.addEventListener('touchstart',function(e){
+				console.log(e);
 				startPoint = {
 					x : e.changedTouches[0].pageX,
 					y : e.changedTouches[0].pageY,

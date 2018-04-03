@@ -1,86 +1,3 @@
-﻿# 移动端研究 
-
-标签（空格分隔）： 
-
-
-###1.移动端布局：
-
-[苏宁mobile练习][1]
-[JQ官网响应式练习][2]
-[UEhtml响应式官网练习][3]
-
-###2.移动端基础练习
-[锤子电话本][4]
-[选项卡][5]
-
-###3.滑屏基础练习
-[自定义滑屏][6]
-[网易新闻][7]
-
-###4.多指操作练习
-[图片剪裁][8]
-编辑图片应用预览
-![预览][9]
-
-###5.陀螺仪练习
-[全景图][10]
-全景图预览
-![预览][11]
-###~~
-[横竖屏检测][12]
-[移动的方块][13]
-[摇一摇][14]
-
-
-  [1]: https://helloforrestworld.github.io/javascriptLab/移动端研究/移动端布局/4-苏宁易购/index.html
-  [2]: https://helloforrestworld.github.io/javascriptLab/移动端研究/移动端布局/5-响应式网站jq官网/index.html
-  [3]: https://helloforrestworld.github.io/javascriptLab/移动端研究/移动端布局/7-uehtml/index.html
-  [4]: https://helloforrestworld.github.io/javascriptLab/移动端研究/移动端原生技法封装/3-touchEvent应用/1-锤子电话本/index.html
-  [5]: https://helloforrestworld.github.io/javascriptLab/移动端研究/移动端原生技法封装/3-touchEvent应用/2-选项卡/index.html
-  [6]: https://helloforrestworld.github.io/javascriptLab/移动端研究/移动端原生技法封装/6-自定义滑屏/6-下滑加载更多.html
-  [7]: https://helloforrestworld.github.io/javascriptLab/移动端研究/移动端原生技法封装/7-网易新闻练习/1-index.html
-  [8]: https://helloforrestworld.github.io/javascriptLab/移动端研究/移动端原生技法封装/9-图片剪裁(多指应用)/5-裁切图片应用(加上旋转).html
-  [9]: https://ws1.sinaimg.cn/large/e8323205gy1fpwgx3dbqlj207s07sdfo.jpg
-  [10]: https://helloforrestworld.github.io/javascriptLab/移动端研究/移动端原生技法封装/10-陀螺仪/7-全景图.html
-  [11]: https://ws1.sinaimg.cn/large/e8323205gy1fpwh4pkkraj207s07sjr7.jpg
-  [12]: https://helloforrestworld.github.io/javascriptLab/移动端研究/移动端原生技法封装/10-陀螺仪/1-横竖屏检测.html
-  [13]: https://helloforrestworld.github.io/javascriptLab/移动端研究/移动端原生技法封装/10-陀螺仪/3-移动方块.html
-  [14]: https://helloforrestworld.github.io/javascriptLab/移动端研究/移动端原生技法封装/10-陀螺仪/5-摇一摇.html
-  
-  
-###移动端工具函数封装
-
-####tap事件封装
-> 
-  el 要点击的元素
-  fn 触发事件的回调
-  touchstart记录坐标点 touchend记录坐标点 如果两者小于一定距离则为tap
-  
-```
-		function tap(el,fn){
-			var startPoint = {};
-			var endPoint = {};
-			el.addEventListener('touchstart',function(e){
-				console.log(e);
-				startPoint = {
-					x : e.changedTouches[0].pageX,
-					y : e.changedTouches[0].pageY,
-				}
-			},false)
-			el.addEventListener('touchend',function(e){
-
-				endPoint = {
-					x : e.changedTouches[0].pageX,
-					y : e.changedTouches[0].pageY,
-				}
-				if( Math.abs(startPoint.x - endPoint.x) < 5 && Math.abs(startPoint.y - endPoint.y) < 5){
-					fn && fn.call(el,e);
-				}
-			},false)
-		}
-```
-####动画帧兼容
-```
 (function(){ //动画帧兼容
 	window.requestAnimationFrame = window.requestAnimationFrame||
 		window.webkitRequestAnimationFrame||
@@ -116,75 +33,6 @@
 		}
 	}
 }())
-```
-####css函数
-```
-//css函数
-function css(el,attr,val){
-	var transformAttr = ['rotate','rotateX','rotateY','skew','skewX','skewY','scale','scaleX','scaleY','translate','translateX','translateY','translateZ'];
-	for(var i = 0 ; i < transformAttr.length; i++){
-		if(attr === transformAttr[i]){
-			//transform属性单独处理
-			el.transform = el.transform || {
-				'rotate':0,
-				'rotateX':0,
-				'rotateY':0,
-				'skew':0,
-				'skewX':0,
-				'skewY':0,
-				'scale':1,
-				'scaleX':1,
-				'scaleY':1,
-				'translate':0,
-				'translateX':0,
-				'translateY':0,
-				'translateZ':0 //硬件加速
-			}; //默认值
-			
-			var str = '';
-			if(val === undefined){
-				return el.transform[attr]
-			}
-			el.transform[attr] = val;
-			
-			for(var key in el.transform){
-				switch(key){
-					case 'rotate':
-					case 'rotateX':
-					case 'rotateY':
-					case 'skew':
-					case 'skewX':
-					case 'skewY':
-						str += key + '(' + el.transform[key] + 'deg) '
-						break
-					case 'translate':
-					case 'translateX':
-					case 'translateY':
-					case 'translateZ':
-						str += key + '(' + el.transform[key] + 'px) '
-						break
-					default:
-						str += key + '(' + el.transform[key] + ') '
-				}
-			}
-			el.style.transform = str;
-			return
-		}
-	}
-	
-	
-	if(val === undefined){
-		return parseFloat( window.getComputedStyle(el)[attr] )
-	}
-	if(attr === 'opacity'){
-		el.style[attr] = val;
-	}else{
-		el.style[attr] = val + 'px';
-	}
-}
-```
-####动画函数
-```
 var Tween = { //Tween算法
 	linear: function (t, b, c, d){
 		return c*t/d + b;
@@ -314,21 +162,72 @@ var Tween = { //Tween算法
 		return Tween['bounceOut'](t*2-d, 0, c, d) * 0.5 + c*0.5 + b;
 	}
 };
-```
-```
-/*
-			init: {
-				el ：运动的元素
-				type: 运动的类型 如linear
-				target:{  运动的目标
-					'translateX': 300,
-					'translateY': 400
-				}
-				time：运动的时间,
-				callBack:运动完成回调,
-				callIn:运动执行过程中回调
+
+//css函数
+function css(el,attr,val){
+	var transformAttr = ['rotate','rotateX','rotateY','skew','skewX','skewY','scale','scaleX','scaleY','translate','translateX','translateY','translateZ'];
+	for(var i = 0 ; i < transformAttr.length; i++){
+		if(attr === transformAttr[i]){
+			//transform属性单独处理
+			el.transform = el.transform || {
+				'rotate':0,
+				'rotateX':0,
+				'rotateY':0,
+				'skew':0,
+				'skewX':0,
+				'skewY':0,
+				'scale':1,
+				'scaleX':1,
+				'scaleY':1,
+				'translate':0,
+				'translateX':0,
+				'translateY':0,
+				'translateZ':0 //硬件加速
+			}; //默认值
+			
+			var str = '';
+			if(val === undefined){
+				return el.transform[attr]
 			}
-*/
+			el.transform[attr] = val;
+			
+			for(var key in el.transform){
+				switch(key){
+					case 'rotate':
+					case 'rotateX':
+					case 'rotateY':
+					case 'skew':
+					case 'skewX':
+					case 'skewY':
+						str += key + '(' + el.transform[key] + 'deg) '
+						break
+					case 'translate':
+					case 'translateX':
+					case 'translateY':
+					case 'translateZ':
+						str += key + '(' + el.transform[key] + 'px) '
+						break
+					default:
+						str += key + '(' + el.transform[key] + ') '
+				}
+			}
+			el.style.transform = str;
+			return
+		}
+	}
+	
+	
+	if(val === undefined){
+		return parseFloat( window.getComputedStyle(el)[attr] )
+	}
+	if(attr === 'opacity'){
+		el.style[attr] = val;
+	}else{
+		el.style[attr] = val + 'px';
+	}
+}
+
+//动画函数
 function startMove(init){
 	var el = init.el;//运动的元素
 	var target = init.target;//目标值
@@ -361,29 +260,7 @@ function startMove(init){
 		}
 	}())
 }
-```
-####自定义滑屏
-```
-swiper({
-		wrap:scrollWrap,
-		dir:'y',
-		backOut:'pull',
-		//none : 不能超出
-		//normal: 能正常拉但是会弹回去
-		//pull : 加上弹力
-		start(){
-			console.log('start') //滑动前
-		},
-		end(){
-			console.log('end') //手指抬起
-		},
-		move(){
-			console.log('move')//滑动中
-		},
-		over(){
-			console.log('over')//整个滑动结束
-		}
-})
+
 function swiper(init){
 	var wrap = init.wrap; //滚动元素的父级
 	var scroll = wrap.children[0];//滚动元素
@@ -607,11 +484,9 @@ function swiper(init){
 		return f < 0 ? 0 : f
 	}
 }
-```
-####带滚动条的自定义滑屏
-```
+
+
 //有滚动条的自定义滑屏
-//用法和swiper一样 参数也一样 类名scrollbar可以修改滚动条样式
 function swiperBar(init){
 	var wrap = init.wrap; //外框
 	var scroll = wrap.children[0]; //滚动元素
@@ -696,4 +571,218 @@ function swiperBar(init){
 		}
 	})
 }
-```
+
+//tap
+function tap(el,fn){
+	var startPoint = {};
+	var endPoint = {};
+	el.addEventListener('touchstart',function(e){
+		startPoint = {
+			x : e.changedTouches[0].pageX,
+			y : e.changedTouches[0].pageY,
+		}
+	},false)
+	el.addEventListener('touchend',function(e){
+
+		endPoint = {
+			x : e.changedTouches[0].pageX,
+			y : e.changedTouches[0].pageY,
+		}
+		if( Math.abs(startPoint.x - endPoint.x) < 5 && Math.abs(startPoint.y - endPoint.y) < 5){
+			fn && fn.call(el,e);
+		}
+	},false)
+}
+
+//多指操作
+function gesture(init){
+	var el = init.el;
+	var isGesture = false;//是否在多指操作
+	var lastDis;
+	var lastDeg;
+	
+	el.addEventListener('touchstart',function(e){ //start
+		var touch = e.touches;
+		
+		if(touch.length >= 2){
+			isGesture = true;
+			lastDis = getDis(touch[0],touch[1]);
+			lastDeg = getDeg(touch[0],touch[1]);
+			init.start && init.start.call(el,e)
+		}
+		
+	},false)
+	
+	el.addEventListener('touchend',function(e){//end
+		var touch = e.touches;
+		
+		if(isGesture){
+			isGesture = false;
+			init.end && init.end.call(el,e)
+		}
+		
+	},false)
+	
+	el.addEventListener('touchmove',function(e){//change
+		//需要
+		//scale :  本次手指距离  / start时候手指距离
+		//rotation: 本次手指形成的直线 与 start时手指形成的直线的夹角
+		if(isGesture){
+			var touch = e.touches;
+			var nowDis = getDis(touch[0],touch[1]);
+			var nowDeg = getDeg(touch[0],touch[1]);
+			
+			e.scale = nowDis / lastDis;
+			e.rotation = nowDeg - lastDeg;
+			init.change && init.change.call(el,e);
+		}
+	})
+	
+	function getDis(pointA,pointB){
+		
+		var x = pointA.pageX - pointB.pageY;
+		var y = pointA.pageY - pointB.pageY;
+		
+		return  Math.sqrt(x*x + y*y)
+		
+	}
+	
+	function getDeg(pointA,pointB){
+		//直线与X轴正方向顺时针夹角
+		var x = pointB.pageX - pointA.pageX;
+		var y = pointB.pageY - pointA.pageY;
+		
+		return Math.atan2(y,x) * 180 / Math.PI 
+		
+	}
+}
+
+// 单指拖拽封装
+/*
+	 init{
+		 el : el,
+		 start:拖拽前回调
+		 move: 拖拽中的回调
+		 end : 拖拽结束的回调
+	 }
+ */
+function dragOne(init){
+	var el = init.el;
+	var isDrag = false;
+	var startPoint = {}; //手指按下位置
+	
+	el.addEventListener('touchstart',function(e){
+		var touch = e.touches;
+		if(touch.length === 1){
+			startPoint = {
+				x : touch[0].pageX,
+				y : touch[0].pageY
+			};
+			isDrag = true;
+			init.start && init.start.call(el,e);
+		}else{
+			isDrag = false;
+		}
+	},false)
+	
+	el.addEventListener('touchmove',function(e){
+		var touch = e.touches;
+		if(isDrag){
+			var lastPoint = { //手指移动的坐标
+				x : touch[0].pageX,
+				y : touch[0].pageY
+			};
+			e.pointDis = {//手指坐标差值
+				x : lastPoint.x - startPoint.x,
+				y : lastPoint.y - startPoint.y
+			};
+			init.move && init.move.call(el,e);
+		}
+	},false)
+	
+	el.addEventListener('touchend',function(e){
+		if(isDrag){
+			init.end && init.end.call(el,e);
+			isDrag = false;
+		}
+	},false)
+}
+
+// fnA 横屏时的回调
+// fnB 竖屏时的回调
+function addOrientation(fnA,fnB){
+	toChange();
+	window.addEventListener(window.orientation === undefined? 'resize':'orientationchange',toChange);
+	function toChange(){
+		if(window.orientation === undefined){
+			var html = document.documentElement;
+			var htmlW = html.clientWidth;
+			var htmlH = html.clientHeight;
+			if(htmlW < htmlH ){
+				fnB && fnB();
+			}else{
+				fnA && fnA();
+			}
+		}else{
+			if(window.orientation == 0 || window.orientation == 180){
+				fnB && fnB();
+			}else {
+				fnA && fnA();
+			}
+		}
+	}
+}
+
+// 加速度检测
+function addMotion(callBack){
+	var isAndriod  = !getIos();
+	window.addEventListener('devicemotion',function(e){
+		if(isAndriod){
+			// 安装下方向取反
+			e.accelerationIncludingGravity.x = -e.accelerationIncludingGravity.x;
+			e.accelerationIncludingGravity.y = -e.accelerationIncludingGravity.y; 
+			e.accelerationIncludingGravity.z = -e.accelerationIncludingGravity.z; 
+		}
+		callBack && callBack(e);
+	},false)
+	// 判断是否是ios
+	function getIos(){
+		var u = window.navigator.userAgent;
+		return !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
+	}
+}
+
+
+// 摇一摇
+function phoneShake(callBack){
+	var RANGE = 76;
+	var lastX = 0;
+	var lastY = 0;
+	var lastZ = 0;
+	var lastTime = Date.now();
+	var isShake = false;
+	addMotion(function(e){
+		var nowTime = Date.now();
+		if(nowTime - lastTime < 100){ //限制事件执行间隔
+			return
+		}else{
+			lastTime = nowTime;
+		}
+		var motion = e.accelerationIncludingGravity;
+		var x = Math.round( motion.x );
+		var y = Math.round( motion.y );
+		var z = Math.round( motion.z );
+		var dis = Math.abs(x - lastX) + Math.abs(z - lastZ) + Math.abs(y - lastY);
+		box.innerHTML = dis;
+		if(dis > RANGE){
+			isShake = true; //摇动触发 让摇动平稳再触发事件
+		}
+		if(dis < 15 && isShake){
+			callBack && callBack();
+			isShake = false;
+		}
+		lastX = x;
+		lastY = y;
+		lastZ = z;
+	})
+}
