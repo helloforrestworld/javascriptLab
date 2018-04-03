@@ -623,10 +623,12 @@ function gesture(init){
 	},false)
 	
 	el.addEventListener('touchmove',function(e){//change
+		var touch = e.touches;
 		//需要
 		//scale :  本次手指距离  / start时候手指距离
 		//rotation: 本次手指形成的直线 与 start时手指形成的直线的夹角
-		if(isGesture){
+		if(touch.length >= 2){
+			isGesture = true;
 			var touch = e.touches;
 			var nowDis = getDis(touch[0],touch[1]);
 			var nowDeg = getDeg(touch[0],touch[1]);
@@ -639,7 +641,7 @@ function gesture(init){
 	
 	function getDis(pointA,pointB){
 		
-		var x = pointA.pageX - pointB.pageY;
+		var x = pointA.pageX - pointB.pageX;
 		var y = pointA.pageY - pointB.pageY;
 		
 		return  Math.sqrt(x*x + y*y)

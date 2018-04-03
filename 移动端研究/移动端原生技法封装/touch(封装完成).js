@@ -514,7 +514,7 @@ function swiperBar(init){
 	 //滚动条初始化
 	wrapRect = wrap[wc[dir]];
 	scrollRect = scroll[so[dir]];
-	scale = wrap[wc[dir]] /  scroll[so[dir]];
+	scale = wrapRect /  scrollRect;
 	if(dir === 'x'){
 		bar.style.cssText = 'transition:opacity 300ms;opacity:0; z-index:999;position:absolute;left:0;bottom:0;width:'+scale * wrap.clientWidth +'px;height:4px;background-color:rgba(0,0,0,0.6);border-radius:5px';
 	}else if(dir === 'y'){
@@ -624,10 +624,12 @@ function gesture(init){
 	},false)
 	
 	el.addEventListener('touchmove',function(e){//change
+		var touch = e.touches;
 		//需要
 		//scale :  本次手指距离  / start时候手指距离
 		//rotation: 本次手指形成的直线 与 start时手指形成的直线的夹角
-		if(isGesture){
+		if(touch.length >= 2){
+			isGesture = true;
 			var touch = e.touches;
 			var nowDis = getDis(touch[0],touch[1]);
 			var nowDeg = getDeg(touch[0],touch[1]);
@@ -640,7 +642,7 @@ function gesture(init){
 	
 	function getDis(pointA,pointB){
 		
-		var x = pointA.pageX - pointB.pageY;
+		var x = pointA.pageX - pointB.pageX;
 		var y = pointA.pageY - pointB.pageY;
 		
 		return  Math.sqrt(x*x + y*y)

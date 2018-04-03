@@ -639,7 +639,7 @@ function swiperBar(init){
 	 //滚动条初始化
 	wrapRect = wrap[wc[dir]];
 	scrollRect = scroll[so[dir]];
-	scale = wrap[wc[dir]] /  scroll[so[dir]];
+	scale = wrapRect /  scrollRect;
 	if(dir === 'x'){
 		bar.style.cssText = 'transition:opacity 300ms;opacity:0; z-index:999;position:absolute;left:0;bottom:0;width:'+scale * wrap.clientWidth +'px;height:4px;background-color:rgba(0,0,0,0.6);border-radius:5px';
 	}else if(dir === 'y'){
@@ -695,5 +695,138 @@ function swiperBar(init){
 			init.over && init.over.call(wrap);
 		}
 	})
+}
+```
+####多指操作
+```
+gesture({
+    el 要操作的元素,
+    start:function(e){
+        操作前
+    },
+    change:function(e){
+        e.scale //  本次手指距离 / 按下时手指距离
+        e.rotation // 旋转的角度 顺时针为正 逆时针为负
+        手指位置改变时
+    },
+    end:function(e){
+        手指抬起操作结束
+    }
+})
+function gesture(init){
+	var el = init.el;
+	var isGesture = false;//是否在多指操作
+	var lastDis;
+	var lastDeg;
+	
+	el.addEventListener('touchstart',function(e){ //start
+		var touch = e.touches;
+		
+		if(touch.length >= 2){
+			isGesture = true;
+			lastDis = getDis(touch[0],touch[1]);
+			lastDeg = getDeg(touch[0],touch[1]);
+			init.start && init.start.call(el,e)
+		}
+		
+	},false)
+	
+	el.addEventListener('touchend',function(e){//end
+		var touch = e.touches;
+		
+		if(isGesture){
+			isGesture = false;
+			init.end && init.end.call(el,e)
+		}
+		
+	},false)
+	
+	el.addEventListener('touchmove',function(e){//change
+		var touch = e.touches;
+		//需要
+		//scale :  本次手指距离  / start时候手指距离
+		//rotation: 本次手指形成的直线 与 start时手指形成的直线的夹角
+		if(touch.length >= 2){
+			isGesture = true;
+			var touch = e.touches;
+			var nowDis = getDis(touch[0],touch[1]);
+			var nowDeg = getDeg(touch[0],touch[1]);
+			
+			e.scale = nowDis / lastDis;
+			e.rotation = nowDeg - lastDeg;
+			init.change && init.change.call(el,e);
+		}
+	})
+	
+	function getDis(pointA,pointB){
+		
+		var x = pointA.pageX - pointB.pageX;
+		var y = pointA.pageY - pointB.pageY;
+		
+		return  Math.sqrt(x*x + y*y)
+		
+	}
+	
+	function getDeg(pointA,pointB){
+		//直线与X轴正方向顺时针夹角
+		var x = pointB.pageX - pointA.pageX;
+		var y = pointB.pageY - pointA.pageY;
+		
+		return Math.atan2(y,x) * 180 / Math.PI 
+		
+	}
+}
+```
+####单指拖拽
+```
+// 单指拖拽封装
+/*
+	 init{
+		 el : el,
+		 start:拖拽前回调
+		 move: 拖拽中的回调 e.pointDis获取手指坐标差值
+		 end : 拖拽结束的回调
+	 }
+ */
+function dragOne(init){
+	var el = init.el;
+	var isDrag = false;
+	var startPoint = {}; //手指按下位置
+	
+	el.addEventListener('touchstart',function(e){
+		var touch = e.touches;
+		if(touch.length === 1){
+			startPoint = {
+				x : touch[0].pageX,
+				y : touch[0].pageY
+			};
+			isDrag = true;
+			init.start && init.start.call(el,e);
+		}else{
+			isDrag = false;
+		}
+	},false)
+	
+	el.addEventListener('touchmove',function(e){
+		var touch = e.touches;
+		if(isDrag){
+			var lastPoint = { //手指移动的坐标
+				x : touch[0].pageX,
+				y : touch[0].pageY
+			};
+			e.pointDis = {//手指坐标差值
+				x : lastPoint.x - startPoint.x,
+				y : lastPoint.y - startPoint.y
+			};
+			init.move && init.move.call(el,e);
+		}
+	},false)
+	
+	el.addEventListener('touchend',function(e){
+		if(isDrag){
+			init.end && init.end.call(el,e);
+			isDrag = false;
+		}
+	},false)
 }
 ```
