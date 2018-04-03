@@ -830,3 +830,89 @@ function dragOne(init){
 	},false)
 }
 ```
+>陀螺仪相关
+```
+// fnA 横屏时的回调
+// fnB 竖屏时的回调
+function addOrientation(fnA,fnB){
+	toChange();
+	window.addEventListener(window.orientation === undefined? 'resize':'orientationchange',toChange);
+	function toChange(){
+		if(window.orientation === undefined){
+			var html = document.documentElement;
+			var htmlW = html.clientWidth;
+			var htmlH = html.clientHeight;
+			if(htmlW < htmlH ){
+				fnB && fnB();
+			}else{
+				fnA && fnA();
+			}
+		}else{
+			if(window.orientation == 0 || window.orientation == 180){
+				fnB && fnB();
+			}else {
+				fnA && fnA();
+			}
+		}
+	}
+}
+
+// 加速度检测
+function addMotion(callBack){
+	var isAndriod  = !getIos();
+	window.addEventListener('devicemotion',function(e){
+		if(isAndriod){
+			// 安装下方向取反
+			e.accelerationIncludingGravity.x = -e.accelerationIncludingGravity.x;
+			e.accelerationIncludingGravity.y = -e.accelerationIncludingGravity.y; 
+			e.accelerationIncludingGravity.z = -e.accelerationIncludingGravity.z; 
+		}
+		callBack && callBack(e);
+	},false)
+	// 判断是否是ios
+	function getIos(){
+		var u = window.navigator.userAgent;
+		return !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
+	}
+}
+
+
+// 摇一摇
+function phoneShake(callBack){
+	var RANGE = 76;
+	var lastX = 0;
+	var lastY = 0;
+	var lastZ = 0;
+	var lastTime = Date.now();
+	var isShake = false;
+	addMotion(function(e){
+		var nowTime = Date.now();
+		if(nowTime - lastTime < 100){ //限制事件执行间隔
+			return
+		}else{
+			lastTime = nowTime;
+		}
+		var motion = e.accelerationIncludingGravity;
+		var x = Math.round( motion.x );
+		var y = Math.round( motion.y );
+		var z = Math.round( motion.z );
+		var dis = Math.abs(x - lastX) + Math.abs(z - lastZ) + Math.abs(y - lastY);
+		box.innerHTML = dis;
+		if(dis > RANGE){
+			isShake = true; //摇动触发 让摇动平稳再触发事件
+		}
+		if(dis < 15 && isShake){
+			callBack && callBack();
+			isShake = false;
+		}
+		lastX = x;
+		lastY = y;
+		lastZ = z;
+	})
+}
+
+//角度检测 deviceorientation 
+DeviceOrientationEvent.alpha 表示设备沿z轴上的旋转角度，范围为0~360。
+DeviceOrientationEvent.beta 表示设备在x轴上的旋转角度，范围为-180~180。它描述的是设备由前向后旋转的情况。
+DeviceOrientationEvent.gamma 表示设备在y轴上的旋转角度，范围为-90~90。它描述的是设备由左向右旋转的情况。
+```
