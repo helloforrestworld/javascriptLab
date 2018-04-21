@@ -20,8 +20,8 @@
   var box = document.getElementsByClassName('box')[0];
   window.addEventListener('deviceorientation',function(e){
     var x = e.beta; //围绕x轴旋转角度
-    var y = e.gamma;//围绕y轴旋转角度
-    var z = e.alpha;//围绕z轴旋转角度
+    var y = e.gamma;//围绕y轴旋转角度  描述左右翻转
+    var z = e.alpha;//围绕z轴旋转角度  描述上下翻转
     box.innerHTML = 'x:' + x;
     box.innerHTML += '<br>y:'+ y;
     box.innerHTML += '<br>Z:'+ z;
