@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.25.0/ramda.min.js"></script>
+<script type="text/javascript">
+  // 大于
+  console.log(R.gt(2, 2))
+  console.log(R.gt(2)(1))
+  console.log(R.gt('a', 'z'))
+  // 大于等于
+  console.log(R.gte(2, 2))
+  // 小于
+  console.log(R.lt(-2, 3))
+  // 小于等于
+  console.log(R.lte(-2, -2))
+  
+  // 等于 （支持对象比较）
+  console.log(R.equals(2, 3)) // false
+  console.log(R.equals(2, '2')) // false
+  console.log(R.equals([1,2], [1,2])) // true
+  console.log(R.equals({a:1}, {a:1})) // true
+  
+  // eqBy：比较两个值传入指定函数的运算结果是否相等。
+  console.log(R.eqBy(Math.abs, -5)(5))
+</script>
+</html>

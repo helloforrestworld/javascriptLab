@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.25.0/ramda.min.js"></script>
+<script type="text/javascript">
+  // split：按照指定分隔符将字符串拆成一个数组。
+  console.log(R.split(',')('a,b,c,d,e,f')) // ['a', 'b', 'c', 'd', 'e', 'f']
+  // test：判断一个字符串是否匹配给定的正则表达式。
+  console.log(R.test(/[\d]+/)('ab')) // false
+  
+  // match：返回一个字符串的匹配结果。
+  console.log(R.match(/([a-zA-Z]a)/g)('banaSa'))
+  // ["ba", "na", "Sa"]
+  
+</script>
+</html>

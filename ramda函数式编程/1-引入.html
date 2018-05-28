@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.25.0/ramda.min.js"></script>
+<script type="text/javascript">
+  let square = n => n * n
+  console.log(R.map(square, [2, 4])) // [4, 16]
+  let sqArr = R.map(square)
+  console.log(sqArr([3, 6])) // [9, 36]
+  
+  // 柯里化
+  let add = R.curry((x, y) => {
+    return x + y
+  })
+  console.log(add(2, 4)) // 6
+  console.log(add(2)(4)) // 6
+</script>
+</html>
