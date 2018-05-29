@@ -11,14 +11,27 @@
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.25.0/ramda.min.js"></script>
 <script type="text/javascript">
-  // split：按照指定分隔符将字符串拆成一个数组。
-  console.log(R.split(',')('a,b,c,d,e,f')) // ['a', 'b', 'c', 'd', 'e', 'f']
-  // test：判断一个字符串是否匹配给定的正则表达式。
-  console.log(R.test(/[\d]+/)('ab')) // false
+  // compose：将多个函数合并成一个函数，从右到左执行。
+  console.log(R.compose(Math.abs, R.add(1), R.multiply(4))(-2))
   
-  // match：返回一个字符串的匹配结果。
-  console.log(R.match(/([a-zA-Z]a)/g)('banaSa'))
-  // ["ba", "na", "Sa"]
+  // pipe：将多个函数合并成一个函数，从左到右执行。
+  let negative = x => -1 * x
+  let increaseOne = x => x + 1
+  console.log(R.pipe(Math.pow, negative, increaseOne)(-2, 3))
+  
+  // converge：接受两个参数，第一个参数是函数，第二个参数是函数数组。传入的值先使用第二个参数包含的函数分别处理以后，再用第一个参数处理前一步生成的结果。
+
+  let sum = arr => {
+    let ret = 0;
+    for(let i = 0; i < arr.length; i++) {
+      ret += arr[i]
+    }
+    return ret
+  }
+  let getLen = arr => {
+    return arr.length
+  }
+  console.log(R.converge(R.divide, [sum, getLen])([1,2,3,4,5])) // 3
   
 </script>
 </html>
