@@ -17,5 +17,45 @@
   let f = afterCurry(1)
   let g = f(2, 3)
   console.log(g(4))
+  
+  console.log(R.range(1, 5))
+  // partial：允许多参数的函数接受一个数组，指定最左边的部分参数。
+  let multiplyer = (a, b) => a * b
+  console.log(R.partial(multiplyer, [2])(3))
+  
+  // 与partial类似，但数组指定的参数为最右边的参数。
+  let sayName = (firstName, lastName, age) => 'hello, i am   ' + firstName + '  ' + lastName + ', i am ' + age + '  years old'
+  console.log(R.partialRight(sayName, ['steve', 18])('josh'))
+  console.log(R.partialRight(sayName)([18])('josh', 'steve'))
+  console.log(R.partialRight(sayName)(['josh', 'steve', 18])())
+  
+  // 接受一个函数fn和一个函数数组fnList作为参数，返回fn的柯里化版本。该新函数的参数，先分别经过对应的fnList成员处理，再传入fn执行。
+  let decreaseOne = x => x - 1
+  let increaseOne = x => x + 1
+  console.log(R.useWith(Math.pow, [decreaseOne, increaseOne])(3, 4))
+  
+  // memoize：返回一个函数，会缓存每一次的运行结果。
+  
+  let arrMul = arr => {
+    console.log(arr)
+    let ret = 1
+    arr.forEach(i => ret *= i)
+    return ret
+  }
+  let count = 0
+  var fac = R.memoize(n => {
+    count += 1
+    return arrMul(R.range(1, n + 1))
+  })
+  console.log(fac(5))
+  console.log(fac(5))
+  console.log(count) // 1 函数只执行了一遍
+  
+  // complement：返回一个新函数，如果原函数返回true，该函数返回false；如果原函数返回false，该函数返回true。
+  
+  let gt10 = x => x > 10
+  let lte10 = R.complement(gt10)
+  console.log( gt10(7) )
+  console.log( lte10(7) )
 </script>
 </html>

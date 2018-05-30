@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.25.0/ramda.min.js"></script>
+<script type="text/javascript">
+  // contains：如果包含某个成员，返回true。
+  console.log(R.contains(2, [1, 2, 3, 4])) // true
+  console.log(R.contains({name: 'jj'}, [{name: 'jj'}])) // true
+  
+  // all：所有成员都满足指定函数时，返回true，否则返回false 
+  let equal3 = R.equals(3)
+  console.log(R.all(equal3)([1, 5, 6])) // fasle
+  console.log(R.all(equal3)([3, 3, 3])) // true
+  
+  // any：只要有一个成员满足条件，就返回true。
+  
+  let lessThan2 = R.flip(R.lt)(2)
+  console.log(R.any(lessThan2)([2, 5, 6, 7])) // false
+  console.log(R.any(lessThan2)([1, 5, 6, 7])) // true
+  
+  // none：没有成员满足条件时，返回true。
+  let isEven = n => n % 2 === 0
+  console.log(R.none(isEven)([1, 2, 3])) // fasle
+  console.log(R.none(isEven)([1, 3, 7])) // true
+</script>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.25.0/ramda.min.js"></script>
+<script type="text/javascript">
+  // head：返回数组的第一个成员。
+  console.log(R.head(['hello', 'man', 'you ', 'just'])) // 'hello'
+  console.log(R.head([])) // undefined
+  console.log(R.head('adc')) // a
+  console.log(R.head('')) // ''
+  
+  // last：返回数组的最后一个成员。
+  console.log(R.last(['hello', 'man', 'you ', 'just'])) // 'just'
+  console.log(R.last([])) // undefined
+  console.log(R.last('adc')) // c
+  console.log(R.last('')) // ''
+  
+  // tail：返回第一个成员以外的所有成员组成的新数组。
+  console.log(R.tail([1, 2, 3])) // [2, 3]
+  console.log(R.tail('abc')) // 'bc'
+  
+  // init：返回最后一个成员以外的所有成员组成的新数组。
+  console.log(R.init([1, 2, 3])) // [1, 2]
+  console.log(R.init('abc')) // 'ab'
+  
+  // nth：取出指定位置的成员。 支持负数
+  let list = ['aabb', 'ccdd', 'eeff', 'gghh']
+  console.log(R.nth(1)(list)) // 'ccdd'
+  console.log(R.nth(-1)(list)) // 'gghh'
+  
+  // take：取出前 n 个成员。
+  console.log(R.take(2)(list))// ['aabb', 'ccdd']
+  
+  // takeLast: 取出后 n 个成员
+  console.log(R.takeLast(2)(list)) // ['eeff', 'gghh']
+  
+  // slice：从起始位置（包括）开始，到结束位置（不包括）为止，从原数组截取出一个新数组。
+  console.log(R.slice(1, 3)(['a', 'b', 'c', 'd'])) // ['b', 'c']
+  console.log(R.slice(1, Infinity)(['b', 'c', 'd', 'e'])) // ['c', 'd', 'e']
+  console.log(R.slice(-3, -1)(['a', 'b', 'c', 'd'])) // ['b', 'c']
+  console.log(R.slice(0, 1)('Ramda')) // 'R'
+  
+  // remove：移除开始位置后的n个成员。
+  console.log(R.remove(2, 3)([1, 2, 3, 4, 5, 6, 7])) // [1, 2, 6, 7]
+  // insert：在指定位置插入给定值。
+  console.log(R.insert(2, 'x')([1, 2, 3, 4])) // [1, 2, 'x', 3, 4]
+  // insertAll：在指定位置，插入另一个数组的所有成员。
+  console.log(R.insertAll(2, ['a', 'b'])([1, 2, 3, 4, 5])) // [1, 2, 'a', b, 3, 4, 5]
+  // prepend：在数组头部插入一个成员
+  console.log(R.prepend(1)([2,3])) // [1, 2, 3]
+  // append： 在数组尾部插入一个成员
+  console.log(R.append(3)([1, 2])) // [1, 2, 3]
+  // intersperse：在数组成员之间插入表示分隔的成员。
+  console.log(R.intersperse(';', [1, 2, 3])) // [1, ';', 2, ';', 3]
+  // join：将数组合并成一个字符串，并在成员之间插入分隔符。
+  console.log(R.join('|')([1, 2, 3])) // '1|2|3'
+</script>
+</html>

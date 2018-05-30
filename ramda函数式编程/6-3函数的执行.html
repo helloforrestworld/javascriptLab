@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.25.0/ramda.min.js"></script>
+<script type="text/javascript">
+  console.log(R.assoc('a', 2)(111))
+  
+  // binary：参数函数执行时，只传入最前面两个参数。
+  let takeThreeArgs = (a, b, c) => {
+    return [a, b, c]
+  }
+  console.log(R.binary(takeThreeArgs)(1, 2, 3)) // [1, 2, undefined]
+  
+  // tap：将一个值传入指定函数，并返回该值。
+  let sayX = x => console.log('x is '  + x)
+  R.tap(sayX)('aa')  // x is aa
+  
+  // zipWith：将两个数组对应位置的值，一起作为参数传入某个函数。
+  let composeName = (firstName, lastName) => {
+    return firstName + ' ' + lastName
+  }
+  console.log(
+  R.zipWith(composeName, ['Michel', 'Walter'])(['josh', 'white'])) //  ["Michel josh", "Walter white"]
+  
+  // apply：将数组转成参数序列，传入指定函数。
+  let nums = [1, 2, 3, 4]
+  console.log(R.apply(Math.max)(nums)) // 4
+  
+  // applySpec：返回一个模板函数，该函数会将参数传入模板内的函数执行，然后将执行结果填充到模板。
+  
+  let getMetrics = R.applySpec({
+    sum: R.add,
+    nest: {mul: R.multiply}
+  })
+  
+  console.log(getMetrics(2, 4)) // {sum: 6, nest: {mul: 8}}
+  
+  // ascend：返回一个升序排列的比较函数，主要用于排序。
+  
+  let byAgeUp = R.ascend(R.prop('age'))
+  let people = [
+    {age:13, name: 'josh'},
+    {age:2, name: 'bush'},
+    {age:15, name: 'wolf'}
+  ]
+  console.log(R.sort(byAgeUp)(people))
+  console.log(byAgeUp({age:13, name: 'josh'}, {age:2, name: 'bush'})) // 1
+  
+  // descend：返回一个降序排列的比较函数，主要用于排序。
+  let byAgeDown = R.descend(R.prop('age'))
+  console.log(R.sort(byAgeDown)(people))
+</script>
+</html>
