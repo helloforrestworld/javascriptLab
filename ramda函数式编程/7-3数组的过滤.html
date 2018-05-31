@@ -11,6 +11,18 @@
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.25.0/ramda.min.js"></script>
 <script type="text/javascript">
+  // filter：过滤出符合条件的成员。
+  let isEven = x => x % 2 === 0
+  let arr = [1, 2, 3, 4]
+  console.log(R.filter(isEven)(arr)) // [2, 4]
   
+  // reject：过滤出所有不满足条件的成员。
+  let isOdd = x => x % 2 === 1
+  console.log(R.reject(isOdd)(arr)) // [2, 4]
+  
+  // takeWhile： 一旦不满足条件 后面的成员都会被过滤
+  let isNotFour = x => x !== 4
+  let arr2 = [1, 2, 3, 4, 2, 2]
+  console.log(R.takeWhile(isNotFour)(arr2))
 </script>
 </html>
