@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.25.0/ramda.min.js"></script>
+<script type="text/javascript">
+  // countBy： 对每个数组执行指定函数 返回一个结果统计对象
+  let numbers = [1.02, 1.33, 1.2, 2, 3.3, 3.6]
+  console.log(R.countBy(Math.floor)(numbers)) // {1: 3, 2: 1, 3: 2}
+  
+  // splitAt：在给定位置，将原数组分成两个部分
+  console.log(R.splitAt(0)([1, 2, 3])) // [[0], [1, 2, 3]]
+  console.log(R.splitAt(1)([1, 2, 3])) // [[1], [2, 3]]
+  console.log(R.splitAt(5)('hello world')) // ["hello", " world"]
+  
+  // splitEvery：按照指定的个数，将原数组分成多个部分。
+  console.log(R.splitEvery(3)([1, 1, 2, 3, 4, 5, 2, 1])) // [[1, 1, 2], [3, 4, 5], [2, 1]]
+  console.log(R.splitEvery(3)('helloforrest')) // ["hel", 'lof', 'orr', 'est']
+  
+  // splitWhen：以第一个满足指定函数的成员为界，将数组分成两个部分。
+  console.log(R.splitWhen(R.equals(2))([1, 2, 3, 4])) // [[1], [2, 3, 4]]
+  
+  // aperture：每个成员与其后给定数量的成员分成一组，这些组构成一个新的数组。
+  console.log(R.aperture(3)([1, 2, 3, 4, 5, 6, 7])) // // [[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 6], [5, 6, 7]]
+  
+  // partition：根据是否满足指定函数，将成员分区
+  console.log(R.partition(R.contains('s'))(['sa', 'adasds', 'ab']))
+  // [['sa', 'adasds'], ['ab']]
+  
+  // indexOf：某个值在数组中第一次出现的位置。
+  console.log(R.indexOf(3)([1,2,3,4])) // 2
+  console.log(R.indexOf(10)([1,2,3,4])) // -1
+  
+  // lastIndexOf：某个值在数组中最后一次出现的位置。
+  console.log(R.lastIndexOf(3)([3, -1, 3, 4, 3])) // 4
+  
+  // map：数组的每个成员依次执行某个函数。
+  let gotDouble = x => x * 2
+  console.log(R.map(gotDouble)([1, 2, 3])) // [2, 4, 6]
+  
+  // mapIndexed：与map类似，区别是遍历函数可以额外获得两个参数：索引位置和原数组。
+  let addIndex = (item, index) => item + '-' + index
+  let mapIndex = R.addIndex(R.map)
+  console.log(mapIndex(addIndex, ['a', 'b', 'c'])) // ["a-0", "b-1", "c-2"]
+  
+  // forEach：数组的每个成员依次执行某个函数，总是返回原数组。
+  let printAddFive = x => console.log(x + 5)
+  console.log(R.forEach(printAddFive, [1, 2, 3])) // [1, 2, 3]
+  // log 6
+  // log 7
+  // log 8
+  
+  // reduce：数组成员依次执行指定函数，每一次的运算结果都会进入一个累积变量。
+  let mySubtract = function (a, b) {
+    console.log('a:' + a, 'b:' + b)
+    return a - b
+  }
+  console.log(R.reduce(mySubtract, 0)([1, 2, 3, 4])) // -10
+  // // => ((((0 - 1) - 2) - 3) - 4) = -10
+  
+  
+  // reduceRight：与reduce类似，区别是数组成员从左到右执行。
+  console.log(R.reduceRight(mySubtract, 0)([1, 2, 3, 4])) // -2
+  // // => (1 - (2 - (3 - (4 - 0)))) = -2
+</script>
+</html>

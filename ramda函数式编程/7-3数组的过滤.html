@@ -24,5 +24,13 @@
   let isNotFour = x => x !== 4
   let arr2 = [1, 2, 3, 4, 2, 2]
   console.log(R.takeWhile(isNotFour)(arr2))
+  
+  // dropWhile: 一旦满足条件后踢去 ， 一但不满足条件直接取 
+  let lt2 = x => x <= 2
+  console.log(R.dropWhile(lt2)([1, 1, 1, 1, 1])) // []
+  console.log(R.dropWhile(lt2)([1, 2, 3, 4])) // [3, 4]
+  
+  // without：返回指定值以外的成员。
+  console.log(R.without([1, 2])([1, 2, 3, 4])) // [3, 4])
 </script>
 </html>
