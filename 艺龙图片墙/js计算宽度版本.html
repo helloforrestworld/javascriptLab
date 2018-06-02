@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body, ul {
+      margin: 0;
+      padding: 0;
+    }
+    li {
+      list-style: none;
+    }
+    a {
+      text-decoration: none;
+      color: rgb(147, 144, 145);
+    }
+    .container {
+      margin-top: 100px;
+    }
+    .pics {
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .pics li{
+      float: left;
+      height: 260px;
+      width: 172px;
+      transition: 300ms;
+    }
+    .pics li:hover .mask h4 {
+      display: none;
+    }
+    .pics li a{
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+    }
+    .pics li a .mask, .pics li a .bg-box{
+      height: 100%;
+      width: 100%;
+    }
+    .pics li a .mask {
+      position: absolute;
+      display: flex;
+      align-content: center;
+      justify-content: center;
+      left: 0;
+      top: 0;
+    }
+    .pics li a .mask h4 {
+      width: 30px;
+      color: #fff;
+      font: 30px/30px Microsoft Yahei;
+    }
+    .pics li a .bg-box {
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  </style>
+</head>
+<body>
+  <div  class="container">
+    <ul class="pics"></ul>
+  </div>
+</body>
+<script>
+  const imgData = [
+    {text: '园林酒店', src:'./img/1.jpg'}, 
+    {text: '情侣酒店', src:'./img/2.jpg'}, 
+    {text: '设计师酒店', src:'./img/3.jpg'}, 
+    {text: '青年旅社', src:'./img/4.jpg'}, 
+    {text: '特色客栈', src:'./img/5.jpg'}, 
+    {text: '海岛酒店', src:'./img/6.jpg'}, 
+    {text: '海岛温泉', src:'./img/7.jpg'}
+  ]
+  const DEFAULTWIDTH = 172 // 图片容器默认宽度
+  const CONTAINWIDTH = DEFAULTWIDTH * imgData.length // 总宽度
+  const HOVERWIDTH = 402 // hover后图片容器宽度
+  const HOVEROTHERWIDTH = (CONTAINWIDTH - HOVERWIDTH) / imgData.length - 1 // 没有被选中的其他图片容器宽度
+  let picContain = document.getElementsByClassName('pics')[0]
+  let picList = document.getElementsByClassName('pic-list')
+  let picStr = ``
+  imgData.forEach((item) => {
+    picStr += `
+    <li class="pic-list">
+      <a href="javascript:;">
+        <div class="mask">
+          <h4>${item.text}</h4>
+        </div>
+        <div class="bg-box" style="background-image: url(${item.src})"></div>
+      </a>
+    </li>
+    `
+  })
+  picContain.style.width = CONTAINWIDTH + 'px'
+  picContain.innerHTML = picStr
+  
+  Array.from(picList).forEach((item, i) => {
+    item.onmouseenter = function() {
+      this.style.width = HOVERWIDTH + 'px';
+      for (let j = 0; j < picList.length; j ++) {
+        if (j !== i) {
+          picList[j].style.width = HOVEROTHERWIDTH + 'px'
+        }
+      }
+    }
+    item.onmouseleave = function() {
+      for (let j = 0; j < picList.length; j++) {
+        picList[j].style.width = DEFAULTWIDTH + 'px'
+      }
+    }
+  })
+</script>
+</html>

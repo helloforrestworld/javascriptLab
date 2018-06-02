@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body, ul {
+      margin: 0;
+      padding: 0;
+    }
+    li {
+      list-style: none;
+    }
+    a {
+      text-decoration: none;
+      color: rgb(147, 144, 145);
+    }
+    .pics {
+      margin: auto;
+      display: flex;
+    }
+    .pics li{
+      flex: 1;
+      height: 260px;
+      transition: 300ms;
+    }
+    .pics li:hover .mask h4 {
+      opacity: 0;
+    }
+    .pics li a{
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+    }
+    .pics li a .mask, .pics li a .bg-box{
+      height: 100%;
+      width: 100%;
+    }
+    .pics li a .mask {
+      position: absolute;
+      display: flex;
+      align-content: center;
+      justify-content: center;
+      left: 0;
+      top: 0;
+    }
+    .pics li a .mask h4 {
+      transition: 200ms;
+      width: 30px;
+      color: #fff;
+      font: 30px/30px Microsoft Yahei;
+    }
+    .pics li a .bg-box {
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  </style>
+</head>
+<body>
+  <div  class="container">
+    <ul class="pics"></ul>
+  </div>
+</body>
+<script>
+  const imgData = [
+    {text: '园林酒店', src:'./img/1.jpg'}, 
+    {text: '情侣酒店', src:'./img/2.jpg'}, 
+    {text: '设计师酒店', src:'./img/3.jpg'}, 
+    {text: '青年旅社', src:'./img/4.jpg'}, 
+    {text: '特色客栈', src:'./img/5.jpg'}, 
+    {text: '海岛酒店', src:'./img/6.jpg'}, 
+    {text: '海岛温泉', src:'./img/7.jpg'}
+  ]
+  let picContain = document.getElementsByClassName('pics')[0]
+  let picList = document.getElementsByClassName('pic-list')
+  let picStr = ``
+  imgData.forEach((item) => {
+    picStr += `
+    <li class="pic-list">
+      <a href="javascript:;">
+        <div class="mask">
+          <h4>${item.text}</h4>
+        </div>
+        <div class="bg-box" style="background-image: url(${item.src})"></div>
+      </a>
+    </li>
+    `
+  })
+  const DEFAULTWIDTH = 172
+  const CONTAINWIDTH = DEFAULTWIDTH * imgData.length
+  const HOVERWIDTH = 402
+  picContain.style.width = imgData.length * 172 + 'px'
+  picContain.innerHTML = picStr
+  for (let i = 0; i < imgData.length; i++) {
+    picList[i].onmouseenter = function() {
+      this.style.flex = `0 1 ${HOVERWIDTH}px`
+    }
+    picList[i].onmouseleave = function() {
+      this.style.flex = ''
+    }
+  }
+</script>
+</html>
