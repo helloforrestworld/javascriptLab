@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <style>
-    body, ul {
+    body, ul, h4 {
       margin: 0;
       padding: 0;
     }
@@ -22,6 +22,7 @@
       display: flex;
     }
     .pics li{
+      background: red;
       flex: 1;
       height: 260px;
       transition: 300ms;
@@ -32,6 +33,7 @@
     .pics li a{
       position: relative;
       display: inline-block;
+      background: yellow;
       width: 100%;
       height: 100%;
     }
@@ -42,7 +44,7 @@
     .pics li a .mask {
       position: absolute;
       display: flex;
-      align-content: center;
+      align-items: center;
       justify-content: center;
       left: 0;
       top: 0;
@@ -91,7 +93,7 @@
   })
   const DEFAULTWIDTH = 172
   const CONTAINWIDTH = DEFAULTWIDTH * imgData.length
-  const HOVERWIDTH = 402
+  const HOVERWIDTH = 400
   picContain.style.width = imgData.length * 172 + 'px'
   picContain.innerHTML = picStr
   for (let i = 0; i < imgData.length; i++) {

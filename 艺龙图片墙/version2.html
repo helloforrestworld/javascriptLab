@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <style>
-    body, ul {
+    body, ul, h4{
       margin: 0;
       padding: 0;
     }
@@ -46,7 +46,7 @@
     .pics li a .mask {
       position: absolute;
       display: flex;
-      align-content: center;
+      align-items: center;
       justify-content: center;
       left: 0;
       top: 0;
@@ -79,8 +79,8 @@
   ]
   const DEFAULTWIDTH = 172 // 图片容器默认宽度
   const CONTAINWIDTH = DEFAULTWIDTH * imgData.length // 总宽度
-  const HOVERWIDTH = 402 // hover后图片容器宽度
-  const HOVEROTHERWIDTH = (CONTAINWIDTH - HOVERWIDTH) / imgData.length - 1 // 没有被选中的其他图片容器宽度
+  const HOVERWIDTH = 400 // hover后图片容器宽度
+  const HOVEROTHERWIDTH = (CONTAINWIDTH - HOVERWIDTH) / (imgData.length - 1)// 没有被选中的其他图片容器宽度
   let picContain = document.getElementsByClassName('pics')[0]
   let picList = document.getElementsByClassName('pic-list')
   let picStr = ``
