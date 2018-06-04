@@ -56,5 +56,11 @@ R.intersectionWith(R.eqBy(R.prop('id'))，buffaloSpringfield)(csny)
 R.difference([1,2,3,4])([7,6,5,4,3]) // [1,2]
 R.difference([7,6,5,4,3])([1,2,3,4]) // [7,6,5]
 R.difference([{a: 1}, {b: 2}])([{a: 1}, {c: 3}]) // [{b: 2}]
+
+// differenceWith：返回执行指定函数后，第一个数组里面不符合条件的所有成员。
+var cmp = (x, y) => x.a === y.a;
+var l1 = [{a: 1}, {a: 2}, {a: 3}];
+var l2 = [{a: 3}, {a: 4}];
+R.differenceWith(cmp, l1)(l2) // [{a: 1}, {a: 2}]
 </script>
 </html>
