@@ -62,5 +62,15 @@ var cmp = (x, y) => x.a === y.a;
 var l1 = [{a: 1}, {a: 2}, {a: 3}];
 var l2 = [{a: 3}, {a: 4}];
 R.differenceWith(cmp, l1)(l2) // [{a: 1}, {a: 2}]
+
+// symmetricDifference 返回两个数组的非共有成员所组成的一个新数组。
+R.symmetricDifference([1,2,3,4])([7,6,5,4,3]) // [1,2,7,6,5]
+R.symmetricDifference([7,6,5,4,3])([1,2,3,4]) // [7,6,5,1,2]
+
+// symmetricDifferenceWith：根据指定条件，返回两个数组所有运算结果不相等的成员所组成的新数组。
+var eqA = R.eqBy(R.prop('a'));
+var l1 = [{a: 1}, {a: 2}, {a: 3}, {a: 4}];
+var l2 = [{a: 3}, {a: 4}, {a: 5}, {a: 6}];
+R.symmetricDifferenceWith(eqA, l1, l2) // [{a: 1}, {a: 2}, {a: 5}, {a: 6}]
 </script>
 </html>
