@@ -11,6 +11,18 @@
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.25.0/ramda.min.js"></script>
 <script type="text/javascript">
-
+  // omit：过滤指定属性
+  
+  R.omit(['a', 'd'])({a: 1, b: 2, c: 3, d: 4})
+  // {b: 2, c: 3}
+  
+  // filter：返回所有满足条件的属性
+  var isEven = n => n % 2 === 0;
+  R.filter(isEven)({a: 1, b: 2, c: 3, d: 4}) // {b: 2, d: 4}
+  
+  // reject：返回所有不满足条件的属性
+  var isOdd = (n) => n % 2 === 1;
+  R.reject(isOdd)({a: 1, b: 2, c: 3, d: 4})
+  // {b: 2, d: 4}
 </script>
 </html>
