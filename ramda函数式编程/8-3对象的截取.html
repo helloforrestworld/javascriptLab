@@ -11,6 +11,71 @@
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.25.0/ramda.min.js"></script>
 <script type="text/javascript">
+  // dissoc：过滤指定属性。
+  R.dissoc('b')({a: 1, b: 2, c: 3})
+  // {a: 1, c: 3}
+  
+  
+  // assoc：添加或改写某个属性。
+  
+  R.assoc('c', 3)({a: 1, b: 2})
+  // {a: 1, b: 2, c: 3}
+  
+  // partition：根据属性值是否满足给定条件，将属性分区。
+  R.partition(R.contains('s'))({ a: 'sss', b: 'ttt', foo: 'bars' })
+  // [ { a: 'sss', foo: 'bars' }, { b: 'ttt' }  ]
+  
+  // pick：返回指定属性组成的新对象
+  R.pick(['a', 'd'])({a: 1, b: 2, c: 3, d: 4})
+  // {a: 1, d: 4}
+  
+  
+  // pickAll：与pick类似，但会包括不存在的属性。
+  R.pickAll(['a', 'e', 'f'])({a: 1, b: 2, c: 3, d: 4})
+  // {a: 1, e: undefined, f: undefined}
+  
+  // pickBy：返回符合条件的属性
+  var isUpperCase = (val, key) => key.toUpperCase() === key;
+  R.pickBy(isUpperCase)({a: 1, b: 2, A: 3, B: 4})
+  // {A: 3, B: 4}
+  
+  // keys：返回对象自身属性的属性名组成的新数组。
+  R.keys({a: 1, b: 2, c: 3}) // ['a', 'b', 'c']
+  
+  // keysIn：返回对象自身的和继承的属性的属性名组成的新数组。
+  
+  var F = function() { this.x = 'X'; };
+  F.prototype.y = 'Y';
+  var f = new F();
+  R.keysIn(f) // ['x', 'y']
 
+  // values：返回对象自身的属性的属性值组成的数组。
+  R.values({a: 1, b: 2, c: 3}); //=> [1, 2, 3]
+  
+  // valuesIn：返回对象自身的和继承的属性的属性值组成的数组。
+  
+  var F = function() { this.x = 'X'; };
+  F.prototype.y = 'Y';
+  var f = new F();
+  R.valuesIn(f) // ['X', 'Y']
+  
+  // invertObj：将属性值和属性名互换。如果多个属性的属性值相同，只返回最后一个属性。
+  
+  var raceResultsByFirstName = {
+    first: 'alice',
+    second: 'jake',
+    third: 'alice',
+  };
+  R.invertObj(raceResultsByFirstName)
+  // {"alice": "third", "jake": "second"}
+  
+  // invert：将属性值和属性名互换，每个属性值对应一个数组。
+  var raceResultsByFirstName = {
+  first: 'alice',
+  second: 'jake',
+  third: 'alice',
+  };
+  R.invert(raceResultsByFirstName)
+  // { 'alice': ['first', 'third'], 'jake':['second'] }
 </script>
 </html>
