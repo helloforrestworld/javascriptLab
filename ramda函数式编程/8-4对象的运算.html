@@ -11,6 +11,73 @@
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.25.0/ramda.min.js"></script>
 <script type="text/javascript">
+  // prop：返回对象的指定属性
+  
+  R.prop('x')({x: 100})
+  // 100
 
+  R.prop('x')({})
+  // undefined
+  
+  // map：对象的所有属性依次执行某个函数。
+  var double = x => x * 2;
+  R.map(double)({x: 1, y: 2, z: 3})
+  // {x: 2, y: 4, z: 6}
+  
+  // mapObjIndexed：与map类似，但是会额外传入属性名和整个对象。
+  
+  var values = { x: 1, y: 2, z: 3 };
+  var prependKeyAndDouble = (num, key, obj) => key + (num * 2);
+
+  R.mapObjIndexed(prependKeyAndDouble)(values)
+  // { x: 'x2', y: 'y4', z: 'z6' }
+  
+  // forEachObjIndexed：每个属性依次执行给定函数，给定函数的参数分别是属性值和属性名，返回原对象。
+  
+  var printKeyConcatValue = (value, key) => console.log(key + ':' + value);
+  R.forEachObjIndexed(printKeyConcatValue)({x: 1, y: 2}) // {x: 1, y: 2}
+  // logs x:1
+  // logs y:2
+  
+  // merge：合并两个对象，如果有同名属性，后面的值会覆盖掉前面的值。
+  R.merge({ 'name': 'fred', 'age': 10 })({ 'age': 40 })
+  // { 'name': 'fred', 'age': 40 }
+
+  var resetToDefault = R.merge(R.__, {x: 0});
+  resetToDefault({x: 5, y: 2}) // {x: 0, y: 2}
+  
+  // mergeWith：合并两个对象，如果有同名属性，会使用指定的函数处理。
+    R.mergeWith(
+    R.concat,
+    { a: true, values: [10, 20] },
+    { b: true, values: [15, 35] }
+  );
+  // { a: true, b: true, values: [10, 20, 15, 35] }
+  
+  // eqProps：比较两个对象的指定属性是否相等。
+  
+  var o1 = { a: 1, b: 2, c: 3, d: 4 };
+  var o2 = { a: 10, b: 20, c: 3, d: 40 };
+  R.eqProps('a', o1)(o2) // false
+  R.eqProps('c', o1)(o2) // true
+
+  // R.evolve：对象的属性分别经过一组函数的处理，返回一个新对象。
+  var tomato  = {
+  firstName: '  Tomato ',
+  data: {elapsed: 100, remaining: 1400},
+  id: 123
+  };
+  var transformations = {
+    firstName: R.trim,
+    lastName: R.trim, // 不会被调用
+    data: {elapsed: R.add(1), remaining: R.add(-1)}
+  };
+  R.evolve(transformations)(tomato)
+  // {
+  //   firstName: 'Tomato',
+  //   data: {elapsed: 101, remaining: 1399},
+  //   id: 123
+  // }
+  
 </script>
 </html>
