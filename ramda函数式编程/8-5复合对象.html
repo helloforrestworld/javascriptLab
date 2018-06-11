@@ -11,6 +11,24 @@
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.25.0/ramda.min.js"></script>
 <script type="text/javascript">
+  // path：取出数组中指定路径的值。
+  R.path(['a', 'b'], {a: {b: 2}}) // 2
+  R.path(['a', 'b'], {c: {b: 2}}) // undefined
+  
+  // pathEq：返回指定路径的值符合条件的成员
+  
+  var user1 = { address: { zipCode: 90210 } };
+  var user2 = { address: { zipCode: 55555 } };
+  var user3 = { name: 'Bob' };
+  var users = [ user1, user2, user3 ];
+  var isFamous = R.pathEq(['address', 'zipCode'], 90210);
+  R.filter(isFamous)(users) // [ user1 ]
+  
+  // assocPath：添加或改写指定路径的属性的值
+  R.assocPath(['a', 'b', 'c'], 42)({a: {b: {c: 0}}})
+  // {a: {b: {c: 42}}}
 
+  R.assocPath(['a', 'b', 'c'], 42)({a: 5})
+  // {a: {b: {c: 42}}}
 </script>
 </html>
