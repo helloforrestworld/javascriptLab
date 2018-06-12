@@ -25,10 +25,10 @@
   R.filter(isFamous)(users) // [ user1 ]
   
   // assocPath：添加或改写指定路径的属性的值
-  R.assocPath(['a', 'b', 'c'], 42)({a: {b: {c: 0}}})
+  console.log(R.assocPath(['a', 'b', 'c'], 42)({a: {b: {c: 0}}}))
   // {a: {b: {c: 42}}}
 
-  R.assocPath(['a', 'b', 'c'], 42)({a: 5})
   // {a: {b: {c: 42}}}
+  console.log(R.assocPath(['a', 'b', 'c'], 42)({a: 5}))
 </script>
 </html>
