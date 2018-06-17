@@ -40,7 +40,7 @@
   // logs y:2
   
   // merge：合并两个对象，如果有同名属性，后面的值会覆盖掉前面的值。
-  R.merge({ 'name': 'fred', 'age': 10 })({ 'age': 40 })
+  console.log(R.merge({ 'name': 'fred', 'age': 10 })({ 'age': 40 }))
   // { 'name': 'fred', 'age': 40 }
 
   var resetToDefault = R.merge(R.__, {x: 0});
