@@ -22,5 +22,12 @@
   })
   console.log(add(2, 4)) // 6
   console.log(add(2)(4)) // 6
+  
+  // 柯里化
+  let add = R.curry((x, y) => {
+    return x + y
+  })
+  console.log(add(2, 4)) // 6
+  console.log(add(2)(4)) // 6
 </script>
 </html>
