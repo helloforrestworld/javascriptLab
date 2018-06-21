@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style media="screen">
+    html * {
+      margin: 0;
+      padding: 0;
+    }
+    
+    .layout article div{
+      min-height: 100px;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <section class="layout float">
+    <style media="screen">
+      .layout.float .left-center-right .left{
+        float: left;
+        width: 300px;
+        background-color: yellow;
+      }
+      .layout.float .left-center-right .right{
+        float: right;
+        width: 300px;
+        background-color: green;
+      }
+      .layout.float .left-center-right .center{
+        background-color: blue;
+      }
+    </style>
+    <h1>浮动三栏布局</h1>
+    <article class="left-center-right">
+      <div class="left"></div>
+      <div class="right"></div>
+      <div class="center">
+        1.三栏布局中间部分
+        2.三栏布局浮动实现
+        3.左右定宽，中间自适应
+      </div>
+    </article>
+  </section>
+  
+  <section class="layout position">
+    <style media="screen">
+      .layout.position {
+        position: relative;
+      }
+      .layout.position .left-center-right > div{
+        position: absolute;
+      }
+      .layout.position .left-center-right .left{
+        width: 300px;
+        left: 0;
+        background-color: yellow;
+      }
+      .layout.position .left-center-right .center{
+        left: 300px;
+        right: 300px;
+        background-color: blue;
+      }
+      .layout.position .left-center-right .right{
+        width: 300px;
+        right: 0;
+        background-color: green;
+      }
+    </style>
+    <h1>绝对定位三栏布局</h1>
+    <article class="left-center-right">
+      <div class="left"></div>
+      <div class="center">
+        1.三栏布局中间部分
+        2.三栏布局绝对定位实现
+        3.左右定宽，中间自适应
+      </div>
+      <div class="right"></div>
+    </article>
+  </section>
+  
+  <section class="layout flex">
+    <style media="screen">
+      .layout.flex {
+        margin-top: 100px;
+      }
+      .layout.flex .left-center-right {
+        display: flex;
+      }
+      .layout.flex .left-center-right .left{
+        width: 300px;
+        background-color: yellow;
+      }
+      .layout.flex .left-center-right .center{
+        flex:1;
+        background-color: blue; 
+      }
+      .layout.flex .left-center-right .right{
+        width: 300px;
+        background-color: green;
+      }
+    </style>
+    <h1>flex三栏布局</h1>
+    <article class="left-center-right">
+      <div class="left"></div>
+      <div class="center">
+        1.三栏布局中间部分
+        2.三栏布局flex实现
+        3.左右定宽，中间自适应
+      </div>
+      <div class="right"></div>
+    </article>
+  </section>
+  
+  <section class="layout table">
+    <style media="screen">
+      .layout.table .left-center-right {
+        display: table;
+        width: 100%;
+        height: 100px;
+      }
+      .layout.table .left-center-right .left{
+        display: table-cell;
+        width: 300px;
+        background-color: yellow;
+      }
+      .layout.table .left-center-right .center{
+        display: table-cell;
+        background-color: blue;
+      }
+      .layout.table .left-center-right .right{
+        display: table-cell;
+        width: 300px;
+        background-color: green;
+      }
+    </style>
+    <h1>table三栏布局</h1>
+    <article class="left-center-right">
+      <div class="left"></div>
+      <div class="center">
+        1.三栏布局中间部分
+        2.三栏布局table实现
+        3.左右定宽，中间自适应
+      </div>
+      <div class="right"></div>
+    </article>
+  </section>
+  
+  <section class="layout grid">
+    <style media="screen">
+      .layout.grid .left-center-right {
+        display: grid;
+        grid-template-columns: 300px auto 300px;
+        grid-template-rows: 100px;
+      }
+      .layout.grid .left-center-right .left{
+        background-color: yellow;
+      }
+      .layout.grid .left-center-right .center{
+        background-color: blue;
+      }
+      .layout.grid .left-center-right .right {
+        background-color: green;
+      }
+    </style>
+    <h1>网格三栏布局</h1>
+    <article class="left-center-right">
+      <div class="left"></div>
+      <div class="center">
+        1.三栏布局中间部分
+        2.三栏布局grid实现
+        3.左右定宽，中间自适应
+      </div>
+      <div class="right"></div>
+    </article>
+  </section>
+  
+  <section class="layout grail">
+    <style media="screen">
+      .layout.grail .left-center-right {
+        padding: 0px 300px;
+      }
+      .layout.grail .left-center-right > div {
+        float: left;
+        position: relative;
+      }
+      .layout.grail .left-center-right .left {
+        width: 300px;
+        margin-left: -100%;
+        left: -300px;
+        background-color: yellow;
+      }
+      .layout.grail .left-center-right .center {
+        width: 100%;
+        background-color: blue;
+      } 
+      .layout.grail .left-center-right .right {
+        width: 300px;
+        margin-left: -300px;
+        right: -300px;
+        background-color: green;
+      }
+    </style>
+    <h1>圣杯三栏</h1>
+    <article class="left-center-right">
+      <div class="center">
+        1.三栏布局中间部分
+        2.三栏布局圣杯(浮动+margin+相对定位+负margin)
+        3.左右定宽，中间自适应
+      </div>
+      <div class="left"></div>
+      <div class="right"></div>
+    </article>
+  </section>
+  
+  <section class="layout fly">
+    <style media="screen">
+      .layout.fly {
+        margin-top: 100px;
+      }
+      .layout.fly .left-center-right > div {
+        float: left;
+      }
+      .layout.fly .left-center-right .left {
+        width: 300px;
+        margin-left: -100%;
+        background-color: yellow;
+      }
+      .layout.fly .left-center-right .center {
+        width: 100%;
+        background-color: blue;
+      }
+      .layout.fly .left-center-right .center .content {
+        margin: 0px 300px;
+      }
+      .layout.fly .left-center-right .right {
+        width: 300px;
+        margin-left: -300px;
+        background-color: green;
+      }
+    </style>
+    <h1>双飞翼三栏</h1>
+    <article class="left-center-right">
+      <div class="center">
+        <div class="content">
+          1.三栏布局中间部分
+          2.三栏布局双飞翼(浮动+padding+负margin)
+          3.左右定宽，中间自适应
+        </div>
+      </div>
+      <div class="left"></div>
+      <div class="right"></div>
+    </article>
+  </section>
+</body>
+</html>
