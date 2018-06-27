@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script type="text/javascript">
+  // 缓存分类
+  // web缓存分为很多种，比如数据库缓存、代理服务器缓存、还有我们熟悉的CDN缓存，以及浏览器缓存。
+  
+  //a 浏览器缓存
+  //页面的缓存状态是由header决定的，header的参数有四种：
+  //一、Cache-Control：
+  // 1、max-age（单位为s）指定设置缓存最大的有效时间，定义的是时间长短。当浏览器向服务器发送请求后，在max-age这段时间里浏览器就不会再向服务器发送请求了。max-age会覆盖掉Expires
+  // 2、s-maxage（单位为s）同max-age，只用于共享缓存（比如CDN缓存）。存在s-maxage，则会覆盖掉max-age和Expires header。
+  // 3、public 指定响应会被缓存，并且在多用户间共享。也就是下图的意思。如果没有指定public还是private，则默认为public。
+  // 4、private 响应只作为私有的缓存（见下图），不能在用户间共享。如果要求HTTP认证，响应会自动设置为private。
+  // 5、no-cache 指定不缓存响应，表明资源不进行缓存，比如，
+  // 但是设置了no-cache之后并不代表浏览器不缓存，而是在缓存前要向服务器确认资源是否被更改。因此有的时候只设置no-cache防止缓存还是不够保险，还可以加上private指令，将过期时间设为过去的时间。
+  // 6、no-store 绝对禁止缓存，一看就知道如果用了这个命令当然就是不会进行缓存啦～每次请求资源都要从服务器重新获取。
+  
+  
+  // 二、Expires
+  // 缓存过期时间，用来指定资源到期的时间，是服务器端的具体的时间点。也就是说，Expires=max-age + 请求时间，需要和Last-modified结合使用。
+  
+  // 三、Last-modified 
+  // 服务器端文件的最后修改时间，需要和cache-control共同使用，是检查服务器端资源是否更新的一种方式。当浏览器再次进行请求时，会向服务器传送If-Modified-Since报头，询问Last-Modified时间点之后资源是否被修改过。如果没有修改，则返回码为304，使用缓存；如果修改过，则再次去服务器请求资源，返回码和首次请求相同为200，资源为服务器最新资源。
+  
+  
+  // 四、ETag
+  // 根据实体内容生成一段hash字符串，标识资源的状态，由服务端产生。浏览器会将这串字符串传回服务器，验证资源是否已经修改，如果没有修改，过程如下：
+  /*
+  使用ETag可以解决Last-modified存在的一些问题：
+  a、某些服务器不能精确得到资源的最后修改时间，这样就无法通过最后修改时间判断资源是否更新
+  b、如果资源修改非常频繁，在秒以下的时间内进行修改，而Last-modified只能精确到秒
+  c、一些资源的最后修改时间改变了，但是内容没改变，使用ETag就认为资源还是没有修改的。
+  
+  
+  // 五、localstorage
+  // LocalStorage是一种本地存储的公共资源，域名下很多应用共享这份资源会有风险；LocalStorage是以页面域名划分的，如果有多个等价域名之间的LocalStorage不互通，则会造成缓存多份浪费。
+  
+  LocalStorage在PC上的兼容性不太好，而且当网络速度快、协商缓存响应快时使用localStorage的速度比不上304。并且不能缓存css文件。而移动端由于网速慢，使用localStorage要快于304。
+  
+  // 六、Cookie 和 LocalStorage 比较
+  https://blog.csdn.net/lttxzmj/article/details/61921551
+   */
+  
+</script> 
+</html>

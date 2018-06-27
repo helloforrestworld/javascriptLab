@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script type="text/javascript">
+    //1 如何检测JS错误/如何保证你产品质量
+    /*
+    a. 前端错误的分类
+      即使运行错误、代码错误
+      资源加载错误
+    b. 错误的捕获方式
+      即使运行错误的捕获方式
+      1> try..catch 2>window.onerror
+      资源加载错误
+      1> object.onerror 2>performance.getEntries() 3>Error事件捕获
+        1 img.onerror = function(e) {
+        
+        }
+        2 // 获取当前页面所有请求对应的PerformanceResourceTiming对象进行分析
+          window.performance.getEntries().forEach(function (perf) {
+              result.push({
+                  'url': perf.name,
+                  'entryType': perf.entryType,
+                  'type': perf.initiatorType,
+                  'duration(ms)': perf.duration
+              });
+          });
+        3 window.addEventListener('error', function(e) {
+         // 技能捕获到运行错误也能捕获到资源加载错误
+         // 如果改成冒泡就只能捕获到运行错误
+      }, true)
+      
+      c. 延伸 跨域的js运行错误可以捕获吗 错误提示是什么 应该怎么处理
+      
+        可以捕获 
+          错误信息就是Script error
+          出错行号0
+          出错列好0
+         解决: 1.在script标签增加crossorigin属性
+               2.在设置js资源响应头 Access-Control-Allow-Origin: *
+        <script src="http://cdn.xxx.com/index.js" crossorigin="anonymous"></script/>      
+      d 上报错误的基本原理
+        1> 采用Ajax通信的方式
+        2> 利用Image对象上报(通常使用这种)
+          利用image发送请求比较快捷方便
+          (new Image()).src= 'http://www.baidu.com/tesjk?r=testjk'
+      
+      e  MVVM框架
+      异常信息被框架自身的异常机制捕获了。window.onerror可能不好使了
+      Vue.config.errorHandler = function (err, vm, info) {
+          let { 
+              message, // 异常信息
+              name, // 异常名称
+              script,  // 异常脚本url
+              line,  // 异常行号
+              column,  // 异常列号
+              stack  // 异常堆栈信息
+          } = err;
+
+          // vm为抛出异常的 Vue 实例
+          // info为 Vue 特定的错误信息，比如错误所在的生命周期钩子
+      }
+     */
+  </script>
+</body>
+</html>
