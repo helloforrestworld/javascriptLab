@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script type="text/javascript">
+    // new
+    var new2 = function(fn, ...arg) {
+      // 创建一个对象 原型指向fn的protoType
+      var o = Object.create(fn.prototype)
+      
+      // fn执行 并把 fn执行环境this指向 这个新对象
+      var ret = fn.apply(o, arg)
+      
+      // 判断fn返回的是否是对象
+      if (typeof ret === 'object') {
+        return ret
+      } else {
+        return o
+      }
+    }
+  </script>
+</body>
+</html>
