@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script type="text/javascript">
+  // DOM事件级别
+    // DOM0 element.onclick = function
+    // DOM2 element.addEventListener('click', function, false)
+    // DOM3 element.addEventListener('keyup', function, false) 
+  // DOM事件模型
+    // 捕获、冒泡
+  // DOM事件流
+    // 1.捕获阶段
+    // 2.目标阶段
+    // 3.冒泡阶段
+  // DOM事件捕获的的具体流程
+    // 1.window => 2.document => 3.html => 4.body => 。。。
+  // Event对象的常见应用
+    // event.preventDefault()
+    // event.stopPropagation()
+    // event.stopImmediatePropagation()
+    // event.currentTarget  绑定事件的元素 
+    // event.target 当前被点击的元素
+  // 自定义事件
+    // var eve = new Event('custome')
+    // el.addEventListener('custome', function() {
+    //  console.log('custome patch')
+    // }, false)
+    // el.dispatchEvent(eve)
+    
+    // var eve = new CustomEvent('custome', {参数})
+</script>
+</html>
