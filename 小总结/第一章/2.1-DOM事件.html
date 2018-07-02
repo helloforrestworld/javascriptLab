@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div class="el">
+    <style media="screen">
+      .el {
+        width: 100px;
+        height: 100px;
+        background: red;
+        margin: 30px auto;
+      }
+    </style>
+  </div>
+  <script type="text/javascript">
+    const el = document.getElementsByClassName('el')[0]
+    window.addEventListener('click', () => {
+      console.log('window capture')
+    }, true)
+    document.addEventListener('click', () => {
+      console.log('document capture')
+    }, true)
+    document.documentElement.addEventListener('click', () => {
+      console.log('document.documentElement capture')
+    }, true)
+    document.body.addEventListener('click', () => {
+      console.log('document.body capture')
+    }, true)
+    document.body.addEventListener('click', () => {
+      console.log('document.body capture')
+    }, true)
+    el.addEventListener('click', () => {
+      console.log('目标源事件')
+    }, true)
+    el.addEventListener('click', () => {
+      console.log('目标源事件')
+    }, false)
+    window.addEventListener('click', () => {
+      console.log('window pop')
+    }, false)
+    document.addEventListener('click', () => {
+      console.log('document pop')
+    }, false)
+    document.documentElement.addEventListener('click', () => {
+      console.log('document.documentElement pop')
+    }, false)
+    document.body.addEventListener('click', () => {
+      console.log('document.body pop')
+    }, false)
+  </script>
+</body>
+</html>
