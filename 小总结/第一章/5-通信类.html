@@ -176,10 +176,39 @@
 		}
 		return query.join('&');
 	}
-  // 4 跨域
-    //  JSONP
-    //  H5
-    //  cross origin
+	// 4 跨域
+	//  JSONP
+		// 上面
+	//  H5 postMessage
+		// a窗口发送
+		// window.postMessage('data', 'http://baidu.com')
+		// // b窗口接受
+		// window.addEventListener('message', (ev) => {
+		// 	console.log(ev.origin)
+		// 	console.log(ev.source)
+		// })
+	//  CORS
+		// fetch('/api/aa', {
+		// 	'method': 'get',
+		// 	...
+		// }).then(res => {
+		// })
+	//  WebSocket
+		// let ws = new WebSocket('wss://echo.websocket.org')
+		// ws.onopen = function (evt) {
+		// 	console.log('Connetion open...')
+		// 	ws.send('message')
+		// }
+		// ws.onmessage = function (evt) {
+		// 	console.log('message get', evt.data)
+		// 	ws.close()
+		// }
+		// ws.onclose = function (evt) {
+		// 	console.log('connect closed')
+		// }
+	//  Hash
+		// 例如a页面通过iframe嵌套b页面
+		// b页面onhashchange
 </script>
 
 </html>
