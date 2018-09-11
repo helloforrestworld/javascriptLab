@@ -79,7 +79,6 @@ const speak = () => {
     synth.speak(speakText)
   } else {
     console.error('输入点什么呗！')
-    alert('输入点什么呗！')
   }
 }
 
