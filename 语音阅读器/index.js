@@ -40,10 +40,14 @@ const speak = () => {
   // 是否正在speak
   if (synth.speaking) {
     console.error('慢点~说着呢...')
+    alert('别按太快！！')
     return
   }
   // 可以speak
   if (textInput.value.trim() !== '') {
+    // Add background animation
+    body.style.background = '#141414 url(img/wave.gif)'
+    body.style.backgroundSize = '100% 100%'
     // Speech对象初始化
     const speakText = new SpeechSynthesisUtterance(textInput.value)
 
@@ -53,6 +57,7 @@ const speak = () => {
     }
     speakText.onend = e => {
       console.log('这段说完了..')
+      body.style.background = '#141414'
     }
 
     // 声音配置初始化
@@ -72,11 +77,13 @@ const speak = () => {
 
     // Speak
     synth.speak(speakText)
+  } else {
+    console.error('输入点什么呗！')
+    alert('输入点什么呗！')
   }
 }
 
 // 绑定事件
-
 // Submit
 textForm.addEventListener('submit', e => {
   e.preventDefault()
